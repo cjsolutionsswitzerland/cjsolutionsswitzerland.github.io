@@ -4,7 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Badewannen-Füllstandsmesser – CJ Solutions</title>
-  <meta name="description" content="Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft. Handgefertigt in der Schweiz.">
+  <meta name="description" content="Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft. Handgefertigt in der Schweiz. CHF 49.">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/badewanne.html">
+  <meta property="og:title" content="Badewannen-Füllstandsmesser – CJ Solutions">
+  <meta property="og:description" content="Füllstand & Temperatur in Echtzeit. Akustischer Alarm bei 90% – nie wieder nasser Boden. CHF 49, handgefertigt in der Schweiz.">
+  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Badewannen-Füllstandsmesser",
+    "description": "Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft. Handgefertigt in der Schweiz.",
+    "brand": { "@type": "Brand", "name": "CJ Solutions" },
+    "manufacturer": { "@type": "Organization", "name": "CJ Solutions", "address": { "@type": "PostalAddress", "addressCountry": "CH" } },
+    "offers": {
+      "@type": "Offer",
+      "price": "49",
+      "priceCurrency": "CHF",
+      "availability": "https://schema.org/InStock",
+      "priceValidUntil": "2027-12-31",
+      "seller": { "@type": "Organization", "name": "CJ Solutions" }
+    },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Alarm", "value": "Melodie bei 90% Füllstand" },
+      { "@type": "PropertyValue", "name": "Temperaturgenauigkeit", "value": "±0.5°C" },
+      { "@type": "PropertyValue", "name": "Stromversorgung", "value": "USB-C Akku" }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -18,23 +54,41 @@
     html { scroll-behavior: smooth; }
     body { background:var(--navy); color:var(--white); font-family:var(--sans); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased; }
 
+    /* NAV */
     nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; background:rgba(10,15,30,0.88); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
     .nav-logo { font-family:var(--mono); font-size:1.1rem; font-weight:600; color:var(--cyan); text-decoration:none; letter-spacing:0.02em; }
     .nav-logo span { color:var(--white); }
-    .nav-back { font-size:0.85rem; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition:color 0.2s; }
-    .nav-back:hover { color:var(--cyan); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; position:relative; }
+    .nav-links a:hover { color:var(--white); }
+    .nav-links a.nav-active { color:var(--white); }
+    .nav-links a.nav-active::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--cyan); border-radius:2px; }
     .lang-btn { font-family:var(--mono); font-size:0.75rem; background:var(--navy3); border:1px solid var(--border); color:var(--muted); padding:4px 12px; border-radius:4px; cursor:pointer; transition:all 0.2s; }
     .lang-btn:hover { border-color:var(--cyan); color:var(--cyan); }
 
+    /* MOBILE MENU */
+    .burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; }
+    .burger span { display:block; width:22px; height:2px; background:var(--muted); border-radius:2px; transition:all 0.3s ease; }
+    .burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); background:var(--cyan); }
+    .burger.open span:nth-child(2) { opacity:0; }
+    .burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); background:var(--cyan); }
+    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:rgba(10,15,30,0.97); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:1.5rem 2rem; z-index:99; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:var(--muted); text-decoration:none; font-size:1rem; padding:0.9rem 0; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .mobile-menu a:last-child { border-bottom:none; }
+    .mobile-menu a:hover, .mobile-menu a.nav-active { color:var(--cyan); }
+
+    /* SECTIONS */
     section { padding:5rem 2rem; }
     .container { max-width:1000px; margin:0 auto; }
     .section-label { font-family:var(--mono); font-size:0.7rem; color:var(--cyan); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:0.75rem; }
     h2 { font-size:clamp(1.4rem,3vw,2rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:1rem; }
 
-    /* HERO PRODUKT */
+    /* PRODUCT HERO */
     .product-hero { min-height:100vh; display:flex; align-items:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
-    .product-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 50% 60% at 75% 50%, rgba(34,211,200,0.07) 0%, transparent 65%); pointer-events:none; }
-    .product-hero-inner { max-width:1000px; width:100%; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .product-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 50% 60% at 75% 50%, rgba(34,211,200,0.07) 0%, transparent 65%); pointer-events:none; z-index:1; }
+    .product-hero::after { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(34,211,200,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,200,0.04) 1px, transparent 1px); background-size:48px 48px; animation:gridMove 20s linear infinite; pointer-events:none; z-index:0; }
+    .product-hero-inner { max-width:1000px; width:100%; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; position:relative; z-index:2; }
     .breadcrumb { font-family:var(--mono); font-size:0.7rem; color:var(--muted); margin-bottom:1rem; }
     .breadcrumb a { color:var(--muted); text-decoration:none; }
     .breadcrumb a:hover { color:var(--cyan); }
@@ -50,6 +104,14 @@
     .price-hero { font-family:var(--mono); font-size:1.6rem; font-weight:600; color:var(--cyan); margin-bottom:1.5rem; }
     .price-hero span { font-size:0.85rem; color:var(--muted); font-weight:400; }
 
+    /* SCROLL INDICATOR */
+    .scroll-indicator { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); transition:opacity 0.4s ease; display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:var(--muted); font-family:var(--mono); font-size:0.65rem; letter-spacing:0.08em; animation:fadeInUp 1s ease 1s both; z-index:2; }
+    .scroll-indicator svg { animation:bounce 1.8s ease infinite; }
+
+    @keyframes gridMove { 0% { background-position:0 0; } 100% { background-position:48px 48px; } }
+    @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+    @keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
     /* OLED MOCKUP */
     .oled-wrap { display:flex; justify-content:center; align-items:center; }
     .oled-shell { background:#060b14; border:2px solid #2a3a55; border-radius:12px; padding:1.5rem; box-shadow:0 0 50px rgba(34,211,200,0.14), 0 0 0 1px rgba(34,211,200,0.06); width:280px; }
@@ -63,7 +125,7 @@
     .oled-label { font-size:0.6rem; margin-top:0.5rem; color:#00ffee88; }
     .oled-chip { font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-align:center; margin-top:0.75rem; letter-spacing:0.08em; }
 
-    /* SZENARIEN */
+    /* SCENARIOS */
     .scenario-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.25rem; }
     .scenario { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; position:relative; overflow:hidden; }
     .scenario::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--cyan); }
@@ -71,6 +133,12 @@
     .scenario h4 { font-size:1rem; margin-bottom:0.5rem; }
     .scenario p { color:var(--muted); font-size:0.875rem; line-height:1.6; }
     .scenario .hl { color:var(--cyan); font-weight:500; }
+
+    /* STATS */
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; margin-top:3rem; }
+    .stat { text-align:center; padding:1.5rem 1rem; background:var(--navy2); border:1px solid var(--border); border-radius:10px; }
+    .stat-num { font-family:var(--mono); font-size:1.8rem; font-weight:600; color:var(--cyan); display:block; }
+    .stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; }
 
     /* SPECS */
     .specs-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
@@ -81,36 +149,76 @@
     .spec-table td:first-child { color:var(--muted); font-family:var(--mono); font-size:0.75rem; width:45%; }
     .spec-table td:last-child { color:var(--white); font-weight:500; }
 
-    /* HOW IT WORKS */
+    /* STEPS */
     .steps { display:flex; flex-direction:column; gap:1.25rem; }
     .step { display:flex; gap:1.25rem; align-items:flex-start; }
     .step-num { width:32px; height:32px; border-radius:50%; background:var(--cyan-dim); border:1px solid var(--cyan2); color:var(--cyan); font-family:var(--mono); font-size:0.8rem; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
     .step-text h4 { font-size:0.95rem; margin-bottom:0.25rem; }
     .step-text p { color:var(--muted); font-size:0.875rem; }
 
-    /* STATS */
-    .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; margin-top:3rem; }
-    .stat { text-align:center; padding:1.5rem 1rem; background:var(--navy2); border:1px solid var(--border); border-radius:10px; }
-    .stat-num { font-family:var(--mono); font-size:1.8rem; font-weight:600; color:var(--cyan); display:block; }
-    .stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; }
+    /* FAQ */
+    .faq-list { max-width:720px; }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-question { width:100%; background:none; border:none; color:var(--white); font-family:var(--sans); font-size:0.975rem; font-weight:500; text-align:left; padding:1.25rem 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:1rem; transition:color 0.2s; }
+    .faq-question:hover { color:var(--cyan); }
+    .faq-icon { font-family:var(--mono); font-size:1.1rem; color:var(--cyan); flex-shrink:0; transition:transform 0.3s; line-height:1; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-answer { overflow:hidden; max-height:0; transition:max-height 0.35s ease; }
+    .faq-answer-inner { color:var(--muted); font-size:0.9rem; line-height:1.7; padding-bottom:1.25rem; }
 
-    /* CTA */
-    .cta-box { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:3rem; text-align:center; }
-    .cta-box h2 { margin-bottom:0.75rem; }
-    .cta-box p { color:var(--muted); margin-bottom:2rem; max-width:480px; margin-left:auto; margin-right:auto; }
-    .contact-email { font-family:var(--mono); color:var(--cyan); text-decoration:none; font-size:1rem; border-bottom:1px solid var(--cyan2); padding-bottom:2px; }
-    .contact-email:hover { color:#30ebe0; }
+    /* NEWSLETTER STRIP */
+    .newsletter-strip { background:var(--navy3); border:1px solid var(--border); border-radius:12px; padding:2rem 2.5rem; margin-top:2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+    .newsletter-strip h4 { font-size:1rem; margin-bottom:0.25rem; }
+    .newsletter-strip p { color:var(--muted); font-size:0.85rem; }
+    .newsletter-form { display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .newsletter-input { font-family:var(--sans); font-size:0.875rem; background:var(--navy2); border:1px solid var(--border); color:var(--white); padding:0.6rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; width:220px; }
+    .newsletter-input::placeholder { color:var(--muted); }
+    .newsletter-input:focus { border-color:var(--cyan); }
+    .btn-sm { padding:0.6rem 1.25rem; font-size:0.875rem; }
+
+    /* ORDER FORM */
+    .cta-box { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:3rem; }
+    .cta-box > p { color:var(--muted); margin-bottom:2rem; max-width:520px; }
+    .order-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-field label { font-size:0.8rem; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; }
+    .form-field input, .form-field textarea, .form-field select { font-family:var(--sans); font-size:0.9rem; background:var(--navy3); border:1px solid var(--border); color:var(--white); padding:0.7rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; resize:vertical; appearance:none; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color:var(--muted); }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color:var(--cyan); }
+    .form-field select option { background:var(--navy3); }
+    .form-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:0.5rem; }
+    .form-alt { font-size:0.8rem; color:var(--muted); }
+    .form-alt a { color:var(--cyan); text-decoration:none; }
+    .form-success { display:none; text-align:center; padding:2rem; color:var(--cyan); font-family:var(--mono); }
+    .form-note { font-size:0.8rem; color:var(--muted); margin-top:1.5rem; text-align:center; line-height:1.6; }
 
     footer { border-top:1px solid var(--border); padding:2rem; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
     footer a { color:var(--muted); text-decoration:none; }
     footer a:hover { color:var(--cyan); }
 
+    /* SCROLL ANIMATIONS */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:0.1s; }
+    .reveal-delay-2 { transition-delay:0.2s; }
+    .reveal-delay-3 { transition-delay:0.3s; }
+    .reveal-delay-4 { transition-delay:0.4s; }
+    .reveal-delay-5 { transition-delay:0.5s; }
+    .reveal-delay-6 { transition-delay:0.6s; }
+
     @media(max-width:768px) {
       .product-hero-inner { grid-template-columns:1fr; gap:2.5rem; }
       .oled-wrap { order:-1; }
       .specs-grid { grid-template-columns:1fr; }
-      .nav-back span { display:none; }
+      .nav-links { display:none; }
+      .burger { display:flex; }
       footer { justify-content:center; text-align:center; }
+      .btn-outline { margin-left:0; margin-top:0.75rem; }
+      .newsletter-strip { flex-direction:column; align-items:flex-start; }
+      .newsletter-input { width:100%; }
+      .form-row { grid-template-columns:1fr; }
+      .cta-box { padding:2rem 1.5rem; }
     }
     @media(prefers-reduced-motion:reduce) { .oled-bar-fill { animation:none; width:72%; } }
   </style>
@@ -119,9 +227,27 @@
 
 <nav>
   <a href="index.html" class="nav-logo">CJ<span> Solutions</span></a>
-  <a href="index.html" class="nav-back">← <span data-de="Zurück zur Übersicht" data-en="Back to overview">Zurück zur Übersicht</span></a>
-  <button class="lang-btn" id="langToggle">EN</button>
+  <ul class="nav-links">
+    <li><a href="#warum" data-de="Warum?" data-en="Why?">Warum?</a></li>
+    <li><a href="#wie-es-funktioniert" data-de="Funktionsweise" data-en="How it works">Funktionsweise</a></li>
+    <li><a href="#faq" data-de="FAQ" data-en="FAQ">FAQ</a></li>
+    <li><a href="#bestellen" data-de="Bestellen" data-en="Order">Bestellen</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="lang-btn" id="langToggle">EN</button>
+    <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-de="← Zurück zur Übersicht" data-en="← Back to overview">← Zurück zur Übersicht</a>
+  <a href="#warum" data-de="Warum?" data-en="Why?">Warum?</a>
+  <a href="#wie-es-funktioniert" data-de="Funktionsweise" data-en="How it works">Funktionsweise</a>
+  <a href="#faq" data-de="FAQ" data-en="FAQ">FAQ</a>
+  <a href="#bestellen" data-de="Bestellen" data-en="Order">Bestellen</a>
+</div>
 
 <!-- PRODUKT HERO -->
 <section class="product-hero">
@@ -159,10 +285,16 @@
       </div>
     </div>
   </div>
+  <div class="scroll-indicator">
+    <span data-de="scroll" data-en="scroll">scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
 </section>
 
 <!-- WARUM -->
-<section style="background:var(--navy2);">
+<section id="warum" style="background:var(--navy2);">
   <div class="container">
     <p class="section-label" data-de="Warum du ihn brauchst" data-en="Why you need it">Warum du ihn brauchst</p>
     <h2 data-de="Kennst du das?" data-en="Sound familiar?">Kennst du das?</h2>
@@ -170,42 +302,42 @@
       Diese Situationen passieren täglich – und sind mit dem Badewannen-Füllstandsmesser Geschichte.
     </p>
     <div class="scenario-grid">
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-1">
         <span class="scenario-emoji">🚿</span>
         <h4 data-de="Du verlässt kurz das Bad..." data-en="You step out for a moment...">Du verlässt kurz das Bad...</h4>
         <p data-de="...und als du zurückkommst, <span class='hl'>läuft die Wanne über</span>. Der Boden ist nass, das Handtuch auch. Passiert jedem – einmal zu oft." data-en="...and when you return, <span class='hl'>the tub is overflowing</span>. The floor is wet, the towel too. Happens to everyone – once too often.">
           ...und als du zurückkommst, <span class="hl">läuft die Wanne über</span>. Der Boden ist nass, das Handtuch auch. Passiert jedem – einmal zu oft.
         </p>
       </div>
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-2">
         <span class="scenario-emoji">🧒</span>
         <h4 data-de="Kinder und Badewanne" data-en="Kids and bath time">Kinder und Badewanne</h4>
         <p data-de="Du bist nebenan, hörst das Wasser laufen – aber <span class='hl'>wie voll ist die Wanne gerade?</span> Mit dem Monitor weisst du es, bevor es zu spät ist." data-en="You're next door, hear the water running – but <span class='hl'>how full is the tub right now?</span> With the monitor, you know before it's too late.">
           Du bist nebenan, hörst das Wasser laufen – aber <span class="hl">wie voll ist die Wanne gerade?</span> Mit dem Monitor weisst du es, bevor es zu spät ist.
         </p>
       </div>
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-3">
         <span class="scenario-emoji">🌡️</span>
         <h4 data-de="Zu heiss? Zu kalt?" data-en="Too hot? Too cold?">Zu heiss? Zu kalt?</h4>
         <p data-de="Das Wasser fühlt sich immer anders an. Der eingebaute Temperatursensor zeigt dir <span class='hl'>die exakte Wassertemperatur</span> – für das perfekte Bad, jedes Mal." data-en="The water always feels different. The built-in sensor shows <span class='hl'>the exact water temperature</span> – for the perfect bath, every time.">
           Das Wasser fühlt sich immer anders an. Der eingebaute Temperatursensor zeigt dir <span class="hl">die exakte Wassertemperatur</span> – für das perfekte Bad, jedes Mal.
         </p>
       </div>
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-4">
         <span class="scenario-emoji">♿</span>
         <h4 data-de="Eingeschränkte Mobilität" data-en="Limited mobility">Eingeschränkte Mobilität</h4>
         <p data-de="Für ältere oder mobilitätseingeschränkte Personen ist das Überwachen schwierig. <span class='hl'>Der akustische Alarm macht das Bad sicherer.</span>" data-en="For elderly or mobility-impaired people, monitoring is difficult. <span class='hl'>The acoustic alarm makes bathing safer.</span>">
           Für ältere oder mobilitätseingeschränkte Personen ist das Überwachen schwierig. <span class="hl">Der akustische Alarm macht das Bad sicherer.</span>
         </p>
       </div>
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-5">
         <span class="scenario-emoji">💧</span>
         <h4 data-de="Wasser sparen" data-en="Save water">Wasser sparen</h4>
         <p data-de="Mit dem Füllstandsbalken siehst du genau, <span class='hl'>wann der optimale Pegelstand erreicht ist</span> – kein Liter zu viel." data-en="The fill bar shows you exactly <span class='hl'>when the optimal level is reached</span> – not a litre too much.">
           Mit dem Füllstandsbalken siehst du genau, <span class="hl">wann der optimale Pegelstand erreicht ist</span> – kein Liter zu viel.
         </p>
       </div>
-      <div class="scenario">
+      <div class="scenario reveal reveal-delay-6">
         <span class="scenario-emoji">🎵</span>
         <h4 data-de="Der Alarm den du hörst" data-en="The alarm you'll hear">Der Alarm den du hörst</h4>
         <p data-de="Kein nervöses Piepen – bei 90% Füllstand spielt das Gerät eine <span class='hl'>unverwechselbare Melodie</span>. Du hörst es auch vom Sofa aus." data-en="No annoying beep – at 90% fill the device plays an <span class='hl'>unmistakable melody</span>. You'll hear it from the couch.">
@@ -215,10 +347,10 @@
     </div>
 
     <div class="stats-row">
-      <div class="stat"><span class="stat-num">90%</span><div class="stat-label" data-de="Füllstand → Alarm" data-en="Fill level → alarm">Füllstand → Alarm</div></div>
-      <div class="stat"><span class="stat-num">±0.5°</span><div class="stat-label" data-de="Temperaturgenauigkeit" data-en="Temperature accuracy">Temperaturgenauigkeit</div></div>
-      <div class="stat"><span class="stat-num">1×</span><div class="stat-label" data-de="Einmalig kalibrieren" data-en="One-time calibration">Einmalig kalibrieren</div></div>
-      <div class="stat"><span class="stat-num">∞</span><div class="stat-label" data-de="Verkäufe gespeichert" data-en="Settings saved">Einstellungen gespeichert</div></div>
+      <div class="stat reveal reveal-delay-1"><span class="stat-num">90%</span><div class="stat-label" data-de="Füllstand → Alarm" data-en="Fill level → alarm">Füllstand → Alarm</div></div>
+      <div class="stat reveal reveal-delay-2"><span class="stat-num">±0.5°</span><div class="stat-label" data-de="Temperaturgenauigkeit" data-en="Temperature accuracy">Temperaturgenauigkeit</div></div>
+      <div class="stat reveal reveal-delay-3"><span class="stat-num">1×</span><div class="stat-label" data-de="Einmalig kalibrieren" data-en="One-time calibration">Einmalig kalibrieren</div></div>
+      <div class="stat reveal reveal-delay-4"><span class="stat-num">∞</span><div class="stat-label" data-de="Einstellungen gespeichert" data-en="Settings saved">Einstellungen gespeichert</div></div>
     </div>
   </div>
 </section>
@@ -227,7 +359,7 @@
 <section id="wie-es-funktioniert">
   <div class="container">
     <div class="specs-grid">
-      <div>
+      <div class="reveal reveal-delay-1">
         <p class="section-label" data-de="Inbetriebnahme" data-en="Setup">Inbetriebnahme</p>
         <h2 data-de="In 3 Schritten bereit" data-en="Ready in 3 steps">In 3 Schritten bereit</h2>
         <div class="steps" style="margin-top:2rem;">
@@ -254,7 +386,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="reveal reveal-delay-2">
         <p class="section-label" data-de="Technische Details" data-en="Technical details">Technische Details</p>
         <h2 data-de="Spezifikationen" data-en="Specifications">Spezifikationen</h2>
         <table class="spec-table" style="margin-top:2rem;">
@@ -270,23 +402,145 @@
   </div>
 </section>
 
-<!-- BESTELLEN -->
-<section id="bestellen" style="background:var(--navy2);">
+<!-- FAQ -->
+<section id="faq" style="background:var(--navy2);">
   <div class="container">
-    <div class="cta-box">
-      <p class="section-label" style="justify-content:center; display:flex;" data-de="Kaufen" data-en="Order">Kaufen</p>
-      <h2 data-de="Bereit für stressfreies Baden?" data-en="Ready for stress-free bathing?">Bereit für stressfreies Baden?</h2>
-      <p data-de="Schick uns eine Mail mit deiner Bestellung. Wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails." data-en="Send us an email with your order. We'll get back to you within 48 hours with payment and shipping details.">
-        Schick uns eine Mail mit deiner Bestellung. Wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails.
+    <p class="section-label" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
+    <h2 data-de="FAQ zum Füllstandsmesser" data-en="FAQ about the level monitor">FAQ zum Füllstandsmesser</h2>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Funktioniert das Gerät mit jeder Badewanne?" data-en="Does it work with any bathtub?">
+          Funktioniert das Gerät mit jeder Badewanne?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Ja. Das Gerät wird einmalig auf deine Wanne kalibriert (leer und voll), danach passt es sich an jede Wannenform und -grösse an. Die Kalibrierung dauert weniger als eine Minute." data-en="Yes. The device is calibrated once to your tub (empty and full), then adapts to any tub shape and size. Calibration takes less than a minute.">
+            Ja. Das Gerät wird einmalig auf deine Wanne kalibriert (leer und voll), danach passt es sich an jede Wannenform und -grösse an. Die Kalibrierung dauert weniger als eine Minute.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie laut ist der Alarm?" data-en="How loud is the alarm?">
+          Wie laut ist der Alarm?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Der Alarm ist laut genug um ihn im Nebenzimmer zu hören – auch bei laufendem Wasser. Er spielt eine der drei wählbaren Melodien und stoppt automatisch sobald du das Wasser abdrehst und der Pegel sinkt." data-en="The alarm is loud enough to hear in the next room – even with water running. It plays one of three selectable melodies and stops automatically once you turn off the water and the level drops.">
+            Der Alarm ist laut genug um ihn im Nebenzimmer zu hören – auch bei laufendem Wasser. Er spielt eine der drei wählbaren Melodien und stoppt automatisch sobald du das Wasser abdrehst und der Pegel sinkt.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie lange hält der Akku?" data-en="How long does the battery last?">
+          Wie lange hält der Akku?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Bei normalem Einsatz (1–2 Bäder pro Tag) hält der Akku mehrere Wochen. Laden per USB-C dauert ca. 1–2 Stunden. Das Display zeigt an, wenn der Akku schwach ist." data-en="With normal use (1–2 baths per day) the battery lasts several weeks. Charging via USB-C takes approx. 1–2 hours. The display shows when the battery is low.">
+            Bei normalem Einsatz (1–2 Bäder pro Tag) hält der Akku mehrere Wochen. Laden per USB-C dauert ca. 1–2 Stunden. Das Display zeigt an, wenn der Akku schwach ist.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Ist das Gerät wasserdicht?" data-en="Is the device waterproof?">
+          Ist das Gerät wasserdicht?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Das Gehäuse ist spritzwassergeschützt – Spritzer und Dampf machen ihm nichts aus. Es ist nicht für vollständiges Eintauchen ausgelegt. Der Temperaturfühler ist wasserdicht und für den Dauerbetrieb im Wasser vorgesehen." data-en="The housing is splash-proof – splashes and steam are no problem. It's not designed for full submersion. The temperature probe is waterproof and designed for continuous use in water.">
+            Das Gehäuse ist spritzwassergeschützt – Spritzer und Dampf machen ihm nichts aus. Es ist nicht für vollständiges Eintauchen ausgelegt. Der Temperaturfühler ist wasserdicht und für den Dauerbetrieb im Wasser vorgesehen.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie erfolgt die Bezahlung?" data-en="How does payment work?">
+          Wie erfolgt die Bezahlung?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Nach der Bestellung erhältst du von uns eine Bestätigung mit den Zahlungsdetails. Akzeptiert werden: TWINT, Banküberweisung und Bar bei Abholung." data-en="After ordering you'll receive a confirmation with payment details. Accepted: TWINT, bank transfer, and cash on pickup.">
+            Nach der Bestellung erhältst du von uns eine Bestätigung mit den Zahlungsdetails. Akzeptiert werden: TWINT, Banküberweisung und Bar bei Abholung.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BESTELLEN -->
+<section id="bestellen">
+  <div class="container">
+    <p class="section-label" data-de="Kaufen" data-en="Order">Kaufen</p>
+    <h2 data-de="Bereit für stressfreies Baden?" data-en="Ready for stress-free bathing?">Bereit für stressfreies Baden?</h2>
+    <div class="cta-box reveal">
+      <p data-de="Formular ausfüllen und wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails." data-en="Fill in the form and we'll get back to you within 48 hours with payment and shipping details.">
+        Formular ausfüllen und wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails.
       </p>
-      <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Badewannen-Füllstandsmesser" class="btn btn-primary" style="font-size:1rem; padding:0.9rem 2rem; margin-bottom:1.5rem;" data-de="Jetzt bestellen – CHF 49" data-en="Order now – CHF 49">Jetzt bestellen – CHF 49</a>
-      <br>
-      <p style="font-size:0.8rem; color:var(--muted); margin-bottom:0;" data-de="Oder direkt mailen: " data-en="Or email directly: ">Oder direkt mailen: </p>
-      <a href="mailto:cj.solutions.switzerland@gmail.com" class="contact-email">cj.solutions.switzerland@gmail.com</a>
-      <br><br>
-      <p style="font-size:0.8rem; color:var(--muted); margin:0;" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich. Zahlung per TWINT, Überweisung oder Bar bei Abholung." data-en="Shipping within Switzerland. Pickup by arrangement. Payment via TWINT, bank transfer, or cash on pickup.">
-        Versand innerhalb der Schweiz. Abholung nach Absprache möglich. Zahlung per TWINT, Überweisung oder Bar bei Abholung.
+      <form class="order-form" action="https://formspree.io/f/xpqgllon" method="POST" id="orderForm">
+        <input type="hidden" name="Produkt" value="Badewannen-Füllstandsmesser – CHF 49">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name" data-de="NAME" data-en="NAME">NAME</label>
+            <input type="text" id="name" name="name" placeholder="Max Muster" required>
+          </div>
+          <div class="form-field">
+            <label for="email" data-de="E-MAIL" data-en="E-MAIL">E-MAIL</label>
+            <input type="email" id="email" name="email" placeholder="max@beispiel.ch" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="melodie" data-de="MELODIE (WUNSCH)" data-en="MELODY (CHOICE)">MELODIE (WUNSCH)</label>
+            <select id="melodie" name="melodie">
+              <option value="La Cucaracha">La Cucaracha</option>
+              <option value="Super Mario">Super Mario</option>
+              <option value="Happy Birthday">Happy Birthday</option>
+              <option value="egal">Keine Präferenz</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="lieferung" data-de="LIEFERUNG" data-en="DELIVERY">LIEFERUNG</label>
+            <select id="lieferung" name="lieferung">
+              <option value="Versand" data-de="Versand (Post)" data-en="Shipping (Post)">Versand (Post)</option>
+              <option value="Abholung" data-de="Abholung nach Absprache" data-en="Pickup by arrangement">Abholung nach Absprache</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="message" data-de="BEMERKUNGEN (OPTIONAL)" data-en="NOTES (OPTIONAL)">BEMERKUNGEN (OPTIONAL)</label>
+          <textarea id="message" name="message" rows="3" placeholder="Adresse, Fragen, Wünsche…"></textarea>
+        </div>
+        <div class="form-footer">
+          <p class="form-alt" data-de="Oder direkt: <a href='mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Badewannen-Füllstandsmesser'>E-Mail schreiben</a>" data-en="Or directly: <a href='mailto:cj.solutions.switzerland@gmail.com?subject=Order%20Bath%20Water%20Level%20Monitor'>Send email</a>">
+            Oder direkt: <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Badewannen-Füllstandsmesser">E-Mail schreiben</a>
+          </p>
+          <button type="submit" class="btn btn-primary" data-de="Bestellen – CHF 49 →" data-en="Order – CHF 49 →">Bestellen – CHF 49 →</button>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✓ <span data-de="Bestellung eingegangen – wir melden uns bald!" data-en="Order received – we'll be in touch soon!">Bestellung eingegangen – wir melden uns bald!</span>
+      </div>
+      <p class="form-note" data-de="Versand innerhalb der Schweiz · Abholung nach Absprache möglich · Zahlung per TWINT, Überweisung oder Bar bei Abholung" data-en="Shipping within Switzerland · Pickup by arrangement · Payment via TWINT, bank transfer or cash on pickup">
+        Versand innerhalb der Schweiz · Abholung nach Absprache möglich · Zahlung per TWINT, Überweisung oder Bar bei Abholung
       </p>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-strip reveal">
+      <div>
+        <h4 data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
+        <p data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
+      </div>
+      <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterForm">
+        <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
+        <button type="submit" class="btn btn-primary btn-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
+      </form>
     </div>
   </div>
 </section>
@@ -298,20 +552,118 @@
 </footer>
 
 <script>
+  /* --- Language Toggle --- */
   let lang = 'de';
-  const btn = document.getElementById('langToggle');
-  btn.addEventListener('click', () => {
+  const langBtn = document.getElementById('langToggle');
+  langBtn.addEventListener('click', () => {
     lang = lang === 'de' ? 'en' : 'de';
-    btn.textContent = lang === 'de' ? 'EN' : 'DE';
+    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-de]').forEach(el => {
       const text = el.getAttribute('data-' + lang);
       if (!text) return;
-      if (['H1','H2','H3','H4','P','SPAN','A','DIV'].includes(el.tagName)) el.innerHTML = text;
+      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
       else el.textContent = text;
     });
   });
 
+  /* --- Mobile Burger Menu --- */
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-label', isOpen ? 'Menü schliessen' : 'Menü öffnen');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    });
+  });
+
+  /* --- Active Nav on Scroll --- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('nav-active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  /* --- Scroll Reveal --- */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* --- Scroll Indicator --- */
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    window.addEventListener('scroll', () => {
+      scrollIndicator.style.opacity = window.scrollY > 80 ? '0' : '1';
+    }, { passive: true });
+  }
+
+  /* --- FAQ Accordion --- */
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(open => {
+        open.classList.remove('open');
+        open.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* --- Order Form AJAX --- */
+  const orderForm = document.getElementById('orderForm');
+  const formSuccess = document.getElementById('formSuccess');
+  if (orderForm) {
+    orderForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(orderForm);
+      try {
+        const res = await fetch(orderForm.action, { method:'POST', body:data, headers:{ Accept:'application/json' } });
+        if (res.ok) {
+          orderForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        }
+      } catch {}
+    });
+  }
+
+  /* --- Newsletter Form AJAX --- */
+  const nlForm = document.getElementById('newsletterForm');
+  if (nlForm) {
+    nlForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(nlForm);
+      try {
+        const res = await fetch(nlForm.action, { method:'POST', body:data, headers:{ Accept:'application/json' } });
+        if (res.ok) {
+          nlForm.innerHTML = '<span style="font-family:var(--mono);font-size:0.85rem;color:var(--cyan);">✓ ' + (lang === 'de' ? 'Eingetragen!' : 'Subscribed!') + '</span>';
+        }
+      } catch {}
+    });
+  }
+
+  /* --- OLED Animation --- */
   const temps = ['36.8 C','37.2 C','37.5 C','38.1 C','36.5 C'];
   const stati = ['gut!','gut!','warm','heiss','warm'];
   let i = 0;

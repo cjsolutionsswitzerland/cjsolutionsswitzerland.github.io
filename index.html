@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CJ Solutions – Smarte Elektronik aus der Schweiz</title>
   <meta name="description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/">
+  <meta property="og:title" content="CJ Solutions – Smarte Elektronik aus der Schweiz">
+  <meta property="og:description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CJ Solutions – Smarte Elektronik aus der Schweiz">
+  <meta name="twitter:description" content="Handgefertigte Elektronik-Lösungen für den Alltag.">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "CJ Solutions",
+        "url": "https://cjsolutionsswitzerland.github.io/",
+        "email": "cj.solutions.switzerland@gmail.com",
+        "address": { "@type": "PostalAddress", "addressCountry": "CH" },
+        "description": "Handgefertigte Elektronik-Lösungen für den Alltag, made in Switzerland."
+      },
+      {
+        "@type": "Product",
+        "name": "Badewannen-Füllstandsmesser",
+        "description": "Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft.",
+        "brand": { "@type": "Brand", "name": "CJ Solutions" },
+        "offers": {
+          "@type": "Offer",
+          "price": "49",
+          "priceCurrency": "CHF",
+          "availability": "https://schema.org/InStock",
+          "seller": { "@type": "Organization", "name": "CJ Solutions" }
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -18,18 +61,37 @@
     html { scroll-behavior: smooth; }
     body { background:var(--navy); color:var(--white); font-family:var(--sans); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased; }
 
+    /* NAV */
     nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; background:rgba(10,15,30,0.88); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
     .nav-logo { font-family:var(--mono); font-size:1.1rem; font-weight:600; color:var(--cyan); text-decoration:none; letter-spacing:0.02em; }
     .nav-logo span { color:var(--white); }
     .nav-links { display:flex; gap:2rem; list-style:none; }
-    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; position:relative; }
     .nav-links a:hover { color:var(--white); }
     .lang-btn { font-family:var(--mono); font-size:0.75rem; background:var(--navy3); border:1px solid var(--border); color:var(--muted); padding:4px 12px; border-radius:4px; cursor:pointer; transition:all 0.2s; }
     .lang-btn:hover { border-color:var(--cyan); color:var(--cyan); }
 
+    /* ACTIVE NAV */
+    .nav-links a.nav-active { color:var(--white); }
+    .nav-links a.nav-active::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--cyan); border-radius:2px; }
+
+    /* MOBILE MENU */
+    .burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; }
+    .burger span { display:block; width:22px; height:2px; background:var(--muted); border-radius:2px; transition:all 0.3s ease; }
+    .burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); background:var(--cyan); }
+    .burger.open span:nth-child(2) { opacity:0; }
+    .burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); background:var(--cyan); }
+    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:rgba(10,15,30,0.97); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:1.5rem 2rem; z-index:99; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:var(--muted); text-decoration:none; font-size:1rem; padding:0.9rem 0; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .mobile-menu a:last-child { border-bottom:none; }
+    .mobile-menu a:hover, .mobile-menu a.nav-active { color:var(--cyan); }
+
+    /* HERO */
     .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(34,211,200,0.06) 0%, transparent 70%); pointer-events:none; }
-    .hero-inner { max-width:900px; width:100%; text-align:center; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(34,211,200,0.06) 0%, transparent 70%); pointer-events:none; z-index:1; }
+    .hero::after { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(34,211,200,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,200,0.04) 1px, transparent 1px); background-size:48px 48px; animation:gridMove 20s linear infinite; pointer-events:none; z-index:0; }
+    .hero-inner { max-width:900px; width:100%; text-align:center; position:relative; z-index:2; }
     .hero-eyebrow { font-family:var(--mono); font-size:0.75rem; color:var(--cyan); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.25rem; }
     h1 { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:600; line-height:1.12; letter-spacing:-0.025em; margin-bottom:1.25rem; }
     h1 em { font-style:normal; color:var(--cyan); }
@@ -39,10 +101,25 @@
     .btn-primary:hover { background:#30ebe0; }
     .btn-outline { background:transparent; border:1px solid var(--border); color:var(--muted); margin-left:1rem; }
     .btn-outline:hover { border-color:var(--cyan); color:var(--cyan); }
-
     .hero-badges { display:flex; gap:1rem; justify-content:center; margin-top:3rem; flex-wrap:wrap; }
     .hero-badge { font-family:var(--mono); font-size:0.7rem; padding:6px 14px; border-radius:20px; border:1px solid var(--border); color:var(--muted); letter-spacing:0.05em; }
 
+    /* HERO STATS */
+    .hero-stats { display:flex; gap:0; justify-content:center; margin-top:2.5rem; flex-wrap:wrap; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--navy2); }
+    .hero-stat { flex:1; min-width:120px; padding:1rem 1.25rem; text-align:center; border-right:1px solid var(--border); }
+    .hero-stat:last-child { border-right:none; }
+    .hero-stat-value { font-family:var(--mono); font-size:1.3rem; font-weight:600; color:var(--cyan); line-height:1; }
+    .hero-stat-label { font-size:0.72rem; color:var(--muted); margin-top:0.3rem; }
+
+    /* SCROLL INDICATOR */
+    .scroll-indicator { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); transition:opacity 0.4s ease; display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:var(--muted); font-family:var(--mono); font-size:0.65rem; letter-spacing:0.08em; animation:fadeInUp 1s ease 1s both; z-index:2; }
+    .scroll-indicator svg { animation:bounce 1.8s ease infinite; }
+
+    @keyframes gridMove { 0% { background-position:0 0; } 100% { background-position:48px 48px; } }
+    @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+    @keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
+    /* SECTIONS */
     section { padding:5rem 2rem; }
     .container { max-width:1100px; margin:0 auto; }
     .section-label { font-family:var(--mono); font-size:0.7rem; color:var(--cyan); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:0.75rem; }
@@ -67,6 +144,25 @@
     .price-sub { font-size:0.7rem; color:var(--muted); font-weight:400; }
     .card-arrow { font-size:1rem; color:var(--muted); transition:color 0.2s; }
 
+    /* NEWSLETTER STRIP */
+    .newsletter-strip { background:var(--navy3); border:1px solid var(--border); border-radius:12px; padding:2rem 2.5rem; margin-top:2.5rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+    .newsletter-strip h4 { font-size:1rem; margin-bottom:0.25rem; }
+    .newsletter-strip p { color:var(--muted); font-size:0.85rem; }
+    .newsletter-form { display:flex; gap:0.5rem; flex-shrink:0; flex-wrap:wrap; }
+    .newsletter-input { font-family:var(--sans); font-size:0.875rem; background:var(--navy2); border:1px solid var(--border); color:var(--white); padding:0.6rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; width:220px; }
+    .newsletter-input::placeholder { color:var(--muted); }
+    .newsletter-input:focus { border-color:var(--cyan); }
+    .btn-sm { padding:0.6rem 1.25rem; font-size:0.875rem; }
+
+    /* PROZESS */
+    .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0; position:relative; }
+    .process-steps::before { content:''; position:absolute; top:2rem; left:calc(100% / 12); right:calc(100% / 12); height:1px; background:linear-gradient(90deg, transparent, var(--cyan2), transparent); opacity:0.4; }
+    .process-step { text-align:center; padding:1.5rem 1rem; position:relative; }
+    .step-num { width:40px; height:40px; border-radius:50%; background:var(--navy3); border:1px solid var(--cyan2); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-family:var(--mono); font-size:0.8rem; color:var(--cyan); position:relative; z-index:1; }
+    .step-icon { font-size:1.1rem; margin-bottom:0.5rem; }
+    .process-step h4 { font-size:0.9rem; margin-bottom:0.3rem; }
+    .process-step p { color:var(--muted); font-size:0.8rem; line-height:1.5; }
+
     /* VALUES */
     .values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem; }
     .value { padding:1.5rem; background:var(--navy2); border:1px solid var(--border); border-radius:10px; }
@@ -79,21 +175,59 @@
     .about-mono { font-family:var(--mono); font-size:0.8rem; color:var(--muted); line-height:2; border-left:2px solid var(--cyan2); padding-left:1.25rem; }
     .about-mono .hl { color:var(--cyan); }
 
+    /* FAQ */
+    .faq-list { max-width:720px; }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-question { width:100%; background:none; border:none; color:var(--white); font-family:var(--sans); font-size:0.975rem; font-weight:500; text-align:left; padding:1.25rem 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:1rem; transition:color 0.2s; }
+    .faq-question:hover { color:var(--cyan); }
+    .faq-icon { font-family:var(--mono); font-size:1.1rem; color:var(--cyan); flex-shrink:0; transition:transform 0.3s; line-height:1; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-answer { overflow:hidden; max-height:0; transition:max-height 0.35s ease, padding 0.35s ease; }
+    .faq-answer-inner { color:var(--muted); font-size:0.9rem; line-height:1.7; padding-bottom:1.25rem; }
+
     /* CONTACT */
-    .contact-box { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:3rem; text-align:center; max-width:580px; margin:0 auto; }
-    .contact-box p { color:var(--muted); margin-bottom:1.5rem; }
-    .contact-email { font-family:var(--mono); color:var(--cyan); text-decoration:none; font-size:1rem; border-bottom:1px solid var(--cyan2); padding-bottom:2px; }
-    .contact-email:hover { color:#30ebe0; }
+    .contact-box { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:3rem; max-width:620px; margin:0 auto; }
+    .contact-box > p { color:var(--muted); margin-bottom:2rem; }
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-field label { font-size:0.8rem; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; }
+    .form-field input, .form-field textarea { font-family:var(--sans); font-size:0.9rem; background:var(--navy3); border:1px solid var(--border); color:var(--white); padding:0.7rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; resize:vertical; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color:var(--muted); }
+    .form-field input:focus, .form-field textarea:focus { border-color:var(--cyan); }
+    .form-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:0.5rem; }
+    .form-alt { font-size:0.8rem; color:var(--muted); }
+    .form-alt a { color:var(--cyan); text-decoration:none; }
+    .form-alt a:hover { color:#30ebe0; }
+    .form-success { display:none; text-align:center; padding:1.5rem; color:var(--cyan); font-family:var(--mono); font-size:0.9rem; }
 
     footer { border-top:1px solid var(--border); padding:2rem; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
     footer a { color:var(--muted); text-decoration:none; }
     footer a:hover { color:var(--cyan); }
 
+    /* SCROLL ANIMATIONS */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:0.1s; }
+    .reveal-delay-2 { transition-delay:0.2s; }
+    .reveal-delay-3 { transition-delay:0.3s; }
+    .reveal-delay-4 { transition-delay:0.4s; }
+    .reveal-delay-5 { transition-delay:0.5s; }
+    .reveal-delay-6 { transition-delay:0.6s; }
+
     @media(max-width:768px) {
       .about-grid { grid-template-columns:1fr; gap:2rem; }
       .nav-links { display:none; }
+      .burger { display:flex; }
       footer { justify-content:center; text-align:center; }
       .btn-outline { margin-left:0; margin-top:0.75rem; }
+      .process-steps::before { display:none; }
+      .newsletter-strip { flex-direction:column; align-items:flex-start; }
+      .newsletter-input { width:100%; }
+      .hero-stats { border-radius:8px; }
+      .hero-stat { min-width:100px; padding:0.75rem 1rem; }
+      .form-row { grid-template-columns:1fr; }
+      .contact-box { padding:2rem 1.5rem; }
     }
   </style>
 </head>
@@ -103,12 +237,26 @@
   <a href="#" class="nav-logo">CJ<span> Solutions</span></a>
   <ul class="nav-links">
     <li><a href="#produkte" data-de="Produkte" data-en="Products">Produkte</a></li>
+    <li><a href="#prozess" data-de="Prozess" data-en="Process">Prozess</a></li>
     <li><a href="#werte" data-de="Qualität" data-en="Quality">Qualität</a></li>
     <li><a href="#ueber" data-de="Über uns" data-en="About">Über uns</a></li>
     <li><a href="#kontakt" data-de="Kontakt" data-en="Contact">Kontakt</a></li>
   </ul>
-  <button class="lang-btn" id="langToggle">EN</button>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="lang-btn" id="langToggle">EN</button>
+    <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#produkte" data-de="Produkte" data-en="Products">Produkte</a>
+  <a href="#prozess" data-de="Prozess" data-en="Process">Prozess</a>
+  <a href="#werte" data-de="Qualität" data-en="Quality">Qualität</a>
+  <a href="#ueber" data-de="Über uns" data-en="About">Über uns</a>
+  <a href="#kontakt" data-de="Kontakt" data-en="Contact">Kontakt</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -124,11 +272,38 @@
       <a href="#produkte" class="btn btn-primary" data-de="Produkte entdecken" data-en="Discover products">Produkte entdecken</a>
       <a href="#kontakt" class="btn btn-outline" data-de="Kontakt" data-en="Contact">Kontakt</a>
     </div>
-    <div class="hero-badges">
+
+    <!-- STATS (7) -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">1</div>
+        <div class="hero-stat-label" data-de="Produkt live" data-en="Product live">Produkt live</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">49</div>
+        <div class="hero-stat-label" data-de="CHF ab Preis" data-en="CHF from price">CHF ab Preis</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">≤48h</div>
+        <div class="hero-stat-label" data-de="Antwortzeit" data-en="Response time">Antwortzeit</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">🇨🇭</div>
+        <div class="hero-stat-label" data-de="Made in Switzerland" data-en="Made in Switzerland">Made in Switzerland</div>
+      </div>
+    </div>
+
+    <div class="hero-badges" style="margin-top:1.5rem;">
       <span class="hero-badge" data-de="🔲 Eigenes PCB-Design" data-en="🔲 Custom PCB design">🔲 Eigenes PCB-Design</span>
       <span class="hero-badge" data-de="🛠 Vom Techniker entwickelt" data-en="🛠 Built by a technician">🛠 Vom Techniker entwickelt</span>
       <span class="hero-badge" data-de="🇨🇭 Made in Switzerland" data-en="🇨🇭 Made in Switzerland">🇨🇭 Made in Switzerland</span>
     </div>
+  </div>
+  <div class="scroll-indicator">
+    <span data-de="scroll" data-en="scroll">scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </section>
 
@@ -142,7 +317,7 @@
     </p>
     <div class="product-grid">
 
-      <a href="badewanne.html" class="product-card">
+      <a href="badewanne.html" class="product-card reveal reveal-delay-1">
         <div class="product-img placeholder" data-label="Foto folgt"></div>
         <div class="product-body">
           <span class="product-tag" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
@@ -157,13 +332,13 @@
         </div>
       </a>
 
-      <div class="product-card" style="opacity:0.5; cursor:default; pointer-events:none;">
+      <div class="product-card reveal reveal-delay-2" style="opacity:0.5; cursor:default; pointer-events:none;">
         <div class="product-img placeholder" data-label="In Entwicklung"></div>
         <div class="product-body">
           <span class="product-tag soon" data-de="IN ENTWICKLUNG" data-en="IN DEVELOPMENT">IN ENTWICKLUNG</span>
           <h3 data-de="Weiteres Produkt folgt" data-en="More products coming">Weiteres Produkt folgt</h3>
-          <p data-de="Neue Geräte sind in Planung. Melde dich für Updates." data-en="New devices are in planning. Sign up for updates.">
-            Neue Geräte sind in Planung. Melde dich für Updates.
+          <p data-de="Neue Geräte sind in Planung. Melde dich unten für Updates an." data-en="New devices are in planning. Sign up below for updates.">
+            Neue Geräte sind in Planung. Melde dich unten für Updates an.
           </p>
           <div class="card-footer">
             <div class="price" style="color:var(--muted);">— CHF</div>
@@ -173,11 +348,72 @@
       </div>
 
     </div>
+
+    <!-- NEWSLETTER (9) -->
+    <div class="newsletter-strip reveal">
+      <div>
+        <h4 data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
+        <p data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
+      </div>
+      <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterForm">
+        <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
+        <button type="submit" class="btn btn-primary btn-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- PROZESS (6) -->
+<section id="prozess">
+  <div class="container">
+    <p class="section-label" data-de="Wie es funktioniert" data-en="How it works">Wie es funktioniert</p>
+    <h2 data-de="Vom Schaltplan zum fertigen Gerät" data-en="From schematic to finished device">Vom Schaltplan zum fertigen Gerät</h2>
+    <p class="section-intro" data-de="Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung." data-en="Every CJ device goes through the same careful process – from the first concept to delivery.">
+      Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung.
+    </p>
+    <div class="process-steps">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <div class="step-icon">💡</div>
+        <h4 data-de="Idee" data-en="Idea">Idee</h4>
+        <p data-de="Echtes Problem aus dem Alltag" data-en="Real problem from daily life">Echtes Problem aus dem Alltag</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-icon">📐</div>
+        <h4 data-de="Schaltplan" data-en="Schematic">Schaltplan</h4>
+        <p data-de="Konzept & Schaltungsentwurf" data-en="Concept & circuit design">Konzept & Schaltungsentwurf</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔲</div>
+        <h4 data-de="PCB-Design" data-en="PCB Design">PCB-Design</h4>
+        <p data-de="Eigenes Platinen-Layout" data-en="Custom PCB layout">Eigenes Platinen-Layout</p>
+      </div>
+      <div class="process-step reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <div class="step-icon">🔧</div>
+        <h4 data-de="Fertigung" data-en="Assembly">Fertigung</h4>
+        <p data-de="Löten & Aufbau von Hand" data-en="Soldering & manual assembly">Löten & Aufbau von Hand</p>
+      </div>
+      <div class="process-step reveal reveal-delay-5">
+        <div class="step-num">05</div>
+        <div class="step-icon">✅</div>
+        <h4 data-de="Test & QA" data-en="Test & QA">Test & QA</h4>
+        <p data-de="Jedes Gerät einzeln geprüft" data-en="Every device individually tested">Jedes Gerät einzeln geprüft</p>
+      </div>
+      <div class="process-step reveal reveal-delay-6">
+        <div class="step-num">06</div>
+        <div class="step-icon">📦</div>
+        <h4 data-de="Versand" data-en="Shipping">Versand</h4>
+        <p data-de="Sicher verpackt, direkt zu dir" data-en="Securely packed, straight to you">Sicher verpackt, direkt zu dir</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- WERTE -->
-<section id="werte">
+<section id="werte" style="background:var(--navy2);">
   <div class="container">
     <p class="section-label" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</p>
     <h2 data-de="Warum CJ Solutions" data-en="Why CJ Solutions">Warum CJ Solutions</h2>
@@ -185,22 +421,22 @@
       Als Techniker im Berufsalltag wissen wir, was wirklich zählt: Zuverlässigkeit, saubere Ausführung, kein Schnickschnack.
     </p>
     <div class="values-grid">
-      <div class="value">
+      <div class="value reveal reveal-delay-1">
         <div class="value-icon">🔲</div>
         <h4 data-de="Eigenes PCB-Design" data-en="Custom PCB design">Eigenes PCB-Design</h4>
         <p data-de="Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout." data-en="No breadboard chaos – every device has a professionally made PCB layout.">Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout.</p>
       </div>
-      <div class="value">
+      <div class="value reveal reveal-delay-2">
         <div class="value-icon">🛠</div>
         <h4 data-de="Praxisnah entwickelt" data-en="Developed from practice">Praxisnah entwickelt</h4>
         <p data-de="Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch." data-en="Born from real everyday problems – not from a textbook.">Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch.</p>
       </div>
-      <div class="value">
+      <div class="value reveal reveal-delay-3">
         <div class="value-icon">📦</div>
         <h4 data-de="Komplett geliefert" data-en="Complete delivery">Komplett geliefert</h4>
         <p data-de="Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen." data-en="Fully assembled, tested, and with instructions. Plug in and go.">Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen.</p>
       </div>
-      <div class="value">
+      <div class="value reveal reveal-delay-4">
         <div class="value-icon">🇨🇭</div>
         <h4 data-de="Made in Switzerland" data-en="Made in Switzerland">Made in Switzerland</h4>
         <p data-de="Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt." data-en="Developed, soldered, and tested in Switzerland. Short delivery, direct contact.">Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt.</p>
@@ -210,10 +446,10 @@
 </section>
 
 <!-- ÜBER UNS -->
-<section id="ueber" style="background:var(--navy2);">
+<section id="ueber">
   <div class="container">
     <div class="about-grid">
-      <div>
+      <div class="reveal reveal-delay-1">
         <p class="section-label" data-de="Über uns" data-en="About us">Über uns</p>
         <h2 data-de="Techniker. Maker. Problemlöser." data-en="Technician. Maker. Problem solver.">Techniker. Maker. Problemlöser.</h2>
         <p style="color:var(--muted); margin-bottom:1.5rem;" data-de="CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis." data-en="CJ Solutions was born from the desire to create practical electronics for everyday life – built cleanly, at a fair price.">
@@ -223,7 +459,7 @@
           Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät.
         </p>
       </div>
-      <div>
+      <div class="reveal reveal-delay-2">
         <div class="about-mono">
           <div>$ whoami</div>
           <div class="hl">→ Techniker, Schweiz</div>
@@ -242,20 +478,135 @@
   </div>
 </section>
 
-<!-- KONTAKT -->
+<!-- FAQ (8) -->
+<section id="faq" style="background:var(--navy2);">
+  <div class="container">
+    <p class="section-label" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
+    <h2 data-de="FAQ" data-en="Frequently asked questions">FAQ</h2>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie läuft eine Bestellung ab?" data-en="How does ordering work?">
+          Wie läuft eine Bestellung ab?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht." data-en="Simply send an email with the desired product and delivery address. We confirm the order within 48 hours and send payment details.">
+            Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wohin wird versandt?" data-en="Where do you ship?">
+          Wohin wird versandt?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache ist ebenfalls möglich. Für Anfragen aus dem Ausland einfach melden." data-en="We currently ship within Switzerland. Pickup by arrangement is also possible. For international requests, just get in touch.">
+            Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache ist ebenfalls möglich. Für Anfragen aus dem Ausland einfach melden.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Gibt es eine Garantie?" data-en="Is there a warranty?">
+          Gibt es eine Garantie?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt." data-en="Yes. Every device is individually tested before shipping. For defects within 6 months, the device will be repaired or replaced free of charge.">
+            Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Sind individuelle Projekte möglich?" data-en="Are custom projects possible?">
+          Sind individuelle Projekte möglich?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Ja, gerne. Wenn du eine konkrete Idee oder ein Problem hast, das du gelöst haben möchtest, kannst du dich melden. Wir schauen gemeinsam, ob und wie wir das umsetzen können." data-en="Yes, absolutely. If you have a specific idea or a problem you'd like solved, get in touch. We'll look together at whether and how we can make it work.">
+            Ja, gerne. Wenn du eine konkrete Idee oder ein Problem hast, das du gelöst haben möchtest, kannst du dich melden. Wir schauen gemeinsam, ob und wie wir das umsetzen können.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie lange dauert die Lieferung?" data-en="How long does delivery take?">
+          Wie lange dauert die Lieferung?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung." data-en="Since every device is handcrafted and individually tested, delivery typically takes 5–10 business days from order confirmation.">
+            Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT (10) -->
 <section id="kontakt">
   <div class="container">
     <p class="section-label" data-de="Kontakt" data-en="Contact">Kontakt</p>
     <h2 data-de="Interesse? Fragen?" data-en="Interested? Questions?">Interesse? Fragen?</h2>
-    <div class="contact-box">
-      <p data-de="Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden." data-en="For orders, questions, or custom projects – just send an email. We reply within 48 hours.">
-        Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden.
+    <div class="contact-box reveal">
+      <p data-de="Für Bestellungen, Fragen oder individuelle Projekte – einfach das Formular ausfüllen oder direkt eine Mail schicken." data-en="For orders, questions, or custom projects – fill in the form or send an email directly.">
+        Für Bestellungen, Fragen oder individuelle Projekte – einfach das Formular ausfüllen oder direkt eine Mail schicken.
       </p>
-      <a href="mailto:cj.solutions.switzerland@gmail.com" class="contact-email">cj.solutions.switzerland@gmail.com</a>
-      <br><br>
-      <p style="font-size:0.8rem; color:var(--muted);" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">
+      <!-- Formspree: Ersetze YOUR_FORM_ID mit deiner ID von formspree.io -->
+      <form class="contact-form" action="https://formspree.io/f/xpqgllon" method="POST" id="contactForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name" data-de="NAME" data-en="NAME">NAME</label>
+            <input type="text" id="name" name="name" placeholder="Max Muster" required>
+          </div>
+          <div class="form-field">
+            <label for="email" data-de="E-MAIL" data-en="E-MAIL">E-MAIL</label>
+            <input type="email" id="email" name="email" placeholder="max@beispiel.ch" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="subject" data-de="BETREFF" data-en="SUBJECT">BETREFF</label>
+          <input type="text" id="subject" name="subject" placeholder="Bestellung / Frage / Projekt">
+        </div>
+        <div class="form-field">
+          <label for="message" data-de="NACHRICHT" data-en="MESSAGE">NACHRICHT</label>
+          <textarea id="message" name="message" rows="5" placeholder="Deine Nachricht…" required></textarea>
+        </div>
+        <div class="form-footer">
+          <p class="form-alt" data-de="Oder direkt: <a href='mailto:cj.solutions.switzerland@gmail.com'>cj.solutions.switzerland@gmail.com</a>" data-en="Or directly: <a href='mailto:cj.solutions.switzerland@gmail.com'>cj.solutions.switzerland@gmail.com</a>">
+            Oder direkt: <a href="mailto:cj.solutions.switzerland@gmail.com">cj.solutions.switzerland@gmail.com</a>
+          </p>
+          <button type="submit" class="btn btn-primary" data-de="Senden →" data-en="Send →">Senden →</button>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✓ <span data-de="Nachricht erhalten – wir melden uns bald!" data-en="Message received – we'll be in touch soon!">Nachricht erhalten – wir melden uns bald!</span>
+      </div>
+      <p style="font-size:0.8rem; color:var(--muted); margin-top:1.5rem; text-align:center;" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">
         Versand innerhalb der Schweiz. Abholung nach Absprache möglich.
       </p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER ABSCHLUSS -->
+<section style="background:var(--navy2); padding:3rem 2rem;">
+  <div class="container">
+    <div class="newsletter-strip reveal">
+      <div>
+        <h4 data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
+        <p data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
+      </div>
+      <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterFormFooter">
+        <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
+        <button type="submit" class="btn btn-primary btn-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
+      </form>
     </div>
   </div>
 </section>
@@ -267,17 +618,111 @@
 </footer>
 
 <script>
+  /* --- Language Toggle --- */
   let lang = 'de';
-  const btn = document.getElementById('langToggle');
-  btn.addEventListener('click', () => {
+  const langBtn = document.getElementById('langToggle');
+  langBtn.addEventListener('click', () => {
     lang = lang === 'de' ? 'en' : 'de';
-    btn.textContent = lang === 'de' ? 'EN' : 'DE';
+    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-de]').forEach(el => {
       const text = el.getAttribute('data-' + lang);
       if (!text) return;
-      if (['H1','H2','H3','P','SPAN','A'].includes(el.tagName)) el.innerHTML = text;
+      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
       else el.textContent = text;
+    });
+  });
+
+  /* --- Mobile Burger Menu --- */
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-label', isOpen ? 'Menü schliessen' : 'Menü öffnen');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    });
+  });
+
+  /* --- Active Nav on Scroll --- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('nav-active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  /* --- Scroll Reveal --- */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* --- Scroll Indicator --- */
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    window.addEventListener('scroll', () => {
+      scrollIndicator.style.opacity = window.scrollY > 80 ? '0' : '1';
+    }, { passive: true });
+  }
+
+  /* --- FAQ Accordion --- */
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(open => {
+        open.classList.remove('open');
+        open.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* --- Contact Form AJAX --- */
+  const contactForm = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(contactForm);
+      try {
+        const res = await fetch(contactForm.action, { method:'POST', body:data, headers:{ Accept:'application/json' } });
+        if (res.ok) {
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        }
+      } catch {}
+    });
+  }
+
+  /* --- Newsletter Form AJAX --- */
+  document.querySelectorAll('#newsletterForm, #newsletterFormFooter').forEach(form => {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, { method:'POST', body:data, headers:{ Accept:'application/json' } });
+        if (res.ok) form.innerHTML = '<span style="font-family:var(--mono);font-size:0.85rem;color:var(--cyan);">✓ ' + (lang === 'de' ? 'Eingetragen!' : 'Subscribed!') + '</span>';
+      } catch {}
     });
   });
 </script>
