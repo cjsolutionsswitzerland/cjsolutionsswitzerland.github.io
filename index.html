@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CJ Solutions – Smarte Elektronik aus der Schweiz</title>
+  <meta name="description" content="Handgefertigte Arduino-Projekte für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0a0f1e;
+      --navy2:   #111827;
+      --navy3:   #1c2840;
+      --cyan:    #22d3c8;
+      --cyan2:   #0f9d94;
+      --cyan-dim:#22d3c820;
+      --white:   #f0f4f8;
+      --muted:   #8a9ab5;
+      --border:  #1e2d45;
+      --mono:    'JetBrains Mono', monospace;
+      --sans:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: rgba(10,15,30,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .lang-btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(34,211,200,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    h1 em { font-style: normal; color: var(--cyan); }
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.925rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--navy);
+    }
+    .btn-primary:hover { background: #30ebe0; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ── OLED DISPLAY MOCKUP ── */
+    .oled-wrap {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .oled-shell {
+      background: #060b14;
+      border: 2px solid #2a3a55;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 40px rgba(34,211,200,0.12), 0 0 0 1px rgba(34,211,200,0.06);
+      width: 280px;
+    }
+    .oled-screen {
+      background: #000;
+      border-radius: 4px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #00ffee;
+      text-shadow: 0 0 8px rgba(0,255,238,0.6);
+      line-height: 1.5;
+      min-height: 130px;
+    }
+    .oled-title {
+      text-align: center;
+      border-bottom: 1px solid #00ffee33;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+    }
+    .oled-row { display: flex; justify-content: space-between; }
+    .oled-bar {
+      height: 10px; background: #001a18; border-radius: 2px;
+      margin: 0.4rem 0;
+      overflow: hidden;
+    }
+    .oled-bar-fill {
+      height: 100%; background: #00ffee;
+      box-shadow: 0 0 6px rgba(0,255,238,0.8);
+      border-radius: 2px;
+      animation: fill 3s ease-in-out infinite alternate;
+    }
+    @keyframes fill { from { width: 30%; } to { width: 85%; } }
+    .oled-divider { border: none; border-top: 1px solid #00ffee22; margin: 0.4rem 0; }
+    .oled-label { font-size: 0.6rem; margin-top: 0.5rem; color: #00ffee88; }
+    .oled-chip {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-intro {
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .product-card {
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .product-card:hover { border-color: var(--cyan2); transform: translateY(-2px); }
+    .product-img {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--navy3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 0.7rem; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-img.placeholder::after { content: attr(data-label); }
+    .product-body { padding: 1.5rem; }
+    .product-tag {
+      display: inline-block;
+      font-family: var(--mono); font-size: 0.65rem;
+      background: var(--cyan-dim); color: var(--cyan);
+      border: 1px solid var(--cyan2);
+      padding: 2px 8px; border-radius: 3px;
+      margin-bottom: 0.75rem; letter-spacing: 0.05em;
+    }
+    .product-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .product-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .product-specs {
+      font-family: var(--mono); font-size: 0.72rem;
+      color: var(--muted); margin-bottom: 1.25rem;
+      border-top: 1px solid var(--border); padding-top: 1rem;
+    }
+    .spec-row { display: flex; justify-content: space-between; padding: 3px 0; }
+    .spec-key { color: var(--muted); }
+    .spec-val { color: var(--white); }
+    .product-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border); padding-top: 1rem;
+    }
+    .price {
+      font-family: var(--mono); font-size: 1.2rem; font-weight: 600; color: var(--cyan);
+    }
+    .price-sub { font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+    .badge-soon {
+      font-family: var(--mono); font-size: 0.65rem;
+      background: var(--navy3); border: 1px solid var(--border);
+      color: var(--muted); padding: 4px 10px; border-radius: 3px;
+    }
+
+    /* ── FEATURES ── */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .feature {
+      padding: 1.5rem;
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .feature-icon {
+      font-size: 1.4rem; margin-bottom: 0.75rem;
+    }
+    .feature h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .feature p { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── SCHALTPLAN ── */
+    .schaltplan-wrap {
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      margin-top: 2rem;
+    }
+    .schaltplan-wrap img { width: 100%; display: block; }
+
+    /* ── PARTS TABLE ── */
+    .parts-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .parts-table th {
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      color: var(--muted); text-align: left; padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--border); text-transform: uppercase;
+    }
+    .parts-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--white);
+    }
+    .parts-table td:last-child { color: var(--cyan); font-family: var(--mono); }
+    .parts-table tr:last-child td { border-bottom: none; }
+    .parts-table tr:hover td { background: var(--navy3); }
+    .table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .table-total {
+      font-family: var(--mono); font-size: 0.85rem;
+      color: var(--muted); margin-top: 1rem; text-align: right;
+    }
+    .table-total span { color: var(--cyan); font-weight: 600; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-mono {
+      font-family: var(--mono); font-size: 0.8rem;
+      color: var(--muted); line-height: 2;
+      border-left: 2px solid var(--cyan2);
+      padding-left: 1.25rem;
+    }
+    .about-mono .hl { color: var(--cyan); }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--navy2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 3rem; text-align: center; max-width: 580px; margin: 0 auto;
+    }
+    .contact-box p { color: var(--muted); margin-bottom: 1.5rem; }
+    .contact-email {
+      font-family: var(--mono); color: var(--cyan);
+      text-decoration: none; font-size: 1rem;
+      border-bottom: 1px solid var(--cyan2);
+      padding-bottom: 2px;
+    }
+    .contact-email:hover { color: #30ebe0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: var(--muted);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .oled-wrap { order: -1; }
+      .nav-links { display: none; }
+      footer { justify-content: center; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .oled-bar-fill { animation: none; width: 72%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">CJ<span> Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="#produkte" data-de="Produkte" data-en="Products">Produkte</a></li>
+    <li><a href="#technik" data-de="Technik" data-en="Technical">Technik</a></li>
+    <li><a href="#ueber" data-de="Über uns" data-en="About">Über uns</a></li>
+    <li><a href="#kontakt" data-de="Kontakt" data-en="Contact">Kontakt</a></li>
+  </ul>
+  <button class="lang-btn" id="langToggle">EN</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow" data-de="Handgefertigt · Schweiz" data-en="Handcrafted · Switzerland">Handgefertigt · Schweiz</p>
+      <h1 data-de="Smarte Elektronik für den <em>echten Alltag</em>" data-en="Smart electronics for <em>real life</em>">
+        Smarte Elektronik für den <em>echten Alltag</em>
+      </h1>
+      <p class="hero-sub" data-de="Arduino-basierte Geräte, handgefertigt und auf eigenen PCBs aufgebaut. Präzise, zuverlässig – designed by a technician." data-en="Arduino-based devices, handcrafted on custom PCBs. Precise, reliable – designed by a technician.">
+        Arduino-basierte Geräte, handgefertigt und auf eigenen PCBs aufgebaut. Präzise, zuverlässig – designed by a technician.
+      </p>
+      <div>
+        <a href="#produkte" class="btn btn-primary" data-de="Produkte ansehen" data-en="View products">Produkte ansehen</a>
+        <a href="#kontakt" class="btn btn-outline" data-de="Kontakt" data-en="Contact">Kontakt</a>
+      </div>
+    </div>
+    <div class="oled-wrap">
+      <div class="oled-shell">
+        <div class="oled-screen">
+          <div class="oled-title">BADEWANNEN-MONITOR</div>
+          <div class="oled-row">
+            <span>Temp:</span>
+            <span id="oledTemp">37.5 C</span>
+          </div>
+          <div class="oled-row">
+            <span></span>
+            <span style="color:#00ffee88" id="oledStatus">gut!</span>
+          </div>
+          <hr class="oled-divider">
+          <div>Fuellstand: <span id="oledPct">72%</span></div>
+          <div class="oled-bar">
+            <div class="oled-bar-fill" id="oledFill"></div>
+          </div>
+          <div class="oled-label">◀ LEER ───────────── VOLL ▶</div>
+        </div>
+        <div class="oled-chip">Arduino Nano · v1.0 · CJ Solutions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUKTE -->
+<section id="produkte" style="background: var(--navy2);">
+  <div class="container">
+    <p class="section-label" data-de="Produkte" data-en="Products">Produkte</p>
+    <h2 data-de="Was wir bauen" data-en="What we build">Was wir bauen</h2>
+    <p class="section-intro" data-de="Jedes Gerät entsteht von Grund auf – von der Schaltung bis zum eigenen PCB. Kein Massenprodukt, sondern durchdachte Lösungen." data-en="Every device is built from scratch – from the circuit to the custom PCB. Not mass-produced, but well-thought-out solutions.">
+      Jedes Gerät entsteht von Grund auf – von der Schaltung bis zum eigenen PCB. Kein Massenprodukt, sondern durchdachte Lösungen.
+    </p>
+    <div class="product-grid">
+      <!-- Produkt 1 -->
+      <div class="product-card">
+        <div class="product-img placeholder" data-label="Foto folgt"></div>
+        <div class="product-body">
+          <span class="product-tag">VERFÜGBAR</span>
+          <h3 data-de="Badewannen-Füllstandsmesser" data-en="Bath Water Level Monitor">Badewannen-Füllstandsmesser</h3>
+          <p data-de="Misst Füllstand und Wassertemperatur in Echtzeit. Spielt ein akustisches Signal wenn die Wanne voll ist – nie wieder überlaufendes Wasser." data-en="Measures water level and temperature in real time. Plays an audible signal when the tub is full – no more overflowing water.">
+            Misst Füllstand und Wassertemperatur in Echtzeit. Spielt ein akustisches Signal wenn die Wanne voll ist – nie wieder überlaufendes Wasser.
+          </p>
+          <div class="product-specs">
+            <div class="spec-row"><span class="spec-key">Mikrocontroller</span><span class="spec-val">Arduino Nano</span></div>
+            <div class="spec-row"><span class="spec-key">Sensoren</span><span class="spec-val">HC-SR04 + DS18B20</span></div>
+            <div class="spec-row"><span class="spec-key">Display</span><span class="spec-val">OLED 0.96″ I2C</span></div>
+            <div class="spec-row"><span class="spec-key">Stromversorgung</span><span class="spec-val">4× AA Batterien</span></div>
+            <div class="spec-row"><span class="spec-key">PCB</span><span class="spec-val">Eigenes Design</span></div>
+            <div class="spec-row"><span class="spec-key">Kalibrierung</span><span class="spec-val">Per Knopfdruck</span></div>
+          </div>
+          <div class="product-footer">
+            <div class="price">CHF 49<span class="price-sub"> inkl. MwSt.</span></div>
+            <a href="#kontakt" class="btn btn-primary" data-de="Anfragen" data-en="Enquire">Anfragen</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platzhalter Produkt 2 -->
+      <div class="product-card" style="opacity: 0.6;">
+        <div class="product-img placeholder" data-label="In Entwicklung"></div>
+        <div class="product-body">
+          <span class="product-tag" style="color:var(--muted); border-color: var(--border); background: var(--navy3);">BALD VERFÜGBAR</span>
+          <h3 data-de="Weiteres Produkt folgt" data-en="More products coming">Weiteres Produkt folgt</h3>
+          <p data-de="Aktuell in Entwicklung. Trag dich für Updates ein." data-en="Currently in development. Sign up for updates.">
+            Aktuell in Entwicklung. Trag dich für Updates ein.
+          </p>
+          <div class="product-footer">
+            <div class="price" style="color: var(--muted);">— CHF</div>
+            <span class="badge-soon" data-de="In Kürze" data-en="Coming soon">In Kürze</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="technik">
+  <div class="container">
+    <p class="section-label" data-de="Qualität" data-en="Quality">Qualität</p>
+    <h2 data-de="Warum CJ Solutions" data-en="Why CJ Solutions">Warum CJ Solutions</h2>
+    <p class="section-intro" data-de="Als Techniker im Berufsalltag wissen wir, was wirklich zählt: Zuverlässigkeit, saubere Ausführung, kein Schnickschnack." data-en="As working technicians, we know what really matters: reliability, clean execution, no frills.">
+      Als Techniker im Berufsalltag wissen wir, was wirklich zählt: Zuverlässigkeit, saubere Ausführung, kein Schnickschnack.
+    </p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">🔲</div>
+        <h4 data-de="Eigenes PCB-Design" data-en="Custom PCB design">Eigenes PCB-Design</h4>
+        <p data-de="Kein Breadboard-Gewirr – jedes Gerät hat ein eigens gefertigtes Platinen-Layout." data-en="No breadboard chaos – every device has a custom-made PCB layout.">Kein Breadboard-Gewirr – jedes Gerät hat ein eigens gefertigtes Platinen-Layout.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛠</div>
+        <h4 data-de="Praxisnah entwickelt" data-en="Developed from practice">Praxisnah entwickelt</h4>
+        <p data-de="Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch." data-en="Born from real everyday problems – not from a textbook.">Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📐</div>
+        <h4 data-de="Dokumentiert" data-en="Fully documented">Dokumentiert</h4>
+        <p data-de="Schaltplan, Teileliste und Anleitung liegen jedem Gerät bei." data-en="Schematic, parts list, and instructions included with every device.">Schaltplan, Teileliste und Anleitung liegen jedem Gerät bei.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🇨🇭</div>
+        <h4 data-de="Made in Switzerland" data-en="Made in Switzerland">Made in Switzerland</h4>
+        <p data-de="Entwickelt, gelötet und getestet in der Schweiz." data-en="Developed, soldered, and tested in Switzerland.">Entwickelt, gelötet und getestet in der Schweiz.</p>
+      </div>
+    </div>
+
+    <!-- Schaltplan -->
+    <div style="margin-top: 4rem;">
+      <p class="section-label" data-de="Einblick" data-en="Inside look">Einblick</p>
+      <h3 style="font-size:1.3rem; margin-bottom:0.5rem;" data-de="Schaltplan: Badewannen-Füllstandsmesser" data-en="Schematic: Bath Water Level Monitor">Schaltplan: Badewannen-Füllstandsmesser</h3>
+      <p style="color:var(--muted); font-size:0.875rem; margin-bottom:1rem;" data-de="Vollständig dokumentiert – jede Verbindung, jedes Bauteil." data-en="Fully documented – every connection, every component.">Vollständig dokumentiert – jede Verbindung, jedes Bauteil.</p>
+      <div class="schaltplan-wrap">
+        <img src="schaltplan.png" alt="Schaltplan Badewannen-Füllstandsmesser">
+      </div>
+    </div>
+
+    <!-- Bauteilliste -->
+    <div style="margin-top: 4rem;">
+      <p class="section-label" data-de="Bauteile" data-en="Parts">Bauteile</p>
+      <h3 style="font-size:1.3rem; margin-bottom:1.5rem;" data-de="Einkaufsliste" data-en="Parts list">Einkaufsliste</h3>
+      <div class="table-wrap">
+        <table class="parts-table">
+          <thead>
+            <tr>
+              <th data-de="Bauteil" data-en="Component">Bauteil</th>
+              <th data-de="Hinweis" data-en="Note">Hinweis</th>
+              <th data-de="Preis ca." data-en="Price approx.">Preis ca.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Arduino Nano (USB-C)</td><td>–</td><td>~4 €</td></tr>
+            <tr><td>HC-SR04 Ultraschallsensor</td><td data-de="Normaler reicht" data-en="Standard version sufficient">Normaler reicht</td><td>~2 €</td></tr>
+            <tr><td>DS18B20 Temperatursensor</td><td data-de="Wasserdichte Version mit Kabel!" data-en="Waterproof version with cable!">Wasserdichte Version mit Kabel!</td><td>~3 €</td></tr>
+            <tr><td>OLED 0.96″ Display</td><td>I2C (4 Pins)</td><td>~4 €</td></tr>
+            <tr><td data-de="Passiver Buzzer" data-en="Passive buzzer">Passiver Buzzer</td><td data-de="Passiv, nicht aktiv" data-en="Passive, not active">Passiv, nicht aktiv</td><td>~1 €</td></tr>
+            <tr><td>4,7 kΩ Widerstand</td><td data-de="Für DS18B20" data-en="For DS18B20">Für DS18B20</td><td>~0.10 €</td></tr>
+            <tr><td data-de="2× Taster" data-en="2× push button">2× Taster</td><td data-de="Miniatur-Taster" data-en="Miniature buttons">Miniatur-Taster</td><td>~0.50 €</td></tr>
+            <tr><td data-de="4× AA Batteriehalter" data-en="4× AA battery holder">4× AA Batteriehalter</td><td data-de="Mit Schalter" data-en="With switch">Mit Schalter</td><td>~2 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-total" data-de="Gesamtkosten Bauteile: ca. <span>~17 €</span>" data-en="Total component cost: approx. <span>~17 €</span>">
+        Gesamtkosten Bauteile: ca. <span>~17 €</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ÜBER UNS -->
+<section id="ueber" style="background: var(--navy2);">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <p class="section-label" data-de="Über uns" data-en="About us">Über uns</p>
+        <h2 data-de="Techniker. Maker. Problemlöser." data-en="Technician. Maker. Problem solver.">Techniker. Maker. Problemlöser.</h2>
+        <p style="color:var(--muted); margin-bottom:1.5rem;" data-de="CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, gut dokumentiert, zu einem fairen Preis." data-en="CJ Solutions was born from the desire to create practical electronics for everyday life – built cleanly, well documented, at a fair price.">
+          CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, gut dokumentiert, zu einem fairen Preis.
+        </p>
+        <p style="color:var(--muted);" data-de="Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen PCB." data-en="Every product is developed by a trained technician with Python and Arduino experience. From the first schematic to the finished PCB.">
+          Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen PCB.
+        </p>
+      </div>
+      <div>
+        <div class="about-mono">
+          <div>$ whoami</div>
+          <div class="hl">→ Techniker, Schweiz</div>
+          <br>
+          <div>$ skills --list</div>
+          <div class="hl">→ Arduino / C++</div>
+          <div class="hl">→ Python</div>
+          <div class="hl">→ PCB Design</div>
+          <div class="hl">→ Elektronik / Wartung</div>
+          <br>
+          <div>$ products --count</div>
+          <div class="hl">→ 1 live, more in dev...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <p class="section-label" data-de="Kontakt" data-en="Contact">Kontakt</p>
+    <h2 data-de="Interesse? Fragen?" data-en="Interested? Questions?">Interesse? Fragen?</h2>
+    <div class="contact-box">
+      <p data-de="Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden." data-en="For orders, questions, or custom projects – just send an email. We reply within 48 hours.">
+        Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden.
+      </p>
+      <a href="mailto:info@cj-solutions.ch" class="contact-email">info@cj-solutions.ch</a>
+      <br><br>
+      <p style="font-size:0.8rem; color:var(--muted);" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">
+        Versand innerhalb der Schweiz. Abholung nach Absprache möglich.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 CJ Solutions, Schweiz</span>
+  <span data-de="Handgefertigte Elektronik" data-en="Handcrafted electronics">Handgefertigte Elektronik</span>
+  <span><a href="mailto:info@cj-solutions.ch">info@cj-solutions.ch</a></span>
+</footer>
+
+<script>
+  // Sprach-Toggle
+  let lang = 'de';
+  const btn = document.getElementById('langToggle');
+
+  btn.addEventListener('click', () => {
+    lang = lang === 'de' ? 'en' : 'de';
+    btn.textContent = lang === 'de' ? 'EN' : 'DE';
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-de]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (el.tagName === 'H1' || el.tagName === 'P' || el.tagName === 'H2' || el.tagName === 'H3') {
+        el.innerHTML = text;
+      } else {
+        el.textContent = text;
+      }
+    });
+  });
+
+  // OLED Animation – Werte live wechseln
+  const temps = ['36.8 C','37.2 C','37.5 C','38.1 C','36.5 C'];
+  const stati = ['gut!','gut!','warm','heiss','warm'];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % temps.length;
+    document.getElementById('oledTemp').textContent = temps[i];
+    document.getElementById('oledStatus').textContent = stati[i];
+  }, 2500);
+
+  // Füllstand-Prozent synchron zur Animation
+  let pct = 30;
+  let dir = 1;
+  setInterval(() => {
+    pct += dir * 1;
+    if (pct >= 85) dir = -1;
+    if (pct <= 30) dir = 1;
+    document.getElementById('oledPct').textContent = pct + '%';
+  }, 100);
+</script>
+</body>
+</html>
