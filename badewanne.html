@@ -553,10 +553,11 @@
 
 <script>
   /* --- Language Toggle --- */
-  let lang = 'de';
+  let lang = localStorage.getItem('cjlang') || 'de';
   const langBtn = document.getElementById('langToggle');
-  langBtn.addEventListener('click', () => {
-    lang = lang === 'de' ? 'en' : 'de';
+
+  function applyLang(l) {
+    lang = l;
     langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-de]').forEach(el => {
@@ -565,7 +566,14 @@
       if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
       else el.textContent = text;
     });
+  }
+
+  langBtn.addEventListener('click', () => {
+    applyLang(lang === 'de' ? 'en' : 'de');
+    localStorage.setItem('cjlang', lang);
   });
+
+  if (lang === 'en') applyLang('en');
 
   /* --- Mobile Burger Menu --- */
   const burgerBtn = document.getElementById('burgerBtn');
