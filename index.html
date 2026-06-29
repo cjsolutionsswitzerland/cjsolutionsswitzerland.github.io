@@ -284,34 +284,26 @@
     .feature h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
     .feature p { color: var(--muted); font-size: 0.85rem; }
 
-    /* ── SCHALTPLAN ── */
-    .schaltplan-wrap {
-      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-      margin-top: 2rem;
+    /* ── SCENARIO CARDS ── */
+    .scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .scenario {
+      background: var(--navy2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; position: relative; overflow: hidden;
     }
-    .schaltplan-wrap img { width: 100%; display: block; }
+    .scenario::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--cyan);
+    }
+    .scenario-emoji { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
+    .scenario h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .scenario p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+    .scenario .highlight { color: var(--cyan); font-weight: 500; }
 
-    /* ── PARTS TABLE ── */
-    .parts-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-    .parts-table th {
-      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
-      color: var(--muted); text-align: left; padding: 0.5rem 1rem;
-      border-bottom: 1px solid var(--border); text-transform: uppercase;
-    }
-    .parts-table td {
-      padding: 0.65rem 1rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--white);
-    }
-    .parts-table td:last-child { color: var(--cyan); font-family: var(--mono); }
-    .parts-table tr:last-child td { border-bottom: none; }
-    .parts-table tr:hover td { background: var(--navy3); }
-    .table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .table-total {
-      font-family: var(--mono); font-size: 0.85rem;
-      color: var(--muted); margin-top: 1rem; text-align: right;
-    }
-    .table-total span { color: var(--cyan); font-weight: 600; }
+    /* ── STATS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 3rem 0; }
+    .stat { text-align: center; padding: 1.5rem 1rem; }
+    .stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 600; color: var(--cyan); display: block; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
 
     /* ── ABOUT ── */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
@@ -503,44 +495,77 @@
       </div>
     </div>
 
-    <!-- Schaltplan -->
+    <!-- Szenarien -->
     <div style="margin-top: 4rem;">
-      <p class="section-label" data-de="Einblick" data-en="Inside look">Einblick</p>
-      <h3 style="font-size:1.3rem; margin-bottom:0.5rem;" data-de="Schaltplan: Badewannen-Füllstandsmesser" data-en="Schematic: Bath Water Level Monitor">Schaltplan: Badewannen-Füllstandsmesser</h3>
-      <p style="color:var(--muted); font-size:0.875rem; margin-bottom:1rem;" data-de="Vollständig dokumentiert – jede Verbindung, jedes Bauteil." data-en="Fully documented – every connection, every component.">Vollständig dokumentiert – jede Verbindung, jedes Bauteil.</p>
-      <div class="schaltplan-wrap">
-        <img src="schaltplan.png" alt="Schaltplan Badewannen-Füllstandsmesser">
+      <p class="section-label" data-de="Warum du ihn brauchst" data-en="Why you need it">Warum du ihn brauchst</p>
+      <h3 style="font-size:1.3rem; margin-bottom:0.5rem;" data-de="Kennst du das?" data-en="Sound familiar?">Kennst du das?</h3>
+      <p style="color:var(--muted); font-size:0.9rem;" data-de="Diese Situationen passieren täglich – und sind mit dem Badewannen-Füllstandsmesser Geschichte." data-en="These situations happen every day – and are history with the bath water level monitor.">
+        Diese Situationen passieren täglich – und sind mit dem Badewannen-Füllstandsmesser Geschichte.
+      </p>
+      <div class="scenario-grid">
+        <div class="scenario">
+          <span class="scenario-emoji">🚿</span>
+          <h4 data-de="Du verlässt kurz das Bad..." data-en="You step out for a moment...">Du verlässt kurz das Bad...</h4>
+          <p data-de="...und als du zurückkommst, <span class='highlight'>läuft die Wanne über</span>. Der Boden ist nass, das Handtuch auch. Passiert jedem – einmal zu oft." data-en="...and when you come back, <span class='highlight'>the tub is overflowing</span>. The floor is wet, the towel too. Happens to everyone – once too often.">
+            ...und als du zurückkommst, <span class="highlight">läuft die Wanne über</span>. Der Boden ist nass, das Handtuch auch. Passiert jedem – einmal zu oft.
+          </p>
+        </div>
+        <div class="scenario">
+          <span class="scenario-emoji">🧒</span>
+          <h4 data-de="Kinder und Badewanne" data-en="Kids and bath time">Kinder und Badewanne</h4>
+          <p data-de="Du bist nebenan, hörst das Wasser laufen – aber <span class='highlight'>wie voll ist die Wanne eigentlich gerade?</span> Mit dem Monitor weisst du es, bevor es zu spät ist." data-en="You're in the next room, hear the water running – but <span class='highlight'>how full is the tub right now?</span> With the monitor, you know before it's too late.">
+            Du bist nebenan, hörst das Wasser laufen – aber <span class="highlight">wie voll ist die Wanne eigentlich gerade?</span> Mit dem Monitor weisst du es, bevor es zu spät ist.
+          </p>
+        </div>
+        <div class="scenario">
+          <span class="scenario-emoji">🌡️</span>
+          <h4 data-de="Zu heiss? Zu kalt?" data-en="Too hot? Too cold?">Zu heiss? Zu kalt?</h4>
+          <p data-de="Das Wasser fühlt sich immer anders an. Der eingebaute Temperatursensor zeigt dir <span class='highlight'>die exakte Wassertemperatur</span> – für das perfekte Bad, jedes Mal." data-en="The water always feels different. The built-in temperature sensor shows you <span class='highlight'>the exact water temperature</span> – for the perfect bath, every time.">
+            Das Wasser fühlt sich immer anders an. Der eingebaute Temperatursensor zeigt dir <span class="highlight">die exakte Wassertemperatur</span> – für das perfekte Bad, jedes Mal.
+          </p>
+        </div>
+        <div class="scenario">
+          <span class="scenario-emoji">♿</span>
+          <h4 data-de="Eingeschränkte Mobilität" data-en="Limited mobility">Eingeschränkte Mobilität</h4>
+          <p data-de="Für ältere Personen oder Menschen mit eingeschränkter Mobilität ist das Überwachen des Füllstands schwierig. <span class='highlight'>Der akustische Alarm macht das Bad sicherer.</span>" data-en="For elderly or people with limited mobility, monitoring the water level is difficult. <span class='highlight'>The acoustic alarm makes bathing safer.</span>">
+            Für ältere Personen oder Menschen mit eingeschränkter Mobilität ist das Überwachen des Füllstands schwierig. <span class="highlight">Der akustische Alarm macht das Bad sicherer.</span>
+          </p>
+        </div>
+        <div class="scenario">
+          <span class="scenario-emoji">💧</span>
+          <h4 data-de="Wasser sparen" data-en="Save water">Wasser sparen</h4>
+          <p data-de="Wie viel Wasser ist genug? Mit dem Füllstandsbalken siehst du genau, <span class='highlight'>wann der optimale Pegelstand erreicht ist</span> – kein Liter zu viel." data-en="How much water is enough? The fill bar shows you exactly <span class='highlight'>when the optimal level is reached</span> – not a litre too much.">
+            Wie viel Wasser ist genug? Mit dem Füllstandsbalken siehst du genau, <span class="highlight">wann der optimale Pegelstand erreicht ist</span> – kein Liter zu viel.
+          </p>
+        </div>
+        <div class="scenario">
+          <span class="scenario-emoji">🎵</span>
+          <h4 data-de="Der Alarm den du hörst" data-en="The alarm you'll hear">Der Alarm den du hörst</h4>
+          <p data-de="Kein nervöses Piepen – bei 90% Füllstand spielt das Gerät eine <span class='highlight'>unverwechselbare Melodie</span>. Du hörst es auch vom Sofa aus." data-en="No annoying beep – at 90% fill the device plays an <span class='highlight'>unmistakable melody</span>. You'll hear it from the couch.">
+            Kein nervöses Piepen – bei 90% Füllstand spielt das Gerät eine <span class="highlight">unverwechselbare Melodie</span>. Du hörst es auch vom Sofa aus.
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- Bauteilliste -->
-    <div style="margin-top: 4rem;">
-      <p class="section-label" data-de="Bauteile" data-en="Parts">Bauteile</p>
-      <h3 style="font-size:1.3rem; margin-bottom:1.5rem;" data-de="Einkaufsliste" data-en="Parts list">Einkaufsliste</h3>
-      <div class="table-wrap">
-        <table class="parts-table">
-          <thead>
-            <tr>
-              <th data-de="Bauteil" data-en="Component">Bauteil</th>
-              <th data-de="Hinweis" data-en="Note">Hinweis</th>
-              <th data-de="Preis ca." data-en="Price approx.">Preis ca.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Arduino Nano (USB-C)</td><td>–</td><td>~4 €</td></tr>
-            <tr><td>HC-SR04 Ultraschallsensor</td><td data-de="Normaler reicht" data-en="Standard version sufficient">Normaler reicht</td><td>~2 €</td></tr>
-            <tr><td>DS18B20 Temperatursensor</td><td data-de="Wasserdichte Version mit Kabel!" data-en="Waterproof version with cable!">Wasserdichte Version mit Kabel!</td><td>~3 €</td></tr>
-            <tr><td>OLED 0.96″ Display</td><td>I2C (4 Pins)</td><td>~4 €</td></tr>
-            <tr><td data-de="Passiver Buzzer" data-en="Passive buzzer">Passiver Buzzer</td><td data-de="Passiv, nicht aktiv" data-en="Passive, not active">Passiv, nicht aktiv</td><td>~1 €</td></tr>
-            <tr><td>4,7 kΩ Widerstand</td><td data-de="Für DS18B20" data-en="For DS18B20">Für DS18B20</td><td>~0.10 €</td></tr>
-            <tr><td data-de="2× Taster" data-en="2× push button">2× Taster</td><td data-de="Miniatur-Taster" data-en="Miniature buttons">Miniatur-Taster</td><td>~0.50 €</td></tr>
-            <tr><td data-de="4× AA Batteriehalter" data-en="4× AA battery holder">4× AA Batteriehalter</td><td data-de="Mit Schalter" data-en="With switch">Mit Schalter</td><td>~2 €</td></tr>
-          </tbody>
-        </table>
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">90%</span>
+        <div class="stat-label" data-de="Füllstand → Alarm" data-en="Fill level → alarm">Füllstand → Alarm</div>
       </div>
-      <p class="table-total" data-de="Gesamtkosten Bauteile: ca. <span>~17 €</span>" data-en="Total component cost: approx. <span>~17 €</span>">
-        Gesamtkosten Bauteile: ca. <span>~17 €</span>
-      </p>
+      <div class="stat">
+        <span class="stat-num">±0.5°</span>
+        <div class="stat-label" data-de="Temperaturgenauigkeit" data-en="Temperature accuracy">Temperaturgenauigkeit</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1×</span>
+        <div class="stat-label" data-de="Kalibrierung, dann nie wieder" data-en="Calibrate once, done forever">Kalibrierung, dann nie wieder</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">🇨🇭</span>
+        <div class="stat-label" data-de="Handgefertigt in der Schweiz" data-en="Handcrafted in Switzerland">Handgefertigt in der Schweiz</div>
+      </div>
     </div>
   </div>
 </section>
@@ -587,7 +612,7 @@
       <p data-de="Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden." data-en="For orders, questions, or custom projects – just send an email. We reply within 48 hours.">
         Für Bestellungen, Fragen oder individuelle Projekte – einfach eine Mail schicken. Wir antworten innerhalb von 48 Stunden.
       </p>
-      <a href="mailto:info@cj-solutions.ch" class="contact-email">cj.solutions.switzerland@gmail.com</a>
+      <a href="mailto:info@cj-solutions.ch" class="contact-email">info@cj-solutions.ch</a>
       <br><br>
       <p style="font-size:0.8rem; color:var(--muted);" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">
         Versand innerhalb der Schweiz. Abholung nach Absprache möglich.
