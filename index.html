@@ -348,18 +348,6 @@
       </div>
 
     </div>
-
-    <!-- NEWSLETTER (9) -->
-    <div class="newsletter-strip reveal">
-      <div>
-        <h4 data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
-        <p data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
-      </div>
-      <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterForm">
-        <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
-        <button type="submit" class="btn btn-primary btn-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
-      </form>
-    </div>
   </div>
 </section>
 
@@ -715,7 +703,7 @@
   }
 
   /* --- Newsletter Form AJAX --- */
-  document.querySelectorAll('#newsletterForm, #newsletterFormFooter').forEach(form => {
+  document.querySelectorAll('#newsletterFormFooter').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const data = new FormData(form);
