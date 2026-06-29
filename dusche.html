@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duschzeitsensor – CJ Solutions</title>
+  <meta name="description" content="Smarter Duschzeitsensor mit automatischem Start via Mikrofon. Ampellogik: grün, gelb, rot – kein Knopf, keine App. Handgefertigt in der Schweiz.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/dusche.html">
+  <meta property="og:title" content="Duschzeitsensor – CJ Solutions">
+  <meta property="og:description" content="Automatischer Duschzeitsensor mit Ampellogik. Kein Knopf, keine App – einfach an die Wand. CHF 39, handgefertigt in der Schweiz.">
+  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Duschzeitsensor",
+    "description": "Smarter Duschzeitsensor mit automatischem Start via Mikrofon und DHT22-Bestätigung. Ampellogik: grün, gelb, rot blinkend, Buzzer.",
+    "brand": { "@type": "Brand", "name": "CJ Solutions" },
+    "manufacturer": { "@type": "Organization", "name": "CJ Solutions", "address": { "@type": "PostalAddress", "addressCountry": "CH" } },
+    "offers": {
+      "@type": "Offer",
+      "price": "39",
+      "priceCurrency": "CHF",
+      "availability": "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": "CJ Solutions" }
+    }
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:#0a0f1e; --navy2:#111827; --navy3:#1c2840;
+      --cyan:#22d3c8; --cyan2:#0f9d94; --cyan-dim:#22d3c820;
+      --white:#f0f4f8; --muted:#8a9ab5; --border:#1e2d45;
+      --green:#22c55e; --yellow:#eab308; --red:#ef4444;
+      --mono:'JetBrains Mono',monospace; --sans:'Inter',sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--navy); color:var(--white); font-family:var(--sans); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; background:rgba(10,15,30,0.88); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:var(--mono); font-size:1.1rem; font-weight:600; color:var(--cyan); text-decoration:none; letter-spacing:0.02em; }
+    .nav-logo span { color:var(--white); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; position:relative; }
+    .nav-links a:hover { color:var(--white); }
+    .nav-links a.nav-active { color:var(--white); }
+    .nav-links a.nav-active::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--cyan); border-radius:2px; }
+    .lang-btn { font-family:var(--mono); font-size:0.75rem; background:var(--navy3); border:1px solid var(--border); color:var(--muted); padding:4px 12px; border-radius:4px; cursor:pointer; transition:all 0.2s; }
+    .lang-btn:hover { border-color:var(--cyan); color:var(--cyan); }
+
+    /* MOBILE MENU */
+    .burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; }
+    .burger span { display:block; width:22px; height:2px; background:var(--muted); border-radius:2px; transition:all 0.3s ease; }
+    .burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); background:var(--cyan); }
+    .burger.open span:nth-child(2) { opacity:0; }
+    .burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); background:var(--cyan); }
+    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:rgba(10,15,30,0.97); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:1.5rem 2rem; z-index:99; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:var(--muted); text-decoration:none; font-size:1rem; padding:0.9rem 0; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .mobile-menu a:last-child { border-bottom:none; }
+    .mobile-menu a:hover, .mobile-menu a.nav-active { color:var(--cyan); }
+
+    /* SECTIONS */
+    section { padding:5rem 2rem; }
+    .container { max-width:1000px; margin:0 auto; }
+    .section-label { font-family:var(--mono); font-size:0.7rem; color:var(--cyan); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:0.75rem; }
+    h2 { font-size:clamp(1.4rem,3vw,2rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:1rem; }
+
+    /* PRODUCT HERO */
+    .product-hero { min-height:100vh; display:flex; align-items:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
+    .product-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 50% 60% at 75% 50%, rgba(34,211,200,0.07) 0%, transparent 65%); pointer-events:none; z-index:1; }
+    .product-hero::after { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(34,211,200,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,200,0.04) 1px, transparent 1px); background-size:48px 48px; animation:gridMove 20s linear infinite; pointer-events:none; z-index:0; }
+    .product-hero-inner { max-width:1000px; width:100%; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; position:relative; z-index:2; }
+    .breadcrumb { font-family:var(--mono); font-size:0.7rem; color:var(--muted); margin-bottom:1rem; }
+    .breadcrumb a { color:var(--muted); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--cyan); }
+    .breadcrumb span { margin:0 0.4rem; }
+    h1 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:600; line-height:1.15; letter-spacing:-0.02em; margin-bottom:1rem; }
+    h1 em { font-style:normal; color:var(--cyan); }
+    .product-tagline { color:var(--muted); font-size:1.05rem; margin-bottom:2rem; max-width:420px; }
+    .btn { display:inline-block; padding:0.75rem 1.75rem; border-radius:6px; text-decoration:none; font-weight:500; font-size:0.925rem; transition:all 0.2s; cursor:pointer; border:none; }
+    .btn-primary { background:var(--cyan); color:var(--navy); }
+    .btn-primary:hover { background:#30ebe0; }
+    .btn-outline { background:transparent; border:1px solid var(--border); color:var(--muted); margin-left:0.75rem; }
+    .btn-outline:hover { border-color:var(--cyan); color:var(--cyan); }
+    .price-hero { font-family:var(--mono); font-size:1.6rem; font-weight:600; color:var(--cyan); margin-bottom:1.5rem; }
+    .price-hero span { font-size:0.85rem; color:var(--muted); font-weight:400; }
+
+    /* AMPEL MOCKUP */
+    .ampel-wrap { display:flex; justify-content:center; align-items:center; }
+    .ampel-device { background:#060b14; border:2px solid #2a3a55; border-radius:16px; padding:2rem 1.5rem; box-shadow:0 0 50px rgba(34,211,200,0.1), 0 0 0 1px rgba(34,211,200,0.06); width:200px; display:flex; flex-direction:column; align-items:center; gap:0; }
+    .ampel-label { font-family:var(--mono); font-size:0.6rem; color:var(--muted); letter-spacing:0.1em; margin-bottom:1.5rem; text-align:center; }
+    .ampel-lights { display:flex; flex-direction:column; gap:1.25rem; align-items:center; }
+    .ampel-light { width:52px; height:52px; border-radius:50%; border:2px solid #1e2d45; transition:all 0.4s ease; position:relative; }
+    .ampel-light.active-green { background:#22c55e; box-shadow:0 0 20px rgba(34,197,94,0.7), 0 0 40px rgba(34,197,94,0.3); border-color:#16a34a; }
+    .ampel-light.active-yellow { background:#eab308; box-shadow:0 0 20px rgba(234,179,8,0.7), 0 0 40px rgba(234,179,8,0.3); border-color:#ca8a04; }
+    .ampel-light.active-red { background:#ef4444; box-shadow:0 0 20px rgba(239,68,68,0.7), 0 0 40px rgba(239,68,68,0.3); border-color:#dc2626; }
+    .ampel-light.off { background:#0d1824; }
+    .ampel-status { font-family:var(--mono); font-size:0.65rem; color:var(--muted); margin-top:1.5rem; text-align:center; letter-spacing:0.05em; min-height:2.5em; }
+    .ampel-chip { font-family:var(--mono); font-size:0.6rem; color:var(--muted); margin-top:1rem; letter-spacing:0.08em; }
+    .ampel-timer { font-family:var(--mono); font-size:1rem; font-weight:600; color:var(--cyan); margin-top:0.5rem; }
+
+    /* AMPELLOGIK TABELLE */
+    .phase-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+    .phase-card { background:var(--navy2); border:1px solid var(--border); border-radius:10px; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start; }
+    .phase-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+    .phase-dot.green { background:var(--green); box-shadow:0 0 8px rgba(34,197,94,0.5); }
+    .phase-dot.yellow { background:var(--yellow); box-shadow:0 0 8px rgba(234,179,8,0.5); }
+    .phase-dot.red { background:var(--red); box-shadow:0 0 8px rgba(239,68,68,0.5); }
+    .phase-dot.alarm { background:var(--red); animation:pulseDot 0.8s ease infinite; }
+    @keyframes pulseDot { 0%,100%{ box-shadow:0 0 8px rgba(239,68,68,0.5); } 50%{ box-shadow:0 0 16px rgba(239,68,68,0.9); } }
+    .phase-info h4 { font-size:0.9rem; margin-bottom:0.2rem; }
+    .phase-info p { color:var(--muted); font-size:0.82rem; }
+    .phase-time { font-family:var(--mono); font-size:0.7rem; color:var(--cyan); margin-top:0.2rem; }
+
+    /* SCENARIOS */
+    .scenario-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.25rem; }
+    .scenario { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; position:relative; overflow:hidden; }
+    .scenario::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--cyan); }
+    .scenario-emoji { font-size:1.8rem; margin-bottom:0.75rem; display:block; }
+    .scenario h4 { font-size:1rem; margin-bottom:0.5rem; }
+    .scenario p { color:var(--muted); font-size:0.875rem; line-height:1.6; }
+    .scenario .hl { color:var(--cyan); font-weight:500; }
+
+    /* STATS */
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; margin-top:3rem; }
+    .stat { text-align:center; padding:1.5rem 1rem; background:var(--navy2); border:1px solid var(--border); border-radius:10px; }
+    .stat-num { font-family:var(--mono); font-size:1.8rem; font-weight:600; color:var(--cyan); display:block; }
+    .stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; }
+
+    /* SPECS */
+    .specs-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+    .spec-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+    .spec-table tr { border-bottom:1px solid var(--border); }
+    .spec-table tr:last-child { border-bottom:none; }
+    .spec-table td { padding:0.65rem 0; }
+    .spec-table td:first-child { color:var(--muted); font-family:var(--mono); font-size:0.75rem; width:45%; }
+    .spec-table td:last-child { color:var(--white); font-weight:500; }
+
+    /* STEPS */
+    .steps { display:flex; flex-direction:column; gap:1.25rem; }
+    .step { display:flex; gap:1.25rem; align-items:flex-start; }
+    .step-num { width:32px; height:32px; border-radius:50%; background:var(--cyan-dim); border:1px solid var(--cyan2); color:var(--cyan); font-family:var(--mono); font-size:0.8rem; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+    .step-text h4 { font-size:0.95rem; margin-bottom:0.25rem; }
+    .step-text p { color:var(--muted); font-size:0.875rem; }
+
+    /* FAQ */
+    .faq-list { max-width:720px; }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-question { width:100%; background:none; border:none; color:var(--white); font-family:var(--sans); font-size:0.975rem; font-weight:500; text-align:left; padding:1.25rem 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:1rem; transition:color 0.2s; }
+    .faq-question:hover { color:var(--cyan); }
+    .faq-icon { font-family:var(--mono); font-size:1.1rem; color:var(--cyan); flex-shrink:0; transition:transform 0.3s; line-height:1; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-answer { overflow:hidden; max-height:0; transition:max-height 0.35s ease; }
+    .faq-answer-inner { color:var(--muted); font-size:0.9rem; line-height:1.7; padding-bottom:1.25rem; }
+
+    /* NEWSLETTER STRIP */
+    .newsletter-strip { background:var(--navy3); border:1px solid var(--border); border-radius:12px; padding:2rem 2.5rem; margin-top:2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+    .newsletter-strip h4 { font-size:1rem; margin-bottom:0.25rem; }
+    .newsletter-strip p { color:var(--muted); font-size:0.85rem; }
+    .newsletter-form { display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .newsletter-input { font-family:var(--sans); font-size:0.875rem; background:var(--navy2); border:1px solid var(--border); color:var(--white); padding:0.6rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; width:220px; }
+    .newsletter-input::placeholder { color:var(--muted); }
+    .newsletter-input:focus { border-color:var(--cyan); }
+    .btn-sm { padding:0.6rem 1.25rem; font-size:0.875rem; }
+
+    /* ORDER FORM */
+    .cta-box { background:var(--navy2); border:1px solid var(--border); border-radius:12px; padding:3rem; }
+    .cta-box > p { color:var(--muted); margin-bottom:2rem; max-width:520px; }
+    .order-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-field label { font-size:0.8rem; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; }
+    .form-field input, .form-field textarea, .form-field select { font-family:var(--sans); font-size:0.9rem; background:var(--navy3); border:1px solid var(--border); color:var(--white); padding:0.7rem 1rem; border-radius:6px; outline:none; transition:border-color 0.2s; resize:vertical; appearance:none; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color:var(--muted); }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color:var(--cyan); }
+    .form-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:0.5rem; }
+    .form-alt { font-size:0.8rem; color:var(--muted); }
+    .form-alt a { color:var(--cyan); text-decoration:none; }
+    .form-success { display:none; text-align:center; padding:2rem; color:var(--cyan); font-family:var(--mono); }
+    .form-note { font-size:0.8rem; color:var(--muted); margin-top:1.5rem; text-align:center; line-height:1.6; }
+
+    /* SCROLL */
+    .scroll-indicator { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); transition:opacity 0.4s ease; display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:var(--muted); font-family:var(--mono); font-size:0.65rem; letter-spacing:0.08em; animation:fadeInUp 1s ease 1s both; z-index:2; }
+    .scroll-indicator svg { animation:bounce 1.8s ease infinite; }
+
+    /* SCROLL ANIMATIONS */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:0.1s; }
+    .reveal-delay-2 { transition-delay:0.2s; }
+    .reveal-delay-3 { transition-delay:0.3s; }
+    .reveal-delay-4 { transition-delay:0.4s; }
+    .reveal-delay-5 { transition-delay:0.5s; }
+    .reveal-delay-6 { transition-delay:0.6s; }
+
+    footer { border-top:1px solid var(--border); padding:2rem; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--muted); flex-wrap:wrap; gap:1rem; }
+    footer a { color:var(--muted); text-decoration:none; }
+    footer a:hover { color:var(--cyan); }
+
+    @keyframes gridMove { 0% { background-position:0 0; } 100% { background-position:48px 48px; } }
+    @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+    @keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
+    @media(max-width:768px) {
+      .product-hero-inner { grid-template-columns:1fr; gap:2.5rem; }
+      .ampel-wrap { order:-1; }
+      .specs-grid { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+      .burger { display:flex; }
+      footer { justify-content:center; text-align:center; }
+      .btn-outline { margin-left:0; margin-top:0.75rem; }
+      .newsletter-strip { flex-direction:column; align-items:flex-start; }
+      .newsletter-input { width:100%; }
+      .form-row { grid-template-columns:1fr; }
+      .cta-box { padding:2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">CJ<span> Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="#ampellogik" data-de="Ampellogik" data-en="Traffic light">Ampellogik</a></li>
+    <li><a href="#warum" data-de="Warum?" data-en="Why?">Warum?</a></li>
+    <li><a href="#wie-es-funktioniert" data-de="Funktionsweise" data-en="How it works">Funktionsweise</a></li>
+    <li><a href="#faq" data-de="FAQ" data-en="FAQ">FAQ</a></li>
+    <li><a href="#bestellen" data-de="Bestellen" data-en="Order">Bestellen</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="lang-btn" id="langToggle">EN</button>
+    <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-de="← Zurück zur Übersicht" data-en="← Back to overview">← Zurück zur Übersicht</a>
+  <a href="#ampellogik" data-de="Ampellogik" data-en="Traffic light">Ampellogik</a>
+  <a href="#warum" data-de="Warum?" data-en="Why?">Warum?</a>
+  <a href="#wie-es-funktioniert" data-de="Funktionsweise" data-en="How it works">Funktionsweise</a>
+  <a href="#faq" data-de="FAQ" data-en="FAQ">FAQ</a>
+  <a href="#bestellen" data-de="Bestellen" data-en="Order">Bestellen</a>
+</div>
+
+<!-- HERO -->
+<section class="product-hero">
+  <div class="product-hero-inner">
+    <div>
+      <p class="breadcrumb">
+        <a href="index.html">CJ Solutions</a>
+        <span>›</span>
+        <span data-de="Produkte" data-en="Products">Produkte</span>
+        <span>›</span>
+        <span data-de="Duschzeitsensor" data-en="Shower Timer">Duschzeitsensor</span>
+      </p>
+      <h1 data-de="Dusch&shy;<em>zeitsensor</em>" data-en="Shower <em>Timer</em>">Dusch&shy;<em>zeitsensor</em></h1>
+      <p class="product-tagline" data-de="Startet automatisch wenn du die Dusche anmachst. Ampellogik zeigt dir wie lange du schon drin bist – kein Knopf, keine App, kein Aufwand." data-en="Starts automatically when you turn on the shower. Traffic light shows how long you've been in – no button, no app, no hassle.">
+        Startet automatisch wenn du die Dusche anmachst. Ampellogik zeigt dir wie lange du schon drin bist – kein Knopf, keine App, kein Aufwand.
+      </p>
+      <div class="price-hero">CHF 39<span> inkl. MwSt. + Versand</span></div>
+      <div>
+        <a href="#bestellen" class="btn btn-primary" data-de="Jetzt anfragen" data-en="Enquire now">Jetzt anfragen</a>
+        <a href="#wie-es-funktioniert" class="btn btn-outline" data-de="Wie es funktioniert" data-en="How it works">Wie es funktioniert</a>
+      </div>
+    </div>
+
+    <!-- AMPEL MOCKUP -->
+    <div class="ampel-wrap">
+      <div class="ampel-device">
+        <div class="ampel-label" data-de="DUSCH-TIMER" data-en="SHOWER TIMER">DUSCH-TIMER</div>
+        <div class="ampel-lights">
+          <div class="ampel-light off" id="ledGreen"></div>
+          <div class="ampel-light off" id="ledYellow"></div>
+          <div class="ampel-light off" id="ledRed"></div>
+        </div>
+        <div class="ampel-timer" id="ampelTimer">--:--</div>
+        <div class="ampel-status" id="ampelStatus" data-de="Warte auf Geräusch..." data-en="Waiting for sound...">Warte auf Geräusch...</div>
+        <div class="ampel-chip">v1.0 · CJ Solutions</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span data-de="scroll" data-en="scroll">scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- AMPELLOGIK -->
+<section id="ampellogik" style="background:var(--navy2);">
+  <div class="container">
+    <p class="section-label" data-de="Ampellogik" data-en="Traffic light system">Ampellogik</p>
+    <h2 data-de="Auf einen Blick: Wie lange bin ich schon drin?" data-en="At a glance: How long have I been in?">Auf einen Blick: Wie lange bin ich schon drin?</h2>
+    <p style="color:var(--muted); max-width:540px; margin-bottom:2.5rem;" data-de="Drei LEDs, eine klare Aussage. Kein Ablesen, kein Rechnen – einfach auf die Farbe schauen." data-en="Three LEDs, one clear statement. No reading, no calculating – just look at the colour.">
+      Drei LEDs, eine klare Aussage. Kein Ablesen, kein Rechnen – einfach auf die Farbe schauen.
+    </p>
+    <div class="phase-grid">
+      <div class="phase-card reveal reveal-delay-1">
+        <div class="phase-dot green"></div>
+        <div class="phase-info">
+          <h4 data-de="Grün – Alles gut" data-en="Green – All good">Grün – Alles gut</h4>
+          <p data-de="Noch genug Zeit. Entspannt weiterduschen." data-en="Still plenty of time. Keep showering relaxed.">Noch genug Zeit. Entspannt weiterduschen.</p>
+          <div class="phase-time">0 – 4 min</div>
+        </div>
+      </div>
+      <div class="phase-card reveal reveal-delay-2">
+        <div class="phase-dot yellow"></div>
+        <div class="phase-info">
+          <h4 data-de="Gelb – Langsam fertig werden" data-en="Yellow – Start wrapping up">Gelb – Langsam fertig werden</h4>
+          <p data-de="Zeit wird knapp. Shampoo ausspülen und abdrehen." data-en="Time is running short. Rinse shampoo and finish up.">Zeit wird knapp. Shampoo ausspülen und abdrehen.</p>
+          <div class="phase-time">4 – 7 min</div>
+        </div>
+      </div>
+      <div class="phase-card reveal reveal-delay-3">
+        <div class="phase-dot red"></div>
+        <div class="phase-info">
+          <h4 data-de="Rot (blinkt) – Zu lange!" data-en="Red (blinking) – Too long!">Rot (blinkt) – Zu lange!</h4>
+          <p data-de="Wirklich jetzt abdrehen. Letzte Warnung vor dem Alarm." data-en="Really turn it off now. Last warning before the alarm.">Wirklich jetzt abdrehen. Letzte Warnung vor dem Alarm.</p>
+          <div class="phase-time">7 – 8 min</div>
+        </div>
+      </div>
+      <div class="phase-card reveal reveal-delay-4">
+        <div class="phase-dot alarm"></div>
+        <div class="phase-info">
+          <h4 data-de="Rot + Buzzer – Alarm!" data-en="Red + Buzzer – Alarm!">Rot + Buzzer – Alarm!</h4>
+          <p data-de="Hörbarer Alarm. Stoppt automatisch nach 2 Minuten." data-en="Audible alarm. Stops automatically after 2 minutes.">Hörbarer Alarm. Stoppt automatisch nach 2 Minuten.</p>
+          <div class="phase-time">ab 8 min</div>
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--muted); font-size:0.85rem; margin-top:1.75rem; font-family:var(--mono);" data-de="→ Alle Zeiten sind per Code frei anpassbar." data-en="→ All timings are freely adjustable via code.">→ Alle Zeiten sind per Code frei anpassbar.</p>
+  </div>
+</section>
+
+<!-- WARUM -->
+<section id="warum">
+  <div class="container">
+    <p class="section-label" data-de="Warum du ihn brauchst" data-en="Why you need it">Warum du ihn brauchst</p>
+    <h2 data-de="Kennst du das?" data-en="Sound familiar?">Kennst du das?</h2>
+    <p style="color:var(--muted); max-width:540px; margin-bottom:3rem;" data-de="Zu lange duschen passiert schnell – und kostet Wasser, Energie und Zeit." data-en="Showering too long happens fast – and costs water, energy and time.">
+      Zu lange duschen passiert schnell – und kostet Wasser, Energie und Zeit.
+    </p>
+    <div class="scenario-grid">
+      <div class="scenario reveal reveal-delay-1">
+        <span class="scenario-emoji">💸</span>
+        <h4 data-de="Die Wasser- und Energierechnung" data-en="The water and energy bill">Die Wasser- und Energierechnung</h4>
+        <p data-de="Eine 15-minütige Dusche verbraucht bis zu <span class='hl'>150 Liter Wasser</span>. Wer täglich 5 Minuten kürzer duscht, spart pro Jahr über 18'000 Liter." data-en="A 15-minute shower uses up to <span class='hl'>150 litres of water</span>. Showering 5 minutes shorter each day saves over 18,000 litres per year.">
+          Eine 15-minütige Dusche verbraucht bis zu <span class="hl">150 Liter Wasser</span>. Wer täglich 5 Minuten kürzer duscht, spart pro Jahr über 18'000 Liter.
+        </p>
+      </div>
+      <div class="scenario reveal reveal-delay-2">
+        <span class="scenario-emoji">👨‍👩‍👧‍👦</span>
+        <h4 data-de="Morgens, wenn alle gleichzeitig müssen" data-en="Mornings when everyone needs the bathroom">Morgens, wenn alle gleichzeitig müssen</h4>
+        <p data-de="Mit mehreren Personen im Haushalt ist Zeitdruck morgens real. Der Sensor hilft <span class='hl'>ohne Diskussionen</span> – die Ampel spricht für sich." data-en="With multiple people in the household, morning time pressure is real. The sensor helps <span class='hl'>without arguments</span> – the traffic light speaks for itself.">
+          Mit mehreren Personen im Haushalt ist Zeitdruck morgens real. Der Sensor hilft <span class="hl">ohne Diskussionen</span> – die Ampel spricht für sich.
+        </p>
+      </div>
+      <div class="scenario reveal reveal-delay-3">
+        <span class="scenario-emoji">🧒</span>
+        <h4 data-de="Kinder die ewig duschen" data-en="Kids who shower forever">Kinder die ewig duschen</h4>
+        <p data-de="&laquo;Noch 2 Minuten!&raquo; – das kennt jeder Elternteil. Mit dem Sensor sieht das Kind selbst wann es Zeit wird. <span class='hl'>Kein Rufen nötig.</span>" data-en="'Just 2 more minutes!' – every parent knows it. With the sensor the child sees for themselves when it's time. <span class='hl'>No shouting needed.</span>">
+          «Noch 2 Minuten!» – das kennt jeder Elternteil. Mit dem Sensor sieht das Kind selbst wann es Zeit wird. <span class="hl">Kein Rufen nötig.</span>
+        </p>
+      </div>
+      <div class="scenario reveal reveal-delay-4">
+        <span class="scenario-emoji">🌍</span>
+        <h4 data-de="Nachhaltigkeit ohne Verzicht" data-en="Sustainability without sacrifice">Nachhaltigkeit ohne Verzicht</h4>
+        <p data-de="Kein Appell, kein schlechtes Gewissen – einfach eine <span class='hl'>visuelle Erinnerung</span> im richtigen Moment. Bewusstsein schaffen ohne zu nerven." data-en="No appeal, no guilt – just a <span class='hl'>visual reminder</span> at the right moment. Building awareness without being annoying.">
+          Kein Appell, kein schlechtes Gewissen – einfach eine <span class="hl">visuelle Erinnerung</span> im richtigen Moment. Bewusstsein schaffen ohne zu nerven.
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat reveal reveal-delay-1"><span class="stat-num">0</span><div class="stat-label" data-de="Knöpfe zu drücken" data-en="Buttons to press">Knöpfe zu drücken</div></div>
+      <div class="stat reveal reveal-delay-2"><span class="stat-num">8</span><div class="stat-label" data-de="Min. bis Alarm" data-en="Min. until alarm">Min. bis Alarm</div></div>
+      <div class="stat reveal reveal-delay-3"><span class="stat-num">2×</span><div class="stat-label" data-de="Sensor-Bestätigung" data-en="Sensor confirmation">Sensor-Bestätigung</div></div>
+      <div class="stat reveal reveal-delay-4"><span class="stat-num">∞</span><div class="stat-label" data-de="Anpassbar per Code" data-en="Adjustable via code">Anpassbar per Code</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WIE ES FUNKTIONIERT -->
+<section id="wie-es-funktioniert" style="background:var(--navy2);">
+  <div class="container">
+    <div class="specs-grid">
+      <div class="reveal reveal-delay-1">
+        <p class="section-label" data-de="Inbetriebnahme" data-en="Setup">Inbetriebnahme</p>
+        <h2 data-de="In 2 Schritten bereit" data-en="Ready in 2 steps">In 2 Schritten bereit</h2>
+        <div class="steps" style="margin-top:2rem;">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4 data-de="Gerät montieren" data-en="Mount the device">Gerät montieren</h4>
+              <p data-de="Ausserhalb der Dusche an der Wand befestigen – in Augenhöhe für gute Sicht auf die LEDs. Mikrofon-Öffnung Richtung Dusche. Strom per USB-Kabel + Badezimmer-Adapter (IP44)." data-en="Mount on the wall outside the shower – at eye level for good visibility of the LEDs. Microphone opening facing the shower. Power via USB cable and bathroom adapter (IP44).">
+                Ausserhalb der Dusche an der Wand befestigen – in Augenhöhe für gute Sicht auf die LEDs. Mikrofon-Öffnung Richtung Dusche. Strom per USB-Kabel + Badezimmer-Adapter (IP44).
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4 data-de="Dusche anmachen – fertig" data-en="Turn on the shower – done">Dusche anmachen – fertig</h4>
+              <p data-de="Das Mikrofon erkennt das Wasserrauschen automatisch. Nach 60 Sekunden bestätigt der DHT22-Sensor per Temperatur- und Feuchtigkeitsmessung, dass wirklich geduscht wird – dann startet die Ampel." data-en="The microphone automatically detects the sound of water. After 60 seconds, the DHT22 sensor confirms via temperature and humidity that showering is actually happening – then the traffic light starts.">
+                Das Mikrofon erkennt das Wasserrauschen automatisch. Nach 60 Sekunden bestätigt der DHT22-Sensor per Temperatur- und Feuchtigkeitsmessung, dass wirklich geduscht wird – dann startet die Ampel.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">✓</div>
+            <div class="step-text">
+              <h4 data-de="Automatisches Ende" data-en="Automatic end">Automatisches Ende</h4>
+              <p data-de="Sobald kein Dampf mehr vorhanden ist, erkennt der Sensor das Ende der Dusche und setzt sich automatisch zurück. Kein Knopf nötig." data-en="As soon as there is no more steam, the sensor detects the end of the shower and resets automatically. No button needed.">
+                Sobald kein Dampf mehr vorhanden ist, erkennt der Sensor das Ende der Dusche und setzt sich automatisch zurück. Kein Knopf nötig.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="section-label" data-de="Technische Details" data-en="Technical details">Technische Details</p>
+        <h2 data-de="Spezifikationen" data-en="Specifications">Spezifikationen</h2>
+        <table class="spec-table" style="margin-top:2rem;">
+          <tr><td data-de="Mikrocontroller" data-en="Microcontroller">Mikrocontroller</td><td>Arduino Nano (ATmega328P)</td></tr>
+          <tr><td data-de="Sensoren" data-en="Sensors">Sensoren</td><td data-de="DHT22 (Temp/Humidity) + KY-038 Mikrofon" data-en="DHT22 (temp/humidity) + KY-038 microphone">DHT22 (Temp/Humidity) + KY-038 Mikrofon</td></tr>
+          <tr><td data-de="Anzeige" data-en="Display">Anzeige</td><td data-de="3× LED (Grün / Gelb / Rot)" data-en="3× LED (Green / Yellow / Red)">3× LED (Grün / Gelb / Rot)</td></tr>
+          <tr><td data-de="Alarm" data-en="Alarm">Alarm</td><td data-de="Passiver Buzzer, 2 kHz" data-en="Passive buzzer, 2 kHz">Passiver Buzzer, 2 kHz</td></tr>
+          <tr><td data-de="Stromversorgung" data-en="Power supply">Stromversorgung</td><td data-de="USB 5V (Kabel + Adapter)" data-en="USB 5V (cable + adapter)">USB 5V (Kabel + Adapter)</td></tr>
+          <tr><td data-de="Gehäuse" data-en="Housing">Gehäuse</td><td data-de="IP44, spritzwassergeschützt" data-en="IP44, splash-proof">IP44, spritzwassergeschützt</td></tr>
+          <tr><td data-de="Lieferung" data-en="Delivery">Lieferung</td><td data-de="Fertig aufgebaut & konfiguriert" data-en="Fully assembled & configured">Fertig aufgebaut & konfiguriert</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <p class="section-label" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
+    <h2 data-de="FAQ zum Duschzeitsensor" data-en="FAQ about the shower timer">FAQ zum Duschzeitsensor</h2>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Startet der Timer auch wenn ich nur kurz Wasser laufen lasse?" data-en="Does the timer start if I just run water briefly?">
+          Startet der Timer auch wenn ich nur kurz Wasser laufen lasse?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Nein – das ist genau der Punkt. Das Mikrofon erkennt zwar das Geräusch, aber nach 60 Sekunden prüft der DHT22-Sensor ob Temperatur und Luftfeuchtigkeit wirklich gestiegen sind. Nur wenn beides zutrifft, startet die Ampel. Kurzes Händewaschen oder Zähneputzen löst keinen Timer aus." data-en="No – that's exactly the point. The microphone detects the sound, but after 60 seconds the DHT22 sensor checks whether temperature and humidity have actually risen. Only if both apply does the traffic light start. Brief handwashing or tooth brushing won't trigger the timer.">
+            Nein – das ist genau der Punkt. Das Mikrofon erkennt zwar das Geräusch, aber nach 60 Sekunden prüft der DHT22-Sensor ob Temperatur und Luftfeuchtigkeit wirklich gestiegen sind. Nur wenn beides zutrifft, startet die Ampel. Kurzes Händewaschen oder Zähneputzen löst keinen Timer aus.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Kann ich die Zeiten anpassen?" data-en="Can I adjust the timings?">
+          Kann ich die Zeiten anpassen?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Ja. Die Zeiten sind als einfache Konstanten oben im Code definiert (PHASE_GREEN, PHASE_YELLOW, etc.) und lassen sich mit der Arduino IDE in wenigen Minuten anpassen. Auf Wunsch konfiguriere ich das Gerät vor dem Versand nach deinen Vorgaben." data-en="Yes. The timings are defined as simple constants at the top of the code (PHASE_GREEN, PHASE_YELLOW, etc.) and can be adjusted in a few minutes using the Arduino IDE. On request I can configure the device to your specifications before shipping.">
+            Ja. Die Zeiten sind als einfache Konstanten oben im Code definiert (PHASE_GREEN, PHASE_YELLOW, etc.) und lassen sich mit der Arduino IDE in wenigen Minuten anpassen. Auf Wunsch konfiguriere ich das Gerät vor dem Versand nach deinen Vorgaben.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Ist das Gerät sicher im Badezimmer?" data-en="Is the device safe in the bathroom?">
+          Ist das Gerät sicher im Badezimmer?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Das Gerät ist für die Montage ausserhalb der Dusche gedacht (z.B. gegenüberliegende Wand oder neben dem Spiegel). Das IP44-Gehäuse schützt vor Spritzwasser und Dampf. Es wird mit einem normalen 5V USB-Adapter betrieben – kein Hochvolt im feuchten Bereich." data-en="The device is designed for mounting outside the shower (e.g. opposite wall or next to the mirror). The IP44 housing protects against splash water and steam. It runs on a normal 5V USB adapter – no high voltage in the wet area.">
+            Das Gerät ist für die Montage ausserhalb der Dusche gedacht (z.B. gegenüberliegende Wand oder neben dem Spiegel). Das IP44-Gehäuse schützt vor Spritzwasser und Dampf. Es wird mit einem normalen 5V USB-Adapter betrieben – kein Hochvolt im feuchten Bereich.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Was wenn der Alarm nervt?" data-en="What if the alarm is annoying?">
+          Was wenn der Alarm nervt?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Der Alarm stoppt automatisch nach 2 Minuten. Du kannst die Alarm-Phase auch verlängern oder den Buzzer im Code deaktivieren – dann hat man nur die LED-Anzeige ohne Ton." data-en="The alarm stops automatically after 2 minutes. You can also extend the alarm phase or disable the buzzer in the code – then you just have the LED display without sound.">
+            Der Alarm stoppt automatisch nach 2 Minuten. Du kannst die Alarm-Phase auch verlängern oder den Buzzer im Code deaktivieren – dann hat man nur die LED-Anzeige ohne Ton.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" data-de="Wie erfolgt die Bezahlung?" data-en="How does payment work?">
+          Wie erfolgt die Bezahlung?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-de="Nach der Bestellung erhältst du eine Bestätigung mit Zahlungsdetails. Akzeptiert werden: TWINT, Banküberweisung und Bar bei Abholung." data-en="After ordering you'll receive a confirmation with payment details. Accepted: TWINT, bank transfer, and cash on pickup.">
+            Nach der Bestellung erhältst du eine Bestätigung mit Zahlungsdetails. Akzeptiert werden: TWINT, Banküberweisung und Bar bei Abholung.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BESTELLEN -->
+<section id="bestellen" style="background:var(--navy2);">
+  <div class="container">
+    <p class="section-label" data-de="Kaufen" data-en="Order">Kaufen</p>
+    <h2 data-de="Bereit für kürzere Duschen?" data-en="Ready for shorter showers?">Bereit für kürzere Duschen?</h2>
+    <div class="cta-box reveal">
+      <p data-de="Formular ausfüllen und wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails." data-en="Fill in the form and we'll get back to you within 48 hours with payment and shipping details.">
+        Formular ausfüllen und wir melden uns innert 48 Stunden mit Zahlungs- und Versanddetails.
+      </p>
+      <form class="order-form" action="https://formspree.io/f/xpqgllon" method="POST" id="orderForm">
+        <input type="hidden" name="Produkt" value="Duschzeitsensor – CHF 39">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name" data-de="NAME" data-en="NAME">NAME</label>
+            <input type="text" id="name" name="name" placeholder="Max Muster" required>
+          </div>
+          <div class="form-field">
+            <label for="email" data-de="E-MAIL" data-en="E-MAIL">E-MAIL</label>
+            <input type="email" id="email" name="email" placeholder="max@beispiel.ch" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="zeiten" data-de="ZEITEN (WUNSCH)" data-en="TIMINGS (PREFERENCE)">ZEITEN (WUNSCH)</label>
+            <select id="zeiten" name="zeiten">
+              <option value="Standard (4/7/8 Min)" data-de="Standard (4/7/8 Min)" data-en="Standard (4/7/8 min)">Standard (4/7/8 Min)</option>
+              <option value="Kürzer (3/5/6 Min)" data-de="Kürzer (3/5/6 Min)" data-en="Shorter (3/5/6 min)">Kürzer (3/5/6 Min)</option>
+              <option value="Länger (6/10/12 Min)" data-de="Länger (6/10/12 Min)" data-en="Longer (6/10/12 min)">Länger (6/10/12 Min)</option>
+              <option value="Nach Absprache" data-de="Nach Absprache" data-en="To be agreed">Nach Absprache</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="lieferung" data-de="LIEFERUNG" data-en="DELIVERY">LIEFERUNG</label>
+            <select id="lieferung" name="lieferung">
+              <option value="Versand (Post)">Versand (Post)</option>
+              <option value="Abholung nach Absprache">Abholung nach Absprache</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="message" data-de="BEMERKUNGEN (OPTIONAL)" data-en="NOTES (OPTIONAL)">BEMERKUNGEN (OPTIONAL)</label>
+          <textarea id="message" name="message" rows="3" placeholder="Adresse, spezielle Wünsche…"></textarea>
+        </div>
+        <div class="form-footer">
+          <p class="form-alt" data-de="Oder direkt: <a href='mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Duschzeitsensor'>E-Mail schreiben</a>" data-en="Or directly: <a href='mailto:cj.solutions.switzerland@gmail.com?subject=Order%20Shower%20Timer'>Send email</a>">
+            Oder direkt: <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Duschzeitsensor">E-Mail schreiben</a>
+          </p>
+          <button type="submit" class="btn btn-primary" data-de="Bestellen – CHF 39 →" data-en="Order – CHF 39 →">Bestellen – CHF 39 →</button>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✓ <span data-de="Bestellung eingegangen – wir melden uns bald!" data-en="Order received – we'll be in touch soon!">Bestellung eingegangen – wir melden uns bald!</span>
+      </div>
+      <p class="form-note" data-de="Versand innerhalb der Schweiz · Abholung nach Absprache · TWINT, Überweisung oder Bar bei Abholung" data-en="Shipping within Switzerland · Pickup by arrangement · TWINT, bank transfer or cash on pickup">
+        Versand innerhalb der Schweiz · Abholung nach Absprache · TWINT, Überweisung oder Bar bei Abholung
+      </p>
+    </div>
+
+    <div class="newsletter-strip reveal">
+      <div>
+        <h4 data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
+        <p data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
+      </div>
+      <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterForm">
+        <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
+        <button type="submit" class="btn btn-primary btn-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span><a href="index.html" data-de="← CJ Solutions" data-en="← CJ Solutions">← CJ Solutions</a></span>
+  <span>© 2026 CJ Solutions, Schweiz</span>
+  <span><a href="mailto:cj.solutions.switzerland@gmail.com">cj.solutions.switzerland@gmail.com</a></span>
+</footer>
+
+<script>
+  /* --- Language Toggle --- */
+  let lang = localStorage.getItem('cjlang') || 'de';
+  const langBtn = document.getElementById('langToggle');
+
+  function applyLang(l) {
+    lang = l;
+    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-de]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
+      else el.textContent = text;
+    });
+  }
+  langBtn.addEventListener('click', () => {
+    applyLang(lang === 'de' ? 'en' : 'de');
+    localStorage.setItem('cjlang', lang);
+  });
+  if (lang === 'en') applyLang('en');
+
+  /* --- Mobile Burger --- */
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    });
+  });
+
+  /* --- Active Nav --- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('nav-active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  /* --- Scroll Reveal --- */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* --- Scroll Indicator --- */
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    window.addEventListener('scroll', () => {
+      scrollIndicator.style.opacity = window.scrollY > 80 ? '0' : '1';
+    }, { passive: true });
+  }
+
+  /* --- FAQ Accordion --- */
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => {
+        o.classList.remove('open');
+        o.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      if (!isOpen) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
+    });
+  });
+
+  /* --- Order Form AJAX --- */
+  const orderForm = document.getElementById('orderForm');
+  const formSuccess = document.getElementById('formSuccess');
+  if (orderForm) {
+    orderForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await fetch(orderForm.action, { method:'POST', body:new FormData(orderForm), headers:{ Accept:'application/json' } });
+        if (res.ok) { orderForm.style.display = 'none'; formSuccess.style.display = 'block'; }
+      } catch {}
+    });
+  }
+
+  /* --- Newsletter AJAX --- */
+  const nlForm = document.getElementById('newsletterForm');
+  if (nlForm) {
+    nlForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await fetch(nlForm.action, { method:'POST', body:new FormData(nlForm), headers:{ Accept:'application/json' } });
+        if (res.ok) nlForm.innerHTML = '<span style="font-family:var(--mono);font-size:0.85rem;color:var(--cyan);">✓ ' + (lang === 'de' ? 'Eingetragen!' : 'Subscribed!') + '</span>';
+      } catch {}
+    });
+  }
+
+  /* --- Ampel Demo Animation --- */
+  const phases = [
+    { green: true,  yellow: false, red: false, blink: false, label_de: 'Grün – Alles gut (0–4 Min)', label_en: 'Green – All good (0–4 min)', time: '02:30', duration: 3000 },
+    { green: false, yellow: true,  red: false, blink: false, label_de: 'Gelb – Langsam fertig werden', label_en: 'Yellow – Start wrapping up', time: '05:10', duration: 3000 },
+    { green: false, yellow: false, red: true,  blink: true,  label_de: 'Rot blinkt – Zu lange!', label_en: 'Red blinking – Too long!', time: '07:30', duration: 3000 },
+    { green: false, yellow: false, red: false, blink: false, label_de: 'Warte auf Geräusch...', label_en: 'Waiting for sound...', time: '--:--', duration: 2000 },
+  ];
+  let phaseIdx = 0;
+  let blinkInterval = null;
+
+  function setAmpel(phase) {
+    const ledG = document.getElementById('ledGreen');
+    const ledY = document.getElementById('ledYellow');
+    const ledR = document.getElementById('ledRed');
+    const status = document.getElementById('ampelStatus');
+    const timer = document.getElementById('ampelTimer');
+    if (blinkInterval) { clearInterval(blinkInterval); blinkInterval = null; }
+    ledG.className = 'ampel-light ' + (phase.green ? 'active-green' : 'off');
+    ledY.className = 'ampel-light ' + (phase.yellow ? 'active-yellow' : 'off');
+    ledR.className = 'ampel-light ' + (phase.red && !phase.blink ? 'active-red' : 'off');
+    timer.textContent = phase.time;
+    status.textContent = lang === 'en' ? phase.label_en : phase.label_de;
+    if (phase.blink) {
+      let on = true;
+      blinkInterval = setInterval(() => {
+        ledR.className = 'ampel-light ' + (on ? 'active-red' : 'off');
+        on = !on;
+      }, 400);
+    }
+  }
+
+  function nextPhase() {
+    setAmpel(phases[phaseIdx]);
+    setTimeout(() => {
+      phaseIdx = (phaseIdx + 1) % phases.length;
+      nextPhase();
+    }, phases[phaseIdx].duration);
+  }
+  nextPhase();
+</script>
+</body>
+</html>
