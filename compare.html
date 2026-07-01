@@ -82,17 +82,17 @@
     .grid {
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
       gap: 2px;
       background: rgba(255,255,255,0.06);
       overflow: hidden;
     }
 
     /* Layout variants */
-    .grid.layout-row { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; }
-    .grid.layout-col { grid-template-columns: 1fr; grid-template-rows: repeat(4, 1fr); }
-    .grid.layout-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    .grid.layout-row { grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; }
+    .grid.layout-col { grid-template-columns: 1fr; grid-template-rows: repeat(5, 1fr); }
+    .grid.layout-2x2 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
 
     /* ── Panel ── */
     .panel {
@@ -125,6 +125,7 @@
     .v2-badge { background: #a78bfa; color: #0a0a0a; }
     .v3-badge { background: #fff; color: #0a0a0a; }
     .v4-badge { background: #2dd4bf; color: #000; }
+    .v5-badge { background: #c81e2c; color: #fff; }
 
     .panel-name {
       font-size: 9px;
@@ -259,12 +260,22 @@
     <iframe id="f4" src="v4/index.html" title="V4 – Apple"></iframe>
   </div>
 
+  <!-- V5 -->
+  <div class="panel">
+    <div class="panel-label">
+      <span class="version-badge v5-badge">V5</span>
+      <span class="panel-name">Werkstatt-Blueprint</span>
+    </div>
+    <a class="open-btn" href="v5/index.html" target="_blank">↗ öffnen</a>
+    <iframe id="f5" src="v5/index.html" title="V5 – Blueprint"></iframe>
+  </div>
+
 </div>
 
 <footer>
   <span>Klick "↗ öffnen" für Vollansicht</span>
   <span>·</span>
-  <span>Scroll Sync synchronisiert alle 4 Versionen gleichzeitig</span>
+  <span>Scroll Sync synchronisiert alle 5 Versionen gleichzeitig</span>
   <span>·</span>
   <a href="index.html">→ cjsolutionsswitzerland.github.io</a>
 </footer>
@@ -281,7 +292,7 @@
 
   /* ── Reload all ── */
   function reloadAll() {
-    ['f1','f2','f3','f4'].forEach(id => {
+    ['f1','f2','f3','f4','f5'].forEach(id => {
       const f = document.getElementById(id);
       f.src = f.src;
     });
@@ -299,7 +310,7 @@
   }
 
   // Listen to scroll events inside each iframe and mirror to others
-  const frames = ['f1','f2','f3','f4'].map(id => document.getElementById(id));
+  const frames = ['f1','f2','f3','f4','f5'].map(id => document.getElementById(id));
 
   frames.forEach(frame => {
     frame.addEventListener('load', () => {

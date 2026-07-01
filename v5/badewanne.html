@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badewannen-Füllstandsmesser — CJ Solutions</title>
+<meta name="description" content="Misst Füllstand & Wassertemperatur deiner Badewanne und spielt eine Melodie, sobald sie voll ist. Kalibrierbar per Knopfdruck, OLED-Display, Akku mit USB-C-Ladung. CHF 39.">
+<link rel="icon" href="../favicon.png">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Badewannen-Füllstandsmesser — CJ Solutions">
+<meta property="og:description" content="Füllstand, Temperatur & eine Melodie, wenn die Wanne voll ist. CHF 39, handgefertigt in der Schweiz.">
+<meta property="og:image" content="../og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .oled{ background:#0a0f0d; border:3px solid #2a2f2c; border-radius:4px; padding:16px 18px; width:270px; font-family:var(--mono); color:#bfe8c8; font-size:.78rem; line-height:1.5; box-shadow:inset 0 0 14px rgba(0,0,0,.6); }
+  .oled .oled-title{ text-align:center; letter-spacing:.08em; border-bottom:1px solid rgba(191,232,200,.3); padding-bottom:6px; margin-bottom:8px; font-size:.72rem; }
+  .oled .oled-temp{ display:flex; justify-content:space-between; }
+  .oled .oled-bar{ margin-top:10px; border:1px solid #bfe8c8; height:14px; position:relative; }
+  .oled .oled-bar i{ position:absolute; inset:1px; background:#bfe8c8; width:0%; transition:width .1s linear; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <rect x="1" y="1" width="38" height="38" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M20 6V16M20 24V34M6 20H16M24 20H34" stroke="currentColor" stroke-width="1.6"/>
+        <rect x="17" y="17" width="6" height="6" fill="#c81e2c"/>
+      </svg>
+      <span class="brand-name">CJ Solutions<small>Werkstatt Nr. 001 · CH</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#produkte" data-lang-de>Produkte</a><a href="index.html#produkte" data-lang-en>Products</a></li>
+      <li><a href="index.html#werkstatt" data-lang-de>Werkstatt</a><a href="index.html#werkstatt" data-lang-en>Workshop</a></li>
+      <li><a href="index.html#kontakt" data-lang-de>Kontakt</a><a href="index.html#kontakt" data-lang-en>Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="langswitch">
+        <button data-lang="de">DE</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:0;">
+  <div class="wrap">
+    <p class="breadcrumb">
+      <a href="index.html" data-lang-de>Produkte</a><a href="index.html" data-lang-en>Products</a>
+      <span> / </span>
+      <span data-lang-de>Badewannen-Füllstandsmesser</span><span data-lang-en>Bathtub Level Meter</span>
+    </p>
+    <div class="hero-grid" style="align-items:flex-start;">
+      <div class="reveal">
+        <p class="kicker" style="color:var(--teal);"><span>PRODUKT 01</span></p>
+        <h1>
+          <span data-lang-de>Sie füllt sich. <em>Und dann singt sie.</em></span>
+          <span data-lang-en>It fills up. <em>Then it sings.</em></span>
+        </h1>
+        <p class="lede">
+          <span data-lang-de>Ultraschall-Sensor am Wannenrand, wasserdichter Temperaturfühler im Wasser, OLED-Display für die Übersicht — und ein Buzzer, der bei 90&nbsp;% Füllstand eine Melodie deiner Wahl abspielt.</span>
+          <span data-lang-en>Ultrasonic sensor at the rim, waterproof temperature probe in the water, an OLED display for the overview — and a buzzer that plays a tune of your choice at 90% fill.</span>
+        </p>
+        <div class="price-hero">CHF 39<span data-lang-de>inkl. Kalibrierung, exkl. Versand</span><span data-lang-en>incl. calibration, excl. shipping</span></div>
+        <div class="hero-actions">
+          <a href="#bestellen" class="btn btn-primary"><span data-lang-de>Jetzt anfragen</span><span data-lang-en>Enquire now</span></a>
+          <a href="#demo" class="btn btn-ghost"><span data-lang-de>Live ausprobieren</span><span data-lang-en>Try it live</span></a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <svg class="blueprint draw-in" viewBox="0 0 380 320" width="100%">
+          <path d="M40 210 q0 46 46 46 h180 q46 0 46-46 v-34 H40 Z"/>
+          <line x1="30" y1="176" x2="270" y2="176"/>
+          <line class="dash accent" x1="30" y1="192" x2="270" y2="192"/>
+          <circle cx="80" cy="120" r="7"/>
+          <line x1="80" y1="127" x2="80" y2="176"/>
+          <line class="dash" x1="80" y1="120" x2="80" y2="70"/>
+          <text x="92" y="66" class="callout">HC-SR04 · ULTRASCHALL</text>
+          <path d="M170 200 q4 -14 0 -28 q-4 -14 0 -28" class="dash accent"/>
+          <text x="182" y="150" class="callout">DS18B20 · TEMP</text>
+          <rect x="270" y="90" width="70" height="50" rx="3"/>
+          <line x1="280" y1="102" x2="330" y2="102"/>
+          <line x1="280" y1="112" x2="320" y2="112"/>
+          <line x1="280" y1="122" x2="325" y2="122"/>
+          <text x="270" y="156" class="callout">OLED 128×64</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="kicker" data-lang-de>Fig. 01 — Simulation</p>
+      <p class="kicker" data-lang-en>Fig. 01 — Simulation</p>
+      <h2><span data-lang-de>Zieh am Regler. Bei 90&nbsp;% passiert's.</span><span data-lang-en>Drag the slider. At 90% it happens.</span></h2>
+      <p><span data-lang-de>So reagiert das echte Gerät — inklusive der drei Original-Melodien aus dem Buzzer.</span><span data-lang-en>This is exactly how the real device reacts — including the three original buzzer melodies.</span></p>
+    </div>
+
+    <div class="demo reveal">
+      <div class="demo-stage">
+        <div class="oled">
+          <div class="oled-title">BADEWANNEN-MONITOR</div>
+          <div class="oled-temp"><span id="oledTemp">Temp: 24.0 C</span><span id="oledStatus">warm</span></div>
+          <div style="margin-top:8px;" id="oledFill">Fuellstand: 30%</div>
+          <div class="oled-bar"><i id="oledBar" style="width:30%"></i></div>
+        </div>
+      </div>
+      <div class="demo-controls">
+        <h3 data-lang-de>Wannenstand simulieren</h3>
+        <h3 data-lang-en>Simulate tub level</h3>
+        <input type="range" id="tubSlider" min="0" max="100" value="30">
+        <div class="demo-readout">
+          <span data-lang-de>Füllstand:</span><span data-lang-en>Fill level:</span> <b id="tubPct">30%</b> ·
+          <span data-lang-de>Temperatur:</span><span data-lang-en>Temperature:</span> <b id="tubTemp">24.0°C</b>
+        </div>
+        <p style="margin-top:20px; color:var(--ink-70); font-size:.92rem;">
+          <span data-lang-de>Ab 90&nbsp;% spielt der Buzzer automatisch die Standardmelodie. Zum Vorhören einfach anklicken:</span>
+          <span data-lang-en>From 90% the buzzer plays the default melody automatically. Click to preview any of them:</span>
+        </p>
+        <div class="melody-row">
+          <button class="melody-btn" data-melody="cucaracha">▶ La Cucaracha</button>
+          <button class="melody-btn" data-melody="mario">▶ Super Mario</button>
+          <button class="melody-btn" data-melody="birthday">▶ Happy Birthday</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="kicker" data-lang-de>Fig. 02 — Ausstattung</p>
+      <p class="kicker" data-lang-en>Fig. 02 — Features</p>
+      <h2><span data-lang-de>Was drinsteckt</span><span data-lang-en>What's inside</span></h2>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat">
+        <div class="n">01</div>
+        <h4 data-lang-de>Ultraschall-Füllstand</h4><h4 data-lang-en>Ultrasonic fill level</h4>
+        <p data-lang-de>HC-SR04-Sensor misst berührungslos den Abstand zur Wasseroberfläche, aktualisiert jede Sekunde.</p>
+        <p data-lang-en>HC-SR04 sensor measures the distance to the water surface contact-free, updated every second.</p>
+      </div>
+      <div class="feat">
+        <div class="n">02</div>
+        <h4 data-lang-de>Wasserdichte Temperatur</h4><h4 data-lang-en>Waterproof temperature</h4>
+        <p data-lang-de>DS18B20-Fühler hängt direkt im Wasser, zeigt "kalt", "warm", "gut!" oder "heiss".</p>
+        <p data-lang-en>DS18B20 probe hangs directly in the water, shows "cold", "warm", "just right" or "hot".</p>
+      </div>
+      <div class="feat">
+        <div class="n">03</div>
+        <h4 data-lang-de>OLED-Display</h4><h4 data-lang-en>OLED display</h4>
+        <p data-lang-de>128×64 Pixel zeigen Temperatur und Füllstand als Balken auf einen Blick.</p>
+        <p data-lang-en>128×64 pixels show temperature and fill level as a bar graph at a glance.</p>
+      </div>
+      <div class="feat">
+        <div class="n">04</div>
+        <h4 data-lang-de>Zwei-Knopf-Kalibrierung</h4><h4 data-lang-en>Two-button calibration</h4>
+        <p data-lang-de>Knopf A = "leer" merken, Knopf B = "voll" merken. Bleibt im Speicher, auch nach Neustart.</p>
+        <p data-lang-en>Button A = mark "empty", button B = mark "full". Saved permanently, even after restart.</p>
+      </div>
+      <div class="feat">
+        <div class="n">05</div>
+        <h4 data-lang-de>3 Melodien</h4><h4 data-lang-en>3 melodies</h4>
+        <p data-lang-de>La Cucaracha, Super Mario oder Happy Birthday — Auswahl per langem Knopfdruck, mit Vorschau am Display.</p>
+        <p data-lang-en>La Cucaracha, Super Mario or Happy Birthday — select via long button press, with a live preview on the display.</p>
+      </div>
+      <div class="feat">
+        <div class="n">06</div>
+        <h4 data-lang-de>Akku &amp; USB-C</h4><h4 data-lang-en>Battery &amp; USB-C</h4>
+        <p data-lang-de>18650-Akku, geladen per USB-C, spritzwassergeschütztes Gehäuse.</p>
+        <p data-lang-en>18650 battery, charged via USB-C, splash-protected housing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section>
+  <div class="wrap" style="max-width:780px;">
+    <div class="section-head reveal">
+      <p class="kicker" data-lang-de>Fig. 03 — Ablauf</p>
+      <p class="kicker" data-lang-en>Fig. 03 — Process</p>
+      <h2><span data-lang-de>Einmal kalibrieren, für immer nutzen</span><span data-lang-en>Calibrate once, use forever</span></h2>
+    </div>
+    <ul class="steps reveal">
+      <li class="step"><span class="step-num"></span><div>
+        <h4 data-lang-de>Wanne leer lassen, Knopf A drücken</h4><h4 data-lang-en>Leave the tub empty, press button A</h4>
+        <p data-lang-de>Der aktuelle Abstand wird als "leer" gespeichert — dauerhaft im EEPROM.</p>
+        <p data-lang-en>The current distance is saved as "empty" — permanently in EEPROM.</p>
+      </div></li>
+      <li class="step"><span class="step-num"></span><div>
+        <h4 data-lang-de>Wanne befüllen, Knopf B drücken</h4><h4 data-lang-en>Fill the tub, press button B</h4>
+        <p data-lang-de>Der gewünschte "voll"-Stand wird gespeichert. Fertig kalibriert.</p>
+        <p data-lang-en>The desired "full" level is saved. Calibration done.</p>
+      </div></li>
+      <li class="step"><span class="step-num"></span><div>
+        <h4 data-lang-de>Display zeigt Füllstand &amp; Temperatur live</h4><h4 data-lang-en>Display shows fill level &amp; temperature live</h4>
+        <p data-lang-de>Jede Sekunde eine neue Messung, sichtbar als Prozentzahl und Balken.</p>
+        <p data-lang-en>A new reading every second, visible as a percentage and bar.</p>
+      </div></li>
+      <li class="step"><span class="step-num"></span><div>
+        <h4 data-lang-de>Bei 90&nbsp;% ertönt die Melodie</h4><h4 data-lang-en>At 90% the melody plays</h4>
+        <p data-lang-de>Einmal pro Füllvorgang — erst wenn der Stand wieder unter 20&nbsp;% fällt, ist der Alarm erneut scharf.</p>
+        <p data-lang-en>Once per fill cycle — the alarm only re-arms once the level drops back below 20%.</p>
+      </div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= SPEC SHEET ================= -->
+<section>
+  <div class="wrap" style="max-width:780px;">
+    <div class="plate reveal">
+      <span class="plate-id">DATASHEET · REV A</span>
+      <table class="datasheet">
+        <tr><td data-lang-de>Sensorik</td><td data-lang-en>Sensors</td>
+          <td><span data-lang-de>Ultraschall (Füllstand) + wasserdichter DS18B20 (Temperatur)</span><span data-lang-en>Ultrasonic (fill level) + waterproof DS18B20 (temperature)</span></td></tr>
+        <tr><td data-lang-de>Anzeige</td><td data-lang-en>Display</td>
+          <td><span data-lang-de>0,96" OLED, I2C</span><span data-lang-en>0.96" OLED, I2C</span></td></tr>
+        <tr><td data-lang-de>Alarm</td><td data-lang-en>Alarm</td>
+          <td><span data-lang-de>Passiver Buzzer, 3 wählbare Melodien, Auslösung bei 90&nbsp;%</span><span data-lang-en>Passive buzzer, 3 selectable melodies, triggers at 90%</span></td></tr>
+        <tr><td data-lang-de>Kalibrierung</td><td data-lang-en>Calibration</td>
+          <td><span data-lang-de>2 Tasten, dauerhaft gespeichert (EEPROM)</span><span data-lang-en>2 buttons, saved permanently (EEPROM)</span></td></tr>
+        <tr><td data-lang-de>Stromversorgung</td><td data-lang-en>Power</td>
+          <td><span data-lang-de>18650-Akku, Laden per USB-C, Ein/Aus-Schalter</span><span data-lang-en>18650 battery, USB-C charging, on/off switch</span></td></tr>
+        <tr><td data-lang-de>Gehäuse</td><td data-lang-en>Housing</td>
+          <td><span data-lang-de>Spritzwassergeschützt</span><span data-lang-en>Splash-protected</span></td></tr>
+        <tr><td data-lang-de>Lieferung</td><td data-lang-en>Delivery</td>
+          <td><span data-lang-de>Einbaufertig, inkl. Kurzanleitung</span><span data-lang-en>Ready to install, incl. quick-start guide</span></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ORDER ================= -->
+<section class="order" id="bestellen">
+  <div class="wrap" style="max-width:720px; text-align:center;">
+    <p class="kicker" data-lang-de>Fig. 04 — Bestellen</p>
+    <p class="kicker" data-lang-en>Fig. 04 — Order</p>
+    <h2><span data-lang-de>CHF 39 — direkt aus der Werkstatt</span><span data-lang-en>CHF 39 — straight from the workshop</span></h2>
+    <p><span data-lang-de>Kurze Mail genügt, wir melden uns mit Verfügbarkeit und Versand.</span><span data-lang-en>A short email is enough — we'll reply with availability and shipping.</span></p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Bestellung%20Badewannen-F%C3%BCllstandsmesser" class="btn btn-primary">
+        <span data-lang-de>Jetzt anfragen</span><span data-lang-en>Enquire now</span>
+      </a>
+      <a href="dusche.html" class="btn btn-ghost"><span data-lang-de>Duschzeitsensor ansehen</span><span data-lang-en>See shower timer</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand-name" style="margin-bottom:6px;">CJ Solutions</div>
+      <p class="foot-note" data-lang-de>Handgefertigte Elektronik aus der Schweiz</p>
+      <p class="foot-note" data-lang-en>Handmade electronics from Switzerland</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="index.html" data-lang-de>Startseite</a><a href="index.html" data-lang-en>Home</a></li>
+      <li><a href="dusche.html" data-lang-de>Dusche</a><a href="dusche.html" data-lang-en>Shower</a></li>
+      <li><a href="mailto:cj.solutions.switzerland@gmail.com">Mail</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+(function(){
+  var slider = document.getElementById("tubSlider");
+  var pctOut = document.getElementById("tubPct");
+  var tempOut = document.getElementById("tubTemp");
+  var oledTemp = document.getElementById("oledTemp");
+  var oledStatus = document.getElementById("oledStatus");
+  var oledFill = document.getElementById("oledFill");
+  var oledBar = document.getElementById("oledBar");
+  var played = false;
+
+  function statusFor(t){
+    if(t < 30) return "kalt";
+    if(t < 36) return "warm";
+    if(t < 40) return "gut!";
+    return "heiss";
+  }
+
+  function update(){
+    var pct = parseInt(slider.value, 10);
+    var temp = (22 + (pct/100)*20).toFixed(1);
+    pctOut.textContent = pct + "%";
+    tempOut.textContent = temp + "°C";
+    oledTemp.textContent = "Temp: " + temp + " C";
+    oledStatus.textContent = statusFor(parseFloat(temp));
+    oledFill.textContent = "Fuellstand: " + pct + "%";
+    oledBar.style.width = pct + "%";
+
+    if(pct >= 90 && !played){
+      played = true;
+      cjPlayMelody("cucaracha");
+    }
+    if(pct < 20){ played = false; }
+  }
+
+  slider.addEventListener("input", update);
+  update();
+})();
+</script>
+</body>
+</html>
