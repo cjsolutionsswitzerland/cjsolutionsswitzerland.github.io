@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CJ Solutions – Smarte Elektronik aus der Schweiz</title>
+  <meta name="description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/v4/">
+  <meta property="og:title" content="CJ Solutions – Smarte Elektronik aus der Schweiz">
+  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['"JetBrains Mono"', 'monospace'] } } }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Scroll-snap container ── */
+    html {
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+    }
+    body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Each slide fills the viewport ── */
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Floating header (logo + switcher + lang) ── */
+    .fh {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      pointer-events: none;
+    }
+    .fh > * { pointer-events: all; }
+
+    /* ── Right-side dot nav ── */
+    .dot-nav {
+      position: fixed;
+      right: 1.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      cursor: pointer;
+      border: none;
+      transition: all 0.35s cubic-bezier(.4,0,.2,1);
+      display: block;
+    }
+    .dot.on-light { background: rgba(0,0,0,0.22); }
+    .dot.active { background: #2dd4bf; transform: scale(1.9); }
+    .dot.active.on-light { background: #0d9488; }
+
+    /* Dot label on hover */
+    .dot-wrap { position: relative; display: flex; align-items: center; }
+    .dot-label {
+      position: absolute;
+      right: 18px;
+      background: rgba(10,10,20,0.85);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .dot-wrap:hover .dot-label { opacity: 1; }
+
+    /* ── Slide counter ── */
+    .slide-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      opacity: 0.4;
+    }
+
+    /* ── Decorative background numbers ── */
+    .deco {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 900;
+      line-height: 1;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.045;
+      letter-spacing: -0.05em;
+    }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      opacity: 0.35;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: floatY 2.5s ease-in-out infinite;
+    }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ── FAQ on slide 5 ── */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.38s cubic-bezier(.4,0,.2,1); }
+    .faq-item.open .faq-body { max-height: 200px; }
+    .faq-plus { transition: transform 0.3s ease; display:inline-block; }
+    .faq-item.open .faq-plus { transform: rotate(45deg); }
+
+    /* ── Reveal on scroll-snap ── */
+    .slide-inner { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .slide.active .slide-inner { opacity: 1; transform: none; }
+    .slide-inner-d1 { transition-delay: 0.15s; }
+    .slide-inner-d2 { transition-delay: 0.28s; }
+    .slide-inner-d3 { transition-delay: 0.42s; }
+
+    /* ── Form ── */
+    .fi {
+      width: 100%;
+      background: #f1f5f9;
+      border: 1.5px solid #e2e8f0;
+      color: #0f172a;
+      border-radius: 8px;
+      padding: 0.625rem 0.875rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: vertical;
+    }
+    .fi:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+    .fi::placeholder { color: #94a3b8; }
+
+    /* Typing cursor */
+    .cursor { display: inline-block; width: 2px; height: 1em; background: #2dd4bf; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Mobile adaptations */
+    @media(max-width: 768px) {
+      .fh { padding: 1rem 1.25rem; }
+      .dot-nav { right: 0.75rem; }
+      .mobile-col { flex-direction: column !important; }
+      .mobile-full { width: 100% !important; }
+      .hide-mobile { display: none !important; }
+      .deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ FLOATING HEADER (global) ═══ -->
+<div class="fh">
+  <a href="#" onclick="goToSlide(0);return false;" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1rem;color:#2dd4bf;text-decoration:none;letter-spacing:0.02em;">
+    CJ<span style="color:#f0f4f8;"> Solutions</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:99px;padding:3px;" id="vSwitcher">
+      <a href="../index.html" class="vsw" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2dd4bf'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">V1</a>
+      <a href="../v2/index.html" class="vsw" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2dd4bf'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">V2</a>
+      <a href="../v3/index.html" class="vsw" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2dd4bf'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">V3</a>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;background:#2dd4bf;color:#04080f;font-weight:700;padding:3px 10px;border-radius:99px;">V4</span>
+    </div>
+    <button id="langBtn" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 12px;border-radius:99px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#2dd4bf';this.style.color='#2dd4bf';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">EN</button>
+  </div>
+</div>
+
+<!-- ═══ DOT NAVIGATION ═══ -->
+<nav class="dot-nav" id="dotNav" aria-label="Slide-Navigation">
+  <div class="dot-wrap"><div class="dot active" data-slide="0" onclick="goToSlide(0)"></div><span class="dot-label" data-de="Intro" data-en="Intro">Intro</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="1" onclick="goToSlide(1)"></div><span class="dot-label" data-de="Badewanne" data-en="Bathtub">Badewanne</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="2" onclick="goToSlide(2)"></div><span class="dot-label" data-de="Dusche" data-en="Shower">Dusche</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="3" onclick="goToSlide(3)"></div><span class="dot-label" data-de="Prozess" data-en="Process">Prozess</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="4" onclick="goToSlide(4)"></div><span class="dot-label" data-de="Werte" data-en="Values">Werte</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="5" onclick="goToSlide(5)"></div><span class="dot-label" data-de="Über uns" data-en="About">Über uns</span></div>
+  <div class="dot-wrap"><div class="dot" data-slide="6" onclick="goToSlide(6)"></div><span class="dot-label" data-de="Kontakt" data-en="Contact">Kontakt</span></div>
+</nav>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 0 · INTRO                         ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide active" id="slide-0" style="background:#04080f;color:#f0f4f8;">
+  <!-- Decorative deco text -->
+  <div class="deco" style="font-size:clamp(160px,28vw,380px);color:#2dd4bf;bottom:-60px;left:-30px;">CJ</div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:5.5rem 2.5rem 3rem;position:relative;z-index:2;">
+
+    <!-- Eyebrow -->
+    <div class="slide-inner slide-inner-d1" style="display:flex;align-items:center;gap:1rem;margin-bottom:auto;padding-top:1rem;">
+      <span class="slide-num" style="color:#2dd4bf;" data-de="00 / 06" data-en="00 / 06">00 / 06</span>
+      <span style="height:1px;width:60px;background:rgba(45,212,191,0.35);display:block;"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;opacity:0.45;text-transform:uppercase;" data-de="Handgefertigt · Schweiz" data-en="Handcrafted · Switzerland">Handgefertigt · Schweiz</span>
+    </div>
+
+    <!-- Main headline -->
+    <div class="slide-inner slide-inner-d2" style="flex:1;display:flex;align-items:center;">
+      <div>
+        <h1 style="font-size:clamp(3.2rem,9vw,8.5rem);font-weight:900;line-height:0.95;letter-spacing:-0.04em;margin-bottom:2rem;">
+          <span style="display:block;" data-de="Smarte" data-en="Smart">Smarte</span>
+          <span style="display:block;color:#2dd4bf;" data-de="Elektronik." data-en="Electronics.">Elektronik.</span>
+          <span style="display:block;font-size:0.45em;font-weight:300;letter-spacing:-0.01em;opacity:0.55;margin-top:0.4em;" data-de="aus der Schweiz." data-en="from Switzerland.">aus der Schweiz.</span>
+        </h1>
+        <p style="color:#8a9ab5;font-size:clamp(0.9rem,1.5vw,1.15rem);max-width:480px;line-height:1.65;margin-bottom:2.5rem;" data-de="Handgefertigte Geräte auf eigenen PCBs – von einem Techniker der weiss was er tut. Kein Gadget-Unfug, nur Lösungen die funktionieren." data-en="Handcrafted devices on custom PCBs – by a technician who knows what he's doing. No gadget nonsense, only solutions that work.">
+          Handgefertigte Geräte auf eigenen PCBs – von einem Techniker der weiss was er tut. Kein Gadget-Unfug, nur Lösungen die funktionieren.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+          <button onclick="goToSlide(1)" style="background:#2dd4bf;color:#04080f;font-weight:800;padding:0.75rem 2rem;border-radius:8px;border:none;cursor:pointer;font-size:0.9rem;font-family:'Inter',sans-serif;transition:all 0.2s;" onmouseover="this.style.background='#5eead4'" onmouseout="this.style.background='#2dd4bf'" data-de="Produkte ansehen ↓" data-en="See products ↓">Produkte ansehen ↓</button>
+          <button onclick="goToSlide(6)" style="background:transparent;color:#8a9ab5;font-weight:500;padding:0.75rem 1.5rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);cursor:pointer;font-size:0.9rem;font-family:'Inter',sans-serif;transition:all 0.2s;" onmouseover="this.style.borderColor='#2dd4bf';this.style.color='#2dd4bf'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='#8a9ab5'" data-de="Kontakt" data-en="Contact">Kontakt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom stats bar -->
+    <div class="slide-inner slide-inner-d3" style="display:flex;flex-wrap:wrap;gap:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.07);">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:#2dd4bf;line-height:1;">2</div>
+        <div style="font-size:0.72rem;opacity:0.45;margin-top:2px;" data-de="Produkte live" data-en="Products live">Produkte live</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.07);align-self:stretch;"></div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:#2dd4bf;line-height:1;">6M</div>
+        <div style="font-size:0.72rem;opacity:0.45;margin-top:2px;" data-de="Garantie" data-en="Warranty">Garantie</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.07);align-self:stretch;"></div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:#2dd4bf;line-height:1;">48h</div>
+        <div style="font-size:0.72rem;opacity:0.45;margin-top:2px;" data-de="Antwortzeit" data-en="Response time">Antwortzeit</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.07);align-self:stretch;"></div>
+      <div>
+        <div style="font-size:1.8rem;line-height:1;">🇨🇭</div>
+        <div style="font-size:0.72rem;opacity:0.45;margin-top:2px;">Made in Switzerland</div>
+      </div>
+      <div style="margin-left:auto;align-self:center;">
+        <div class="scroll-hint" style="color:#f0f4f8;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;">SCROLL</span>
+          <svg width="14" height="18" viewBox="0 0 14 18" fill="none"><path d="M7 2v14M2 11l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 1 · PRODUKT 01 – BADEWANNE        ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-1" style="background:#030e12;color:#f0f4f8;">
+  <div class="deco" style="font-size:clamp(200px,35vw,480px);color:#2dd4bf;top:-80px;left:-40px;">01</div>
+
+  <div style="flex:1;display:flex;align-items:stretch;position:relative;z-index:2;padding-top:5rem;">
+    <!-- Left: Product visual -->
+    <div class="slide-inner slide-inner-d1 hide-mobile" style="width:48%;display:flex;align-items:center;justify-content:center;padding:2rem;">
+      <div style="text-align:center;">
+        <div style="font-size:clamp(100px,16vw,200px);line-height:1;margin-bottom:1rem;filter:drop-shadow(0 0 40px rgba(45,212,191,0.2));">🛁</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;opacity:0.35;text-transform:uppercase;">CHF 49 · inkl. MwSt.</div>
+      </div>
+    </div>
+
+    <!-- Right: Product info -->
+    <div class="slide-inner slide-inner-d2" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem 3rem 3rem 0;max-width:560px;">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+        <span class="slide-num" style="color:#2dd4bf;">01 / 06</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.3);color:#2dd4bf;padding:3px 10px;border-radius:99px;letter-spacing:0.08em;" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
+      </div>
+
+      <h2 style="font-size:clamp(1.8rem,4vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.25rem;" data-de="Badewannen-<br>Füllstandsmesser" data-en="Bath Water<br>Level Monitor">Badewannen-<br>Füllstandsmesser</h2>
+
+      <p style="color:#8a9ab5;line-height:1.7;margin-bottom:2rem;font-size:0.95rem;" data-de="Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bei 90% – nie wieder ein übergelaufenes Bad." data-en="Measures water level and temperature in real time. Acoustic alarm at 90% – never an overflowing bath again.">
+        Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bei 90% – nie wieder ein übergelaufenes Bad.
+      </p>
+
+      <!-- Specs list -->
+      <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#2dd4bf;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="Echtzeit Füllstand & Temperatur (±0.5°C)" data-en="Real-time level & temperature (±0.5°C)">Echtzeit Füllstand & Temperatur (±0.5°C)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#2dd4bf;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="Akustischer Alarm bei 90% Füllstand" data-en="Acoustic alarm at 90% fill level">Akustischer Alarm bei 90% Füllstand</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#2dd4bf;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="USB-C Akku, eigenes PCB-Design" data-en="USB-C battery, custom PCB design">USB-C Akku, eigenes PCB-Design</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#2dd4bf;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="6 Monate Garantie, handgefertigt in der Schweiz" data-en="6 months warranty, handcrafted in Switzerland">6 Monate Garantie, handgefertigt in der Schweiz</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;">
+        <div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:700;color:#2dd4bf;">CHF 49</span>
+          <span style="font-size:0.75rem;opacity:0.4;margin-left:0.5rem;" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</span>
+        </div>
+        <a href="../badewanne.html" style="background:#2dd4bf;color:#04080f;font-weight:700;padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-size:0.9rem;transition:all 0.2s;display:inline-block;" onmouseover="this.style.background='#5eead4'" onmouseout="this.style.background='#2dd4bf'" data-de="Produkt-Details →" data-en="Product details →">Produkt-Details →</a>
+        <button onclick="goToSlide(6)" style="background:transparent;color:#8a9ab5;border:1px solid rgba(255,255,255,0.15);padding:0.75rem 1.25rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:'Inter',sans-serif;transition:all 0.2s;" data-de="Bestellen" data-en="Order">Bestellen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 2 · PRODUKT 02 – DUSCHE           ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-2" style="background:#06030f;color:#f0f4f8;">
+  <div class="deco" style="font-size:clamp(200px,35vw,480px);color:#a78bfa;bottom:-80px;right:-40px;text-align:right;">02</div>
+
+  <div style="flex:1;display:flex;align-items:stretch;position:relative;z-index:2;padding-top:5rem;">
+    <!-- Left: Product info -->
+    <div class="slide-inner slide-inner-d1" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem 0 3rem 3rem;max-width:560px;">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+        <span class="slide-num" style="color:#a78bfa;">02 / 06</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:#a78bfa;padding:3px 10px;border-radius:99px;letter-spacing:0.08em;" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
+      </div>
+
+      <h2 style="font-size:clamp(1.8rem,4vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.25rem;" data-de="Duschzeitsensor<br>Poti-Edition" data-en="Shower Timer<br>Poti Edition">Duschzeitsensor<br>Poti-Edition</h2>
+
+      <p style="color:#8a9ab5;line-height:1.7;margin-bottom:2rem;font-size:0.95rem;" data-de="Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar. 18650-Akku, bis zu 15 Tage Laufzeit." data-en="Wireless, automatic start via microphone, traffic-light logic – time 4–15 min. adjustable via trim pot. 18650 battery, up to 15 days runtime.">
+        Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar. 18650-Akku, bis zu 15 Tage Laufzeit.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2.5rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#a78bfa;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="Automatischer Start via Mikrofon (kein Knopf)" data-en="Auto-start via microphone (no button needed)">Automatischer Start via Mikrofon (kein Knopf)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#a78bfa;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="Ampellogik: grün → gelb → rot blinkend + Buzzer" data-en="Traffic-light logic: green → yellow → red flashing + buzzer">Ampellogik: grün → gelb → rot blinkend + Buzzer</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#a78bfa;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="18650-Akku, bis 15 Tage Laufzeit, kein Kabel" data-en="18650 battery, up to 15 days, no cable">18650-Akku, bis 15 Tage Laufzeit, kein Kabel</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;">
+          <span style="color:#a78bfa;font-family:'JetBrains Mono',monospace;">→</span>
+          <span style="opacity:0.7;" data-de="Zeit stufenlos per Trimmpoti (4–15 Min.)" data-en="Time continuously adjustable via trim pot (4–15 min.)">Zeit stufenlos per Trimmpoti (4–15 Min.)</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;">
+        <div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:700;color:#a78bfa;">CHF 49</span>
+          <span style="font-size:0.75rem;opacity:0.4;margin-left:0.5rem;" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</span>
+        </div>
+        <a href="../dusche.html" style="background:#a78bfa;color:#04080f;font-weight:700;padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-size:0.9rem;transition:all 0.2s;display:inline-block;" onmouseover="this.style.background='#c4b5fd'" onmouseout="this.style.background='#a78bfa'" data-de="Produkt-Details →" data-en="Product details →">Produkt-Details →</a>
+        <button onclick="goToSlide(6)" style="background:transparent;color:#8a9ab5;border:1px solid rgba(255,255,255,0.15);padding:0.75rem 1.25rem;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:'Inter',sans-serif;transition:all 0.2s;" data-de="Bestellen" data-en="Order">Bestellen</button>
+      </div>
+    </div>
+
+    <!-- Right: Product visual -->
+    <div class="slide-inner slide-inner-d2 hide-mobile" style="width:48%;display:flex;align-items:center;justify-content:center;padding:2rem;">
+      <div style="text-align:center;">
+        <div style="font-size:clamp(100px,16vw,200px);line-height:1;margin-bottom:1rem;filter:drop-shadow(0 0 40px rgba(167,139,250,0.2));">🚿</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;opacity:0.35;text-transform:uppercase;">CHF 49 · inkl. MwSt.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 3 · PROZESS                       ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-3" style="background:#050a0f;color:#f0f4f8;">
+  <div style="flex:1;display:flex;flex-direction:column;padding:5.5rem 2.5rem 3rem;position:relative;z-index:2;">
+
+    <div class="slide-inner slide-inner-d1" style="margin-bottom:3rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+        <span class="slide-num" style="color:#2dd4bf;">03 / 06</span>
+        <span style="height:1px;width:40px;background:rgba(45,212,191,0.3);display:block;"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;opacity:0.4;text-transform:uppercase;" data-de="Wie es funktioniert" data-en="How it works">Wie es funktioniert</span>
+      </div>
+      <h2 style="font-size:clamp(2rem,5vw,4rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;" data-de="Vom Schaltplan<br>zum fertigen Gerät." data-en="From schematic<br>to finished device.">Vom Schaltplan<br>zum fertigen Gerät.</h2>
+    </div>
+
+    <!-- Steps: 2x3 grid on desktop, 1 col on mobile -->
+    <div class="slide-inner slide-inner-d2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;flex:1;align-content:start;">
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(255,255,255,0.02);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">01</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>💡</span><strong style="font-size:0.9rem;" data-de="Idee" data-en="Idea">Idee</strong></div>
+          <p style="font-size:0.8rem;opacity:0.5;line-height:1.5;" data-de="Echtes Problem aus dem Alltag identifizieren" data-en="Identify a real everyday problem">Echtes Problem aus dem Alltag identifizieren</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(255,255,255,0.02);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">02</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>📐</span><strong style="font-size:0.9rem;" data-de="Schaltplan" data-en="Schematic">Schaltplan</strong></div>
+          <p style="font-size:0.8rem;opacity:0.5;line-height:1.5;" data-de="Konzept und Schaltungsentwurf" data-en="Concept & circuit design">Konzept und Schaltungsentwurf</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(255,255,255,0.02);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">03</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>🔲</span><strong style="font-size:0.9rem;" data-de="PCB-Design" data-en="PCB Design">PCB-Design</strong></div>
+          <p style="font-size:0.8rem;opacity:0.5;line-height:1.5;" data-de="Professionelles Platinen-Layout in KiCad" data-en="Professional PCB layout in KiCad">Professionelles Platinen-Layout in KiCad</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(255,255,255,0.02);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">04</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>🔧</span><strong style="font-size:0.9rem;" data-de="Fertigung" data-en="Assembly">Fertigung</strong></div>
+          <p style="font-size:0.8rem;opacity:0.5;line-height:1.5;" data-de="Löten und Aufbau von Hand" data-en="Soldering & manual assembly">Löten und Aufbau von Hand</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(255,255,255,0.02);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">05</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>✅</span><strong style="font-size:0.9rem;" data-de="Test & QA" data-en="Test & QA">Test & QA</strong></div>
+          <p style="font-size:0.8rem;opacity:0.5;line-height:1.5;" data-de="Jedes Gerät einzeln vor Versand geprüft" data-en="Every device individually tested before shipping">Jedes Gerät einzeln vor Versand geprüft</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem;border:1px solid rgba(45,212,191,0.2);border-radius:12px;background:rgba(45,212,191,0.05);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:#2dd4bf;line-height:1;flex-shrink:0;">06</span>
+        <div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;"><span>📦</span><strong style="font-size:0.9rem;" data-de="Versand" data-en="Shipping">Versand</strong></div>
+          <p style="font-size:0.8rem;color:#2dd4bf;opacity:0.7;line-height:1.5;" data-de="Sicher verpackt, direkt zu dir in die Schweiz" data-en="Securely packed, straight to you in Switzerland">Sicher verpackt, direkt zu dir in die Schweiz</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 4 · WERTE                         ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-4" style="background:#04080f;color:#f0f4f8;">
+  <div style="flex:1;display:flex;flex-direction:column;padding:5.5rem 2.5rem 3rem;position:relative;z-index:2;">
+
+    <div class="slide-inner slide-inner-d1" style="margin-bottom:3rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+        <span class="slide-num" style="color:#2dd4bf;">04 / 06</span>
+        <span style="height:1px;width:40px;background:rgba(45,212,191,0.3);display:block;"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;opacity:0.4;text-transform:uppercase;" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</span>
+      </div>
+      <h2 style="font-size:clamp(2rem,5vw,4rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;" data-de="Warum<br><span style='color:#2dd4bf'>CJ Solutions</span>?" data-en="Why<br><span style='color:#2dd4bf'>CJ Solutions</span>?">Warum<br><span style="color:#2dd4bf;">CJ Solutions</span>?</h2>
+    </div>
+
+    <!-- 2x2 quadrant grid -->
+    <div class="slide-inner slide-inner-d2" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;flex:1;background:rgba(255,255,255,0.06);">
+
+      <div style="background:#04080f;padding:2rem;display:flex;flex-direction:column;gap:0.75rem;">
+        <div style="font-size:2.5rem;">🔲</div>
+        <h3 style="font-size:1.1rem;font-weight:700;" data-de="Eigenes PCB-Design" data-en="Custom PCB design">Eigenes PCB-Design</h3>
+        <p style="font-size:0.82rem;color:#8a9ab5;line-height:1.6;" data-de="Kein Breadboard-Gewirr. Jedes Gerät hat ein professionell gefertigtes Platinen-Layout – entwickelt in KiCad." data-en="No breadboard chaos. Every device has a professionally made PCB layout – designed in KiCad.">Kein Breadboard-Gewirr. Jedes Gerät hat ein professionell gefertigtes Platinen-Layout – entwickelt in KiCad.</p>
+      </div>
+
+      <div style="background:#04080f;padding:2rem;display:flex;flex-direction:column;gap:0.75rem;border-left:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:2.5rem;">🛠</div>
+        <h3 style="font-size:1.1rem;font-weight:700;" data-de="Praxisnah entwickelt" data-en="Developed from practice">Praxisnah entwickelt</h3>
+        <p style="font-size:0.82rem;color:#8a9ab5;line-height:1.6;" data-de="Entstanden aus echten Problemen – nicht aus dem Lehrbuch. Von einem Techniker mit Arduino- und Python-Erfahrung." data-en="Born from real problems – not from a textbook. By a technician with Arduino and Python experience.">Entstanden aus echten Problemen – nicht aus dem Lehrbuch. Von einem Techniker mit Arduino- und Python-Erfahrung.</p>
+      </div>
+
+      <div style="background:#04080f;padding:2rem;display:flex;flex-direction:column;gap:0.75rem;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:2.5rem;">📦</div>
+        <h3 style="font-size:1.1rem;font-weight:700;" data-de="Komplett geliefert" data-en="Complete delivery">Komplett geliefert</h3>
+        <p style="font-size:0.82rem;color:#8a9ab5;line-height:1.6;" data-de="Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen – keine Montage notwendig." data-en="Fully assembled, tested, and with instructions. Plug in and go – no assembly required.">Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen – keine Montage notwendig.</p>
+      </div>
+
+      <div style="background:rgba(45,212,191,0.05);padding:2rem;display:flex;flex-direction:column;gap:0.75rem;border-top:1px solid rgba(255,255,255,0.06);border-left:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:2.5rem;">🇨🇭</div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:#2dd4bf;">Made in Switzerland</h3>
+        <p style="font-size:0.82rem;color:#8a9ab5;line-height:1.6;" data-de="Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt, 6 Monate Garantie." data-en="Developed, soldered, and tested in Switzerland. Short delivery, direct contact, 6 months warranty.">Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt, 6 Monate Garantie.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 5 · ÜBER UNS + FAQ               ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-5" style="background:#040c10;color:#f0f4f8;">
+  <div class="deco" style="font-size:clamp(140px,22vw,320px);color:#2dd4bf;top:50%;right:-20px;transform:translateY(-50%);">~</div>
+
+  <div style="flex:1;display:flex;align-items:stretch;position:relative;z-index:2;padding-top:5rem;">
+
+    <!-- Left: About -->
+    <div class="slide-inner slide-inner-d1" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem 3rem 2.5rem;max-width:520px;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <span class="slide-num" style="color:#2dd4bf;">05 / 06</span>
+      </div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.5rem;" data-de="Techniker.<br>Maker.<br><span style='color:#2dd4bf'>Problemlöser.</span>" data-en="Technician.<br>Maker.<br><span style='color:#2dd4bf'>Problem solver.</span>">Techniker.<br>Maker.<br><span style="color:#2dd4bf;">Problemlöser.</span></h2>
+      <p style="color:#8a9ab5;line-height:1.7;margin-bottom:1.25rem;font-size:0.9rem;" data-de="CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis." data-en="CJ Solutions was born from the desire to create practical electronics for everyday life – built cleanly, at a fair price.">CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis.</p>
+      <p style="color:#8a9ab5;line-height:1.7;font-size:0.9rem;" data-de="Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät." data-en="Every product is developed by a trained technician with Python and Arduino experience. From the first schematic to the finished device.">Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät.</p>
+    </div>
+
+    <!-- Vertical divider -->
+    <div style="width:1px;background:rgba(255,255,255,0.06);align-self:stretch;margin:3rem 0;" class="hide-mobile"></div>
+
+    <!-- Right: FAQ -->
+    <div class="slide-inner slide-inner-d2" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem 3rem 2rem;max-width:520px;">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;opacity:0.4;text-transform:uppercase;margin-bottom:1.25rem;" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
+
+      <div style="display:flex;flex-direction:column;">
+
+        <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.07);">
+          <button class="faq-q" style="width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:#f0f4f8;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:500;text-align:left;padding:1rem 0;cursor:pointer;gap:1rem;" data-de="Wie läuft eine Bestellung ab?" data-en="How does ordering work?">
+            <span>Wie läuft eine Bestellung ab?</span><span class="faq-plus" style="color:#2dd4bf;font-size:1.2rem;flex-shrink:0;">+</span>
+          </button>
+          <div class="faq-body"><p style="font-size:0.82rem;color:#8a9ab5;line-height:1.65;padding-bottom:1rem;" data-de="E-Mail schicken mit gewünschtem Produkt und Adresse – wir bestätigen innerhalb 48h und senden die Zahlungsinfos." data-en="Send an email with your desired product and address – we confirm within 48h and send payment info.">E-Mail schicken mit gewünschtem Produkt und Adresse – wir bestätigen innerhalb 48h und senden die Zahlungsinfos.</p></div>
+        </div>
+
+        <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.07);">
+          <button class="faq-q" style="width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:#f0f4f8;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:500;text-align:left;padding:1rem 0;cursor:pointer;gap:1rem;" data-de="Wohin wird versandt?" data-en="Where do you ship?">
+            <span>Wohin wird versandt?</span><span class="faq-plus" style="color:#2dd4bf;font-size:1.2rem;flex-shrink:0;">+</span>
+          </button>
+          <div class="faq-body"><p style="font-size:0.82rem;color:#8a9ab5;line-height:1.65;padding-bottom:1rem;" data-de="Aktuell innerhalb der Schweiz. Abholung nach Absprache möglich. Auslandsanfragen: einfach melden." data-en="Currently within Switzerland. Pickup by arrangement possible. International inquiries: just get in touch.">Aktuell innerhalb der Schweiz. Abholung nach Absprache möglich. Auslandsanfragen: einfach melden.</p></div>
+        </div>
+
+        <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.07);">
+          <button class="faq-q" style="width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:#f0f4f8;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:500;text-align:left;padding:1rem 0;cursor:pointer;gap:1rem;" data-de="Gibt es eine Garantie?" data-en="Is there a warranty?">
+            <span>Gibt es eine Garantie?</span><span class="faq-plus" style="color:#2dd4bf;font-size:1.2rem;flex-shrink:0;">+</span>
+          </button>
+          <div class="faq-body"><p style="font-size:0.82rem;color:#8a9ab5;line-height:1.65;padding-bottom:1rem;" data-de="6 Monate. Jedes Gerät wird vor dem Versand einzeln geprüft. Defekte werden kostenlos repariert oder ersetzt." data-en="6 months. Every device is individually tested before shipping. Defects are repaired or replaced free of charge.">6 Monate. Jedes Gerät wird vor dem Versand einzeln geprüft. Defekte werden kostenlos repariert oder ersetzt.</p></div>
+        </div>
+
+        <div class="faq-item" style="border-bottom:1px solid rgba(255,255,255,0.07);">
+          <button class="faq-q" style="width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:#f0f4f8;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:500;text-align:left;padding:1rem 0;cursor:pointer;gap:1rem;" data-de="Individuelle Projekte möglich?" data-en="Custom projects possible?">
+            <span>Individuelle Projekte möglich?</span><span class="faq-plus" style="color:#2dd4bf;font-size:1.2rem;flex-shrink:0;">+</span>
+          </button>
+          <div class="faq-body"><p style="font-size:0.82rem;color:#8a9ab5;line-height:1.65;padding-bottom:1rem;" data-de="Ja, gerne. Konkrete Idee? Einfach melden – wir schauen gemeinsam wie wir es umsetzen können." data-en="Yes, absolutely. Concrete idea? Just get in touch – we'll look together at how to make it work.">Ja, gerne. Konkrete Idee? Einfach melden – wir schauen gemeinsam wie wir es umsetzen können.</p></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 6 · KONTAKT  (light break)        ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="slide" id="slide-6" style="background:#f8fafc;color:#0f172a;">
+  <!-- Update header colors for light slide -->
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2.5rem 3rem;position:relative;z-index:2;">
+
+    <div class="slide-inner slide-inner-d1" style="width:100%;max-width:560px;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;opacity:0.4;color:#0f172a;">06 / 06</span>
+        <span style="height:1px;width:40px;background:rgba(0,0,0,0.15);display:block;"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;opacity:0.4;text-transform:uppercase;color:#0f172a;" data-de="Kontakt" data-en="Contact">Kontakt</span>
+      </div>
+      <h2 style="font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:0.5rem;">
+        <span data-de="Interesse?" data-en="Interested?">Interesse?</span> <span style="color:#0d9488;" data-de="Schreib uns." data-en="Write to us.">Schreib uns.</span>
+      </h2>
+      <p style="color:#64748b;margin-bottom:2rem;font-size:0.9rem;" data-de="Für Bestellungen, Fragen oder individuelle Projekte." data-en="For orders, questions, or custom projects.">Für Bestellungen, Fragen oder individuelle Projekte.</p>
+
+      <form id="contactForm" action="https://formspree.io/f/xpqgllon" method="POST" style="display:flex;flex-direction:column;gap:0.875rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.875rem;">
+          <div>
+            <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#64748b;margin-bottom:0.4rem;font-family:'JetBrains Mono',monospace;" data-de="Name" data-en="Name">Name</label>
+            <input type="text" name="name" placeholder="Max Muster" required class="fi">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#64748b;margin-bottom:0.4rem;font-family:'JetBrains Mono',monospace;" data-de="E-Mail" data-en="E-Mail">E-Mail</label>
+            <input type="email" name="email" placeholder="max@beispiel.ch" required class="fi">
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#64748b;margin-bottom:0.4rem;font-family:'JetBrains Mono',monospace;" data-de="Nachricht" data-en="Message">Nachricht</label>
+          <textarea name="message" rows="3" placeholder="Deine Nachricht…" required class="fi"></textarea>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-top:0.25rem;">
+          <p style="font-size:0.78rem;color:#94a3b8;">
+            <span data-de="Oder:" data-en="Or:">Oder:</span>
+            <a href="mailto:cj.solutions.switzerland@gmail.com" style="color:#0d9488;text-decoration:none;margin-left:0.3rem;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">cj.solutions.switzerland@gmail.com</a>
+          </p>
+          <button type="submit" style="background:#0d9488;color:#fff;font-weight:700;padding:0.7rem 1.75rem;border-radius:8px;border:none;cursor:pointer;font-size:0.9rem;font-family:'Inter',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:0.5rem;" onmouseover="this.style.background='#0f766e'" onmouseout="this.style.background='#0d9488'">
+            <span data-de="Senden" data-en="Send">Senden</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div id="formSuccess" style="display:none;text-align:center;padding:2rem 0;">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem;">✓</div>
+        <p style="color:#0d9488;font-weight:600;" data-de="Nachricht erhalten – wir melden uns bald!" data-en="Message received – we'll be in touch soon!">Nachricht erhalten – wir melden uns bald!</p>
+      </div>
+
+      <!-- Footer links -->
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid #e2e8f0;font-size:0.75rem;color:#94a3b8;">
+        <span>© 2026 CJ Solutions, Schweiz</span>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="../badewanne.html" style="color:#94a3b8;text-decoration:none;" onmouseover="this.style.color='#0d9488'" onmouseout="this.style.color='#94a3b8'" data-de="Badewanne" data-en="Bathtub">Badewanne</a>
+          <a href="../dusche.html" style="color:#94a3b8;text-decoration:none;" onmouseover="this.style.color='#0d9488'" onmouseout="this.style.color='#94a3b8'" data-de="Dusche" data-en="Shower">Dusche</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  /* ── Slide management ── */
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = Array.from(document.querySelectorAll('.dot'));
+  let current = 0;
+
+  function goToSlide(n) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    slides[n].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Detect active slide via IntersectionObserver
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.intersectionRatio > 0.5) {
+        const idx = slides.indexOf(e.target);
+        if (idx === -1) return;
+        current = idx;
+        // Update dots
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', i === idx);
+        });
+        // Mark slide active for reveal animations
+        slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+        // Light slide: adapt header & dots
+        const isLight = idx === 6;
+        document.getElementById('vSwitcher').style.background = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)';
+        document.getElementById('vSwitcher').style.borderColor = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.12)';
+        document.getElementById('langBtn').style.background = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)';
+        document.getElementById('langBtn').style.borderColor = isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.15)';
+        document.getElementById('langBtn').style.color = isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)';
+        const logo = document.querySelector('.fh a');
+        if (logo) logo.style.color = isLight ? '#0d9488' : '#2dd4bf';
+        const logoSpan = logo ? logo.querySelector('span') : null;
+        if (logoSpan) logoSpan.style.color = isLight ? '#0f172a' : '#f0f4f8';
+        // V1/V2/V3 links color
+        document.querySelectorAll('.vsw').forEach(v => {
+          v.style.color = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
+          v.onmouseover = () => v.style.color = isLight ? '#0d9488' : '#2dd4bf';
+          v.onmouseout = () => v.style.color = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
+        });
+        dots.forEach(d => {
+          d.classList.toggle('on-light', isLight);
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => io.observe(s));
+
+  /* ── Keyboard navigation ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); goToSlide(current + 1); }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(current - 1); }
+  });
+
+  /* ── Touch swipe ── */
+  let touchY = 0;
+  document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dy = touchY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 60) goToSlide(dy > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  /* ── Language toggle ── */
+  let lang = localStorage.getItem('cjlang') || 'de';
+  const langBtn = document.getElementById('langBtn');
+  function applyLang(l) {
+    lang = l;
+    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-de]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL','STRONG'].includes(el.tagName)) el.innerHTML = text;
+      else el.textContent = text;
+    });
+  }
+  langBtn.addEventListener('click', () => { applyLang(lang === 'de' ? 'en' : 'de'); localStorage.setItem('cjlang', lang); });
+  if (lang === 'en') applyLang('en');
+
+  /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── Contact form AJAX ── */
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (res.ok) { form.style.display = 'none'; success.style.display = 'block'; }
+      } catch {}
+    });
+  }
+</script>
+</body>
+</html>
