@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CJ Solutions – Smarte Elektronik aus der Schweiz</title>
+  <meta name="description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/v2/">
+  <meta property="og:title" content="CJ Solutions – Smarte Elektronik aus der Schweiz">
+  <meta property="og:description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
+  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "name": "CJ Solutions", "url": "https://cjsolutionsswitzerland.github.io/", "email": "cj.solutions.switzerland@gmail.com", "address": { "@type": "PostalAddress", "addressCountry": "CH" } },
+      { "@type": "Product", "name": "Badewannen-Füllstandsmesser", "brand": { "@type": "Brand", "name": "CJ Solutions" }, "offers": { "@type": "Offer", "price": "49", "priceCurrency": "CHF", "availability": "https://schema.org/InStock" } }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'blob': 'blob 12s infinite ease-in-out',
+            'blob-delay': 'blob 12s 3s infinite ease-in-out',
+            'blob-delay2': 'blob 12s 6s infinite ease-in-out',
+            'float': 'float 5s ease-in-out infinite',
+            'float2': 'float 5s 1.5s ease-in-out infinite',
+            'spin-slow': 'spin 25s linear infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%,100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%', transform: 'translate(0,0)' },
+              '33%': { borderRadius: '40% 60% 70% 30%/40% 50% 60% 50%', transform: 'translate(20px,-40px)' },
+              '66%': { borderRadius: '50% 50% 40% 60%/50% 60% 40% 50%', transform: 'translate(-15px,15px)' },
+            },
+            float: {
+              '0%,100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-14px)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Gradient text utilities */
+    .grad { background: linear-gradient(135deg, #2dd4bf 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-teal { background: linear-gradient(90deg, #5eead4, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-border { background: linear-gradient(135deg, rgba(45,212,191,0.4), rgba(167,139,250,0.3)); padding: 1px; border-radius: 16px; }
+
+    /* Glass morphism */
+    .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(16px); border: 1px solid rgba(94, 234, 212, 0.12); }
+    .glass-light { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(148, 163, 184, 0.15); }
+
+    /* Tilt cards */
+    .tilt-l { transform: rotate(-1.8deg); transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s ease; }
+    .tilt-r { transform: rotate(1.5deg); transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s ease; }
+    .tilt-l:hover, .tilt-r:hover { transform: rotate(0) translateY(-8px); box-shadow: 0 24px 48px rgba(45,212,191,0.18); }
+
+    /* Sticker badges */
+    .sticker { transform: rotate(-2.5deg); display: inline-flex; }
+    .sticker:nth-child(2) { transform: rotate(1.8deg); }
+    .sticker:nth-child(3) { transform: rotate(-1.2deg); }
+
+    /* Wavy section clip */
+    .wave-bottom { clip-path: ellipse(120% 100% at 50% 0%); margin-bottom: -2px; }
+    .wave-top { clip-path: ellipse(120% 100% at 50% 100%); margin-top: -2px; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .rd1 { transition-delay: 0.1s; } .rd2 { transition-delay: 0.2s; } .rd3 { transition-delay: 0.3s; }
+    .rd4 { transition-delay: 0.4s; } .rd5 { transition-delay: 0.5s; } .rd6 { transition-delay: 0.6s; }
+
+    /* Terminal window */
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    /* Gradient line accent */
+    .accent-line { height: 3px; background: linear-gradient(90deg, #2dd4bf, #a78bfa, transparent); border-radius: 99px; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #2dd4bf; border-radius: 99px; }
+
+    /* FAQ smooth height */
+    .faq-answer { overflow: hidden; max-height: 0; transition: max-height 0.4s cubic-bezier(.4,0,.2,1), padding 0.4s ease; }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-icon { transition: transform 0.35s cubic-bezier(.4,0,.2,1); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Mobile menu */
+    .mobile-nav { display: none; }
+    .mobile-nav.open { display: flex; }
+
+    /* Focus ring */
+    input:focus, textarea:focus { outline: none; border-color: #2dd4bf; box-shadow: 0 0 0 3px rgba(45,212,191,0.15); }
+
+    /* Hover arrow */
+    .hover-arrow { transition: transform 0.2s ease; }
+    a:hover .hover-arrow { transform: translateX(4px); }
+
+    @media (max-width: 768px) {
+      .desktop-nav { display: none; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased">
+
+<!-- ═══════════════════════════════════════════════════ NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 h-16 flex items-center justify-between px-5 md:px-8" style="background:rgba(2,6,23,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(45,212,191,0.1);">
+  <a href="#" class="font-mono font-bold text-lg tracking-tight">
+    <span class="grad">CJ</span><span class="text-slate-200"> Solutions</span>
+  </a>
+
+  <!-- Desktop links -->
+  <ul class="desktop-nav hidden md:flex items-center gap-7 list-none">
+    <li><a href="#produkte" class="text-slate-400 hover:text-teal-400 text-sm transition-colors duration-200" data-de="Produkte" data-en="Products">Produkte</a></li>
+    <li><a href="#prozess" class="text-slate-400 hover:text-teal-400 text-sm transition-colors duration-200" data-de="Prozess" data-en="Process">Prozess</a></li>
+    <li><a href="#werte" class="text-slate-400 hover:text-teal-400 text-sm transition-colors duration-200" data-de="Qualität" data-en="Quality">Qualität</a></li>
+    <li><a href="#ueber" class="text-slate-400 hover:text-teal-400 text-sm transition-colors duration-200" data-de="Über uns" data-en="About">Über uns</a></li>
+    <li><a href="#kontakt" class="text-slate-400 hover:text-teal-400 text-sm transition-colors duration-200" data-de="Kontakt" data-en="Contact">Kontakt</a></li>
+  </ul>
+
+  <div class="flex items-center gap-2">
+    <!-- V1/V2 switcher -->
+    <div class="flex items-center gap-1 bg-slate-800 rounded-full p-1 border border-slate-700">
+      <a href="../index.html" class="text-xs font-mono text-slate-400 hover:text-slate-200 px-3 py-1 rounded-full transition-all duration-200 hover:bg-slate-700">V1</a>
+      <span class="text-xs font-mono bg-gradient-to-r from-teal-500 to-violet-500 text-white px-3 py-1 rounded-full font-semibold">V2</span>
+    </div>
+    <!-- Language toggle -->
+    <button id="langToggle" class="font-mono text-xs bg-slate-800 border border-slate-700 hover:border-teal-400 hover:text-teal-400 text-slate-400 px-3 py-1.5 rounded-full transition-all duration-200">EN</button>
+    <!-- Burger -->
+    <button id="burgerBtn" class="md:hidden flex flex-col gap-1.5 p-2 border-0 bg-transparent cursor-pointer" aria-label="Menü öffnen">
+      <span class="burger-bar block w-5 h-0.5 bg-slate-400 rounded transition-all duration-300"></span>
+      <span class="burger-bar block w-5 h-0.5 bg-slate-400 rounded transition-all duration-300"></span>
+      <span class="burger-bar block w-5 h-0.5 bg-slate-400 rounded transition-all duration-300"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobileMenu" class="mobile-nav fixed top-16 inset-x-0 z-40 flex-col bg-slate-950/98 backdrop-blur border-b border-slate-800 px-6 py-4 gap-0">
+  <a href="#produkte" class="text-slate-300 py-3.5 border-b border-slate-800 block hover:text-teal-400 transition-colors" data-de="Produkte" data-en="Products">Produkte</a>
+  <a href="#prozess" class="text-slate-300 py-3.5 border-b border-slate-800 block hover:text-teal-400 transition-colors" data-de="Prozess" data-en="Process">Prozess</a>
+  <a href="#werte" class="text-slate-300 py-3.5 border-b border-slate-800 block hover:text-teal-400 transition-colors" data-de="Qualität" data-en="Quality">Qualität</a>
+  <a href="#ueber" class="text-slate-300 py-3.5 border-b border-slate-800 block hover:text-teal-400 transition-colors" data-de="Über uns" data-en="About">Über uns</a>
+  <a href="#kontakt" class="text-slate-300 py-3.5 block hover:text-teal-400 transition-colors" data-de="Kontakt" data-en="Contact">Kontakt</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════ HERO -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden px-5 pt-24 pb-16">
+  <!-- Animated blobs -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl animate-blob pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/12 rounded-full blur-3xl animate-blob-delay pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-400/8 rounded-full blur-2xl animate-blob-delay2 pointer-events-none"></div>
+
+  <!-- Grid overlay -->
+  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(45,212,191,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(45,212,191,0.035) 1px,transparent 1px);background-size:56px 56px;"></div>
+
+  <div class="relative z-10 max-w-4xl w-full mx-auto text-center">
+    <!-- Eyebrow pill -->
+    <div class="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-400/25 rounded-full px-4 py-1.5 mb-8">
+      <span class="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></span>
+      <span class="font-mono text-teal-400 text-xs tracking-widest uppercase" data-de="Handgefertigt · Schweiz" data-en="Handcrafted · Switzerland">Handgefertigt · Schweiz</span>
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
+      <span class="text-slate-100" data-de="Elektronik die" data-en="Electronics that">Elektronik die</span><br>
+      <span class="grad" data-de="wirklich funktioniert" data-en="actually work">wirklich funktioniert</span>
+    </h1>
+
+    <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" data-de="Wir entwickeln kleine, smarte Geräte für den Alltag – handgefertigt, auf eigenen PCBs, von einem Techniker der weiss was er tut." data-en="We build small, smart devices for everyday life – handcrafted, on custom PCBs, by a technician who knows what he's doing.">
+      Wir entwickeln kleine, smarte Geräte für den Alltag – handgefertigt, auf eigenen PCBs, von einem Techniker der weiss was er tut.
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-4 mb-14">
+      <a href="#produkte" class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold px-7 py-3.5 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-teal-500/25">
+        <span data-de="Produkte entdecken" data-en="Discover products">Produkte entdecken</span>
+        <span>↓</span>
+      </a>
+      <a href="#kontakt" class="inline-flex items-center gap-2 border border-slate-600 hover:border-teal-400 hover:text-teal-400 text-slate-300 font-medium px-7 py-3.5 rounded-full transition-all duration-200">
+        <span data-de="Kontakt" data-en="Contact">Kontakt</span>
+      </a>
+    </div>
+
+    <!-- Stats bar (glass) -->
+    <div class="glass rounded-2xl p-1 max-w-2xl mx-auto mb-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-700/60">
+        <div class="px-4 py-4 text-center">
+          <div class="font-mono text-2xl font-bold grad-teal">2</div>
+          <div class="text-slate-500 text-xs mt-1" data-de="Produkte live" data-en="Products live">Produkte live</div>
+        </div>
+        <div class="px-4 py-4 text-center">
+          <div class="font-mono text-2xl font-bold grad-teal">6 M.</div>
+          <div class="text-slate-500 text-xs mt-1" data-de="Garantie" data-en="Warranty">Garantie</div>
+        </div>
+        <div class="px-4 py-4 text-center">
+          <div class="font-mono text-2xl font-bold grad-teal">≤48h</div>
+          <div class="text-slate-500 text-xs mt-1" data-de="Antwortzeit" data-en="Response time">Antwortzeit</div>
+        </div>
+        <div class="px-4 py-4 text-center">
+          <div class="text-2xl">🇨🇭</div>
+          <div class="text-slate-500 text-xs mt-1">Made in Switzerland</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticker badges -->
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <span class="sticker inline-flex items-center gap-1.5 text-xs font-mono bg-slate-800 border border-slate-700 text-slate-400 px-4 py-2 rounded-full" data-de="🔲 Eigenes PCB-Design" data-en="🔲 Custom PCB design">🔲 Eigenes PCB-Design</span>
+      <span class="sticker inline-flex items-center gap-1.5 text-xs font-mono bg-teal-950/60 border border-teal-500/30 text-teal-400 px-4 py-2 rounded-full" data-de="🛠 Vom Techniker entwickelt" data-en="🛠 Built by a technician">🛠 Vom Techniker entwickelt</span>
+      <span class="sticker inline-flex items-center gap-1.5 text-xs font-mono bg-violet-950/60 border border-violet-500/30 text-violet-400 px-4 py-2 rounded-full" data-de="🇨🇭 Made in Switzerland" data-en="🇨🇭 Made in Switzerland">🇨🇭 Made in Switzerland</span>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div id="scrollIndicator" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600 font-mono text-xs tracking-widest">
+    <span data-de="scroll" data-en="scroll">scroll</span>
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" style="animation:float 2s ease-in-out infinite">
+      <path d="M8 4v12M3 11l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ PRODUKTE -->
+<section id="produkte" class="py-24 px-5 bg-slate-900/50 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(45,212,191,0.04) 0%, transparent 70%);"></div>
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="mb-14 reveal">
+      <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Produkte" data-en="Products">Produkte</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span data-de="Unsere" data-en="Our">Unsere</span> <span class="grad" data-de="Geräte" data-en="devices">Geräte</span>
+      </h2>
+      <div class="accent-line w-20 mt-4 mb-5"></div>
+      <p class="text-slate-400 max-w-md text-base" data-de="Jedes Produkt löst ein echtes Problem. Klick auf ein Gerät um mehr zu erfahren." data-en="Every product solves a real problem. Click on a device to learn more.">
+        Jedes Produkt löst ein echtes Problem. Klick auf ein Gerät um mehr zu erfahren.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+
+      <!-- Card 1 -->
+      <a href="../badewanne.html" class="block tilt-l reveal rd1 rounded-2xl overflow-hidden" style="background:linear-gradient(135deg,rgba(15,118,110,0.15),rgba(13,23,42,0.8));border:1px solid rgba(45,212,191,0.2);text-decoration:none;">
+        <div class="relative h-48 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,rgba(15,118,110,0.2),rgba(2,6,23,0.6));">
+          <span class="text-7xl animate-float select-none">🛁</span>
+          <div class="absolute top-3 left-3">
+            <span class="text-xs font-mono font-bold bg-teal-400 text-slate-900 px-3 py-1 rounded-full" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2 text-slate-100" data-de="Badewannen-Füllstandsmesser" data-en="Bath Water Level Monitor">Badewannen-Füllstandsmesser</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-5" data-de="Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft." data-en="Measures water level and temperature in real time. Acoustic alarm before the tub overflows.">
+            Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft.
+          </p>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
+            <div>
+              <span class="font-mono text-2xl font-bold text-teal-400">CHF 49</span>
+              <span class="text-slate-500 text-xs ml-1" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</span>
+            </div>
+            <span class="text-teal-400 font-mono text-sm hover-arrow" data-de="Details →" data-en="Details →">Details →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="../dusche.html" class="block tilt-r reveal rd2 rounded-2xl overflow-hidden md:mt-8" style="background:linear-gradient(135deg,rgba(91,33,182,0.12),rgba(13,23,42,0.8));border:1px solid rgba(167,139,250,0.2);text-decoration:none;">
+        <div class="relative h-48 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,rgba(91,33,182,0.2),rgba(2,6,23,0.6));">
+          <span class="text-7xl animate-float2 select-none">🚿</span>
+          <div class="absolute top-3 left-3">
+            <span class="text-xs font-mono font-bold bg-violet-400 text-slate-900 px-3 py-1 rounded-full" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2 text-slate-100" data-de="Duschzeitsensor Poti-Edition" data-en="Shower Timer Poti Edition">Duschzeitsensor Poti-Edition</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-5" data-de="Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar, 18650-Akku, bis zu 15 Tage Laufzeit." data-en="Wireless, automatic start via microphone, traffic light – time 4–15 min. adjustable via trim pot, 18650 battery, up to 15 days runtime.">
+            Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar, 18650-Akku, bis zu 15 Tage Laufzeit.
+          </p>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/50">
+            <div>
+              <span class="font-mono text-2xl font-bold text-violet-400">CHF 49</span>
+              <span class="text-slate-500 text-xs ml-1" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</span>
+            </div>
+            <span class="text-violet-400 font-mono text-sm hover-arrow" data-de="Details →" data-en="Details →">Details →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ PROZESS -->
+<section id="prozess" class="py-24 px-5 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-14 reveal">
+      <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Wie es funktioniert" data-en="How it works">Wie es funktioniert</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span data-de="Vom Schaltplan zum" data-en="From schematic to">Vom Schaltplan zum</span><br>
+        <span class="grad" data-de="fertigen Gerät" data-en="finished device">fertigen Gerät</span>
+      </h2>
+      <div class="accent-line w-20 mt-4 mb-5"></div>
+      <p class="text-slate-400 max-w-md text-base" data-de="Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung." data-en="Every CJ device goes through the same careful process – from first concept to delivery.">
+        Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung.
+      </p>
+    </div>
+
+    <!-- Steps grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 relative">
+      <!-- Connecting line (desktop) -->
+      <div class="hidden lg:block absolute top-8 left-[8%] right-[8%] h-px" style="background:linear-gradient(90deg,transparent,rgba(45,212,191,0.4),rgba(167,139,250,0.4),transparent);"></div>
+
+      <!-- Step 1 -->
+      <div class="reveal rd1 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#0d9488,#2dd4bf);box-shadow:0 0 20px rgba(45,212,191,0.3);">
+          <span class="font-mono font-bold text-slate-900 text-sm">01</span>
+        </div>
+        <div class="text-2xl mb-2">💡</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="Idee" data-en="Idea">Idee</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Echtes Problem aus dem Alltag" data-en="Real everyday problem">Echtes Problem aus dem Alltag</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="reveal rd2 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#0f766e,#14b8a6);box-shadow:0 0 20px rgba(20,184,166,0.25);">
+          <span class="font-mono font-bold text-slate-900 text-sm">02</span>
+        </div>
+        <div class="text-2xl mb-2">📐</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="Schaltplan" data-en="Schematic">Schaltplan</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Konzept & Schaltungsentwurf" data-en="Concept & circuit design">Konzept & Schaltungsentwurf</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="reveal rd3 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#4338ca,#6366f1);box-shadow:0 0 20px rgba(99,102,241,0.3);">
+          <span class="font-mono font-bold text-slate-100 text-sm">03</span>
+        </div>
+        <div class="text-2xl mb-2">🔲</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="PCB-Design" data-en="PCB Design">PCB-Design</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Eigenes Platinen-Layout" data-en="Custom PCB layout">Eigenes Platinen-Layout</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="reveal rd4 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#6d28d9,#8b5cf6);box-shadow:0 0 20px rgba(139,92,246,0.3);">
+          <span class="font-mono font-bold text-slate-100 text-sm">04</span>
+        </div>
+        <div class="text-2xl mb-2">🔧</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="Fertigung" data-en="Assembly">Fertigung</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Löten & Aufbau von Hand" data-en="Soldering & manual assembly">Löten & Aufbau von Hand</p>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="reveal rd5 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 0 20px rgba(167,139,250,0.3);">
+          <span class="font-mono font-bold text-slate-100 text-sm">05</span>
+        </div>
+        <div class="text-2xl mb-2">✅</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="Test & QA" data-en="Test & QA">Test & QA</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Jedes Gerät einzeln geprüft" data-en="Every device individually tested">Jedes Gerät einzeln geprüft</p>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="reveal rd6 flex flex-col items-center text-center p-4">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 relative z-10" style="background:linear-gradient(135deg,#0d9488,#2dd4bf);box-shadow:0 0 20px rgba(45,212,191,0.3);">
+          <span class="font-mono font-bold text-slate-900 text-sm">06</span>
+        </div>
+        <div class="text-2xl mb-2">📦</div>
+        <h4 class="font-semibold text-sm mb-1" data-de="Versand" data-en="Shipping">Versand</h4>
+        <p class="text-slate-500 text-xs leading-relaxed" data-de="Sicher verpackt, direkt zu dir" data-en="Securely packed, straight to you">Sicher verpackt, direkt zu dir</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ WERTE -->
+<section id="werte" class="py-24 px-5" style="background:linear-gradient(180deg,rgba(15,23,42,0.5) 0%,rgba(2,6,23,0.8) 100%);">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-14 reveal">
+      <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span data-de="Warum" data-en="Why">Warum</span> <span class="grad">CJ Solutions</span>
+      </h2>
+      <div class="accent-line w-20 mt-4 mb-5"></div>
+      <p class="text-slate-400 max-w-md text-base" data-de="Als Techniker im Berufsalltag wissen wir, was wirklich zählt: Zuverlässigkeit, saubere Ausführung, kein Schnickschnack." data-en="As working technicians we know what really matters: reliability, clean execution, no frills.">
+        Als Techniker im Berufsalltag wissen wir, was wirklich zählt: Zuverlässigkeit, saubere Ausführung, kein Schnickschnack.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <!-- Value 1 -->
+      <div class="reveal rd1 rounded-2xl p-6 relative overflow-hidden group" style="background:linear-gradient(135deg,rgba(13,148,136,0.1),rgba(15,23,42,0.6));border:1px solid rgba(45,212,191,0.15);">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl group-hover:bg-teal-500/10 transition-all duration-500"></div>
+        <div class="text-4xl mb-4">🔲</div>
+        <h4 class="font-bold text-lg mb-2" data-de="Eigenes PCB-Design" data-en="Custom PCB design">Eigenes PCB-Design</h4>
+        <p class="text-slate-400 text-sm leading-relaxed" data-de="Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout." data-en="No breadboard chaos – every device has a professionally made PCB layout.">Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout.</p>
+      </div>
+
+      <!-- Value 2 -->
+      <div class="reveal rd2 rounded-2xl p-6 relative overflow-hidden group" style="background:linear-gradient(135deg,rgba(91,33,182,0.1),rgba(15,23,42,0.6));border:1px solid rgba(167,139,250,0.15);">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-2xl group-hover:bg-violet-500/10 transition-all duration-500"></div>
+        <div class="text-4xl mb-4">🛠</div>
+        <h4 class="font-bold text-lg mb-2" data-de="Praxisnah entwickelt" data-en="Developed from practice">Praxisnah entwickelt</h4>
+        <p class="text-slate-400 text-sm leading-relaxed" data-de="Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch." data-en="Born from real everyday problems – not from a textbook.">Entstanden aus echten Problemen im Alltag – nicht aus dem Lehrbuch.</p>
+      </div>
+
+      <!-- Value 3 -->
+      <div class="reveal rd3 rounded-2xl p-6 relative overflow-hidden group" style="background:linear-gradient(135deg,rgba(91,33,182,0.1),rgba(15,23,42,0.6));border:1px solid rgba(167,139,250,0.15);">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-2xl group-hover:bg-violet-500/10 transition-all duration-500"></div>
+        <div class="text-4xl mb-4">📦</div>
+        <h4 class="font-bold text-lg mb-2" data-de="Komplett geliefert" data-en="Complete delivery">Komplett geliefert</h4>
+        <p class="text-slate-400 text-sm leading-relaxed" data-de="Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen." data-en="Fully assembled, tested, and with instructions. Plug in and go.">Fertig aufgebaut, getestet und mit Anleitung. Einstecken und loslegen.</p>
+      </div>
+
+      <!-- Value 4 -->
+      <div class="reveal rd4 rounded-2xl p-6 relative overflow-hidden group" style="background:linear-gradient(135deg,rgba(13,148,136,0.1),rgba(15,23,42,0.6));border:1px solid rgba(45,212,191,0.15);">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl group-hover:bg-teal-500/10 transition-all duration-500"></div>
+        <div class="text-4xl mb-4">🇨🇭</div>
+        <h4 class="font-bold text-lg mb-2">Made in Switzerland</h4>
+        <p class="text-slate-400 text-sm leading-relaxed" data-de="Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt." data-en="Developed, soldered, and tested in Switzerland. Short delivery, direct contact.">Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ ÜBER UNS -->
+<section id="ueber" class="py-24 px-5">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Text side -->
+      <div class="reveal rd1">
+        <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Über uns" data-en="About us">Über uns</p>
+        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6" data-de="Techniker.<br>Maker.<br>Problemlöser." data-en="Technician.<br>Maker.<br>Problem solver.">
+          Techniker.<br>Maker.<br><span class="grad">Problemlöser.</span>
+        </h2>
+        <p class="text-slate-400 leading-relaxed mb-4" data-de="CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis." data-en="CJ Solutions was born from the desire to create practical electronics for everyday life – built cleanly, at a fair price.">
+          CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis.
+        </p>
+        <p class="text-slate-400 leading-relaxed" data-de="Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät." data-en="Every product is developed by a trained technician with Python and Arduino experience. From the first schematic to the finished device.">
+          Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät.
+        </p>
+      </div>
+
+      <!-- macOS terminal -->
+      <div class="reveal rd2">
+        <div class="rounded-2xl overflow-hidden shadow-2xl" style="border:1px solid rgba(45,212,191,0.2);box-shadow:0 25px 50px rgba(0,0,0,0.5),0 0 0 1px rgba(45,212,191,0.1);">
+          <!-- Terminal title bar -->
+          <div class="flex items-center gap-2 px-4 py-3" style="background:#1a1f2e;border-bottom:1px solid rgba(255,255,255,0.06);">
+            <span class="terminal-dot bg-red-500"></span>
+            <span class="terminal-dot bg-yellow-400"></span>
+            <span class="terminal-dot bg-green-500"></span>
+            <span class="font-mono text-xs text-slate-500 ml-3">bash — cj@switzerland</span>
+          </div>
+          <!-- Terminal content -->
+          <div class="font-mono text-sm p-5 leading-7" style="background:#0d1117;">
+            <div><span class="text-slate-500">~</span> <span class="text-teal-400">$</span> <span class="text-slate-300">whoami</span></div>
+            <div class="text-violet-400 ml-2">→ Techniker, Schweiz</div>
+            <br>
+            <div><span class="text-slate-500">~</span> <span class="text-teal-400">$</span> <span class="text-slate-300">skills --list</span></div>
+            <div class="text-teal-300 ml-2">→ Arduino / C++</div>
+            <div class="text-teal-300 ml-2">→ Python</div>
+            <div class="text-teal-300 ml-2">→ PCB Design (KiCad)</div>
+            <div class="text-teal-300 ml-2">→ Elektronik / Wartung</div>
+            <br>
+            <div><span class="text-slate-500">~</span> <span class="text-teal-400">$</span> <span class="text-slate-300">products --status</span></div>
+            <div class="text-green-400 ml-2">→ 2 live ✓</div>
+            <div class="text-violet-400 ml-2">→ more in dev...</div>
+            <div class="flex items-center gap-1 mt-1">
+              <span class="text-slate-500">~</span> <span class="text-teal-400">$</span>
+              <span class="inline-block w-2 h-4 bg-teal-400 ml-1" style="animation:pulse 1s infinite;"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ FAQ -->
+<section id="faq" class="py-24 px-5" style="background:linear-gradient(180deg,rgba(2,6,23,0.8) 0%,rgba(15,23,42,0.5) 100%);">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-14 reveal">
+      <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span class="grad" data-de="FAQ" data-en="Frequently Asked">FAQ</span>
+      </h2>
+      <div class="accent-line w-20 mt-4"></div>
+    </div>
+
+    <div class="space-y-2 reveal">
+
+      <div class="faq-item rounded-2xl overflow-hidden" style="background:rgba(30,41,59,0.4);border:1px solid rgba(148,163,184,0.12);">
+        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:text-teal-400 transition-colors duration-200" data-de="Wie läuft eine Bestellung ab?" data-en="How does ordering work?">
+          <span class="font-medium text-slate-200">Wie läuft eine Bestellung ab?</span>
+          <span class="faq-icon text-teal-400 text-xl font-mono font-bold flex-shrink-0">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="px-6 pb-5 text-slate-400 text-sm leading-relaxed" data-de="Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht." data-en="Simply send an email with the desired product and delivery address. We confirm the order within 48 hours and send payment details.">
+            Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-2xl overflow-hidden" style="background:rgba(30,41,59,0.4);border:1px solid rgba(148,163,184,0.12);">
+        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:text-teal-400 transition-colors duration-200" data-de="Wohin wird versandt?" data-en="Where do you ship?">
+          <span class="font-medium text-slate-200">Wohin wird versandt?</span>
+          <span class="faq-icon text-teal-400 text-xl font-mono font-bold flex-shrink-0">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="px-6 pb-5 text-slate-400 text-sm leading-relaxed" data-de="Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache ist ebenfalls möglich. Für Anfragen aus dem Ausland einfach melden." data-en="We currently ship within Switzerland. Pickup by arrangement is also possible. For international requests, just get in touch.">
+            Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache ist ebenfalls möglich. Für Anfragen aus dem Ausland einfach melden.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-2xl overflow-hidden" style="background:rgba(30,41,59,0.4);border:1px solid rgba(148,163,184,0.12);">
+        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:text-teal-400 transition-colors duration-200" data-de="Gibt es eine Garantie?" data-en="Is there a warranty?">
+          <span class="font-medium text-slate-200">Gibt es eine Garantie?</span>
+          <span class="faq-icon text-teal-400 text-xl font-mono font-bold flex-shrink-0">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="px-6 pb-5 text-slate-400 text-sm leading-relaxed" data-de="Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt." data-en="Yes. Every device is individually tested before shipping. For defects within 6 months, the device will be repaired or replaced free of charge.">
+            Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-2xl overflow-hidden" style="background:rgba(30,41,59,0.4);border:1px solid rgba(148,163,184,0.12);">
+        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:text-teal-400 transition-colors duration-200" data-de="Sind individuelle Projekte möglich?" data-en="Are custom projects possible?">
+          <span class="font-medium text-slate-200">Sind individuelle Projekte möglich?</span>
+          <span class="faq-icon text-teal-400 text-xl font-mono font-bold flex-shrink-0">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="px-6 pb-5 text-slate-400 text-sm leading-relaxed" data-de="Ja, gerne. Wenn du eine konkrete Idee oder ein Problem hast, das du gelöst haben möchtest, kannst du dich melden. Wir schauen gemeinsam, ob und wie wir das umsetzen können." data-en="Yes, absolutely. If you have a specific idea or a problem you'd like solved, get in touch. We'll look together at whether and how we can make it work.">
+            Ja, gerne. Wenn du eine konkrete Idee oder ein Problem hast, das du gelöst haben möchtest, kannst du dich melden. Wir schauen gemeinsam, ob und wie wir das umsetzen können.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item rounded-2xl overflow-hidden" style="background:rgba(30,41,59,0.4);border:1px solid rgba(148,163,184,0.12);">
+        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:text-teal-400 transition-colors duration-200" data-de="Wie lange dauert die Lieferung?" data-en="How long does delivery take?">
+          <span class="font-medium text-slate-200">Wie lange dauert die Lieferung?</span>
+          <span class="faq-icon text-teal-400 text-xl font-mono font-bold flex-shrink-0">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="px-6 pb-5 text-slate-400 text-sm leading-relaxed" data-de="Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung." data-en="Since every device is handcrafted and individually tested, delivery typically takes 5–10 business days from order confirmation.">
+            Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ KONTAKT -->
+<section id="kontakt" class="py-24 px-5">
+  <div class="max-w-2xl mx-auto">
+    <div class="mb-10 text-center reveal">
+      <p class="font-mono text-teal-400 text-xs tracking-[0.18em] uppercase mb-3" data-de="Kontakt" data-en="Contact">Kontakt</p>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span data-de="Interesse?" data-en="Interested?">Interesse?</span> <span class="grad" data-de="Fragen?" data-en="Questions?">Fragen?</span>
+      </h2>
+      <div class="accent-line w-20 mt-4 mx-auto"></div>
+    </div>
+
+    <div class="reveal glass rounded-3xl p-8 md:p-10">
+      <p class="text-slate-400 text-sm mb-7" data-de="Für Bestellungen, Fragen oder individuelle Projekte – einfach das Formular ausfüllen oder direkt eine Mail schicken." data-en="For orders, questions, or custom projects – fill in the form or send an email directly.">
+        Für Bestellungen, Fragen oder individuelle Projekte – einfach das Formular ausfüllen oder direkt eine Mail schicken.
+      </p>
+
+      <form id="contactForm" action="https://formspree.io/f/xpqgllon" method="POST" class="space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-mono text-xs text-slate-500 tracking-widest uppercase mb-2" data-de="NAME" data-en="NAME">NAME</label>
+            <input type="text" name="name" placeholder="Max Muster" required class="w-full bg-slate-800/60 border border-slate-700/60 text-slate-100 placeholder-slate-600 rounded-xl px-4 py-3 text-sm transition-all duration-200">
+          </div>
+          <div>
+            <label class="block font-mono text-xs text-slate-500 tracking-widest uppercase mb-2" data-de="E-MAIL" data-en="E-MAIL">E-MAIL</label>
+            <input type="email" name="email" placeholder="max@beispiel.ch" required class="w-full bg-slate-800/60 border border-slate-700/60 text-slate-100 placeholder-slate-600 rounded-xl px-4 py-3 text-sm transition-all duration-200">
+          </div>
+        </div>
+        <div>
+          <label class="block font-mono text-xs text-slate-500 tracking-widest uppercase mb-2" data-de="BETREFF" data-en="SUBJECT">BETREFF</label>
+          <input type="text" name="subject" placeholder="Bestellung / Frage / Projekt" class="w-full bg-slate-800/60 border border-slate-700/60 text-slate-100 placeholder-slate-600 rounded-xl px-4 py-3 text-sm transition-all duration-200">
+        </div>
+        <div>
+          <label class="block font-mono text-xs text-slate-500 tracking-widest uppercase mb-2" data-de="NACHRICHT" data-en="MESSAGE">NACHRICHT</label>
+          <textarea name="message" rows="5" placeholder="Deine Nachricht…" required class="w-full bg-slate-800/60 border border-slate-700/60 text-slate-100 placeholder-slate-600 rounded-xl px-4 py-3 text-sm transition-all duration-200 resize-y"></textarea>
+        </div>
+        <div class="flex items-center justify-between flex-wrap gap-3 pt-1">
+          <p class="text-xs text-slate-500">
+            <span data-de="Oder direkt:" data-en="Or directly:">Oder direkt:</span>
+            <a href="mailto:cj.solutions.switzerland@gmail.com" class="text-teal-400 hover:text-teal-300 transition-colors ml-1">cj.solutions.switzerland@gmail.com</a>
+          </p>
+          <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold px-6 py-3 rounded-full transition-all duration-200 hover:scale-105 active:scale-95">
+            <span data-de="Senden" data-en="Send">Senden</span> →
+          </button>
+        </div>
+      </form>
+
+      <div id="formSuccess" class="hidden text-center py-8">
+        <div class="text-4xl mb-3">✓</div>
+        <p class="font-mono text-teal-400" data-de="Nachricht erhalten – wir melden uns bald!" data-en="Message received – we'll be in touch soon!">Nachricht erhalten – wir melden uns bald!</p>
+      </div>
+
+      <p class="text-xs text-slate-600 text-center mt-6" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">Versand innerhalb der Schweiz. Abholung nach Absprache möglich.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ NEWSLETTER -->
+<section class="py-20 px-5" style="background:linear-gradient(135deg,rgba(13,148,136,0.12),rgba(91,33,182,0.1),rgba(2,6,23,0.8));">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8" style="background:rgba(30,41,59,0.4);border:1px solid rgba(45,212,191,0.15);">
+      <div>
+        <h4 class="font-bold text-xl mb-1" data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
+        <p class="text-slate-400 text-sm" data-de="E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam." data-en="Leave your email – we'll reach out when something new is ready. No spam.">E-Mail hinterlassen – wir melden uns wenn etwas Neues da ist. Kein Spam.</p>
+      </div>
+      <form id="newsletterForm" action="https://formspree.io/f/xwvdqqwg" method="POST" class="flex gap-2 flex-shrink-0 flex-wrap">
+        <input type="email" name="email" placeholder="deine@email.ch" required class="bg-slate-800/80 border border-slate-700/60 text-slate-100 placeholder-slate-600 rounded-full px-5 py-2.5 text-sm w-52 transition-all duration-200">
+        <button type="submit" class="bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 text-sm" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ FOOTER -->
+<footer class="border-t border-slate-800/60 px-5 py-8">
+  <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600">
+    <span class="font-mono">© 2026 <span class="grad-teal">CJ Solutions</span>, Schweiz</span>
+    <span data-de="Handgefertigte Elektronik" data-en="Handcrafted electronics">Handgefertigte Elektronik</span>
+    <a href="mailto:cj.solutions.switzerland@gmail.com" class="hover:text-teal-400 transition-colors">cj.solutions.switzerland@gmail.com</a>
+  </div>
+</footer>
+
+
+<script>
+  /* ── Language ── */
+  let lang = localStorage.getItem('cjlang') || 'de';
+  const langBtn = document.getElementById('langToggle');
+
+  function applyLang(l) {
+    lang = l;
+    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-de]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
+      else el.textContent = text;
+    });
+  }
+  langBtn.addEventListener('click', () => { applyLang(lang === 'de' ? 'en' : 'de'); localStorage.setItem('cjlang', lang); });
+  if (lang === 'en') applyLang('en');
+
+  /* ── Mobile Menu ── */
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const bars = burger.querySelectorAll('.burger-bar');
+  burger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    burger.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
+    if (open) {
+      bars[0].style.transform = 'translateY(6px) rotate(45deg)';
+      bars[0].style.background = '#2dd4bf';
+      bars[1].style.opacity = '0';
+      bars[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+      bars[2].style.background = '#2dd4bf';
+    } else {
+      bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; b.style.background = ''; });
+    }
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; b.style.background = ''; });
+  }));
+
+  /* ── Scroll Indicator ── */
+  const scrollInd = document.getElementById('scrollIndicator');
+  window.addEventListener('scroll', () => { if (scrollInd) scrollInd.style.opacity = window.scrollY > 80 ? '0' : '1'; }, { passive: true });
+
+  /* ── Scroll Reveal ── */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  /* ── FAQ Accordion ── */
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── Contact Form AJAX ── */
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (res.ok) { form.style.display = 'none'; success.classList.remove('hidden'); }
+      } catch {}
+    });
+  }
+
+  /* ── Newsletter AJAX ── */
+  const nlForm = document.getElementById('newsletterForm');
+  if (nlForm) {
+    nlForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await fetch(nlForm.action, { method: 'POST', body: new FormData(nlForm), headers: { Accept: 'application/json' } });
+        if (res.ok) nlForm.innerHTML = '<span class="font-mono text-teal-400 text-sm">✓ ' + (lang === 'de' ? 'Eingetragen!' : 'Subscribed!') + '</span>';
+      } catch {}
+    });
+  }
+
+  /* ── Active nav on scroll ── */
+  const secs = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.desktop-nav a[href^="#"], #mobileMenu a[href^="#"]');
+  const no = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navAs.forEach(a => {
+          const active = a.getAttribute('href') === '#' + id;
+          a.style.color = active ? '#2dd4bf' : '';
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  secs.forEach(s => no.observe(s));
+</script>
+</body>
+</html>
