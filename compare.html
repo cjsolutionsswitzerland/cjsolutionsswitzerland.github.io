@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CJ Solutions – Version Vergleich</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Top bar ── */
+    header {
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #050505;
+      gap: 12px;
+    }
+
+    .brand {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+    }
+    .brand span { color: #2dd4bf; }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .layout-btn {
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      padding: 4px 10px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .layout-btn:hover { border-color: #2dd4bf; color: #2dd4bf; }
+    .layout-btn.active { background: #2dd4bf; border-color: #2dd4bf; color: #000; font-weight: 700; }
+
+    .sep { width: 1px; height: 18px; background: rgba(255,255,255,0.08); }
+
+    .sync-btn {
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.35);
+      padding: 4px 10px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .sync-btn:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
+    .sync-btn.on { border-color: #a78bfa; color: #a78bfa; }
+
+    /* ── Grid ── */
+    .grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    /* Layout variants */
+    .grid.layout-row { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; }
+    .grid.layout-col { grid-template-columns: 1fr; grid-template-rows: repeat(4, 1fr); }
+    .grid.layout-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+    /* ── Panel ── */
+    .panel {
+      position: relative;
+      background: #111;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-label {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .version-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 99px;
+    }
+    .v1-badge { background: #22d3c8; color: #0a0f1e; }
+    .v2-badge { background: #a78bfa; color: #0a0a0a; }
+    .v3-badge { background: #fff; color: #0a0a0a; }
+    .v4-badge { background: #2dd4bf; color: #000; }
+
+    .panel-name {
+      font-size: 9px;
+      color: rgba(255,255,255,0.45);
+      background: rgba(0,0,0,0.6);
+      padding: 3px 7px;
+      border-radius: 99px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      letter-spacing: 0.05em;
+    }
+
+    .panel iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* Open button (top-right of each panel) */
+    .open-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 10;
+      font-size: 10px;
+      font-family: inherit;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5);
+      padding: 3px 8px;
+      border-radius: 99px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .open-btn:hover { border-color: #2dd4bf; color: #2dd4bf; }
+
+    /* Focus highlight on hover */
+    .panel:hover { z-index: 1; }
+
+    /* Resize handle cursor hint */
+    .grid-resizer {
+      display: none; /* placeholder, not needed for simplicity */
+    }
+
+    /* Info bar at bottom */
+    footer {
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: #050505;
+    }
+    footer span {
+      font-size: 9px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+    footer a { color: rgba(45,212,191,0.6); text-decoration: none; }
+    footer a:hover { color: #2dd4bf; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span>CJ</span> Solutions — Version Vergleich</div>
+
+  <div class="controls">
+    <!-- Layout -->
+    <button class="layout-btn active" id="btn2x2" onclick="setLayout('2x2')">2×2</button>
+    <button class="layout-btn" id="btnRow" onclick="setLayout('row')">→→→→</button>
+    <button class="layout-btn" id="btnCol" onclick="setLayout('col')">↓↓↓↓</button>
+
+    <div class="sep"></div>
+
+    <!-- Sync scroll -->
+    <button class="sync-btn" id="syncBtn" onclick="toggleSync()">Scroll sync</button>
+
+    <div class="sep"></div>
+
+    <button class="layout-btn" onclick="reloadAll()">↺ Reload</button>
+  </div>
+</header>
+
+<div class="grid layout-2x2" id="grid">
+
+  <!-- V1 -->
+  <div class="panel">
+    <div class="panel-label">
+      <span class="version-badge v1-badge">V1</span>
+      <span class="panel-name">Original Dark Navy</span>
+    </div>
+    <a class="open-btn" href="index.html" target="_blank">↗ öffnen</a>
+    <iframe id="f1" src="index.html" title="V1 – Original"></iframe>
+  </div>
+
+  <!-- V2 -->
+  <div class="panel">
+    <div class="panel-label">
+      <span class="version-badge v2-badge">V2</span>
+      <span class="panel-name">Playful Tailwind</span>
+    </div>
+    <a class="open-btn" href="v2/index.html" target="_blank">↗ öffnen</a>
+    <iframe id="f2" src="v2/index.html" title="V2 – Playful"></iframe>
+  </div>
+
+  <!-- V3 -->
+  <div class="panel">
+    <div class="panel-label">
+      <span class="version-badge v3-badge">V3</span>
+      <span class="panel-name">shadcn/ui System</span>
+    </div>
+    <a class="open-btn" href="v3/index.html" target="_blank">↗ öffnen</a>
+    <iframe id="f3" src="v3/index.html" title="V3 – shadcn"></iframe>
+  </div>
+
+  <!-- V4 -->
+  <div class="panel">
+    <div class="panel-label">
+      <span class="version-badge v4-badge">V4</span>
+      <span class="panel-name">Apple Showcase</span>
+    </div>
+    <a class="open-btn" href="v4/index.html" target="_blank">↗ öffnen</a>
+    <iframe id="f4" src="v4/index.html" title="V4 – Apple"></iframe>
+  </div>
+
+</div>
+
+<footer>
+  <span>Klick "↗ öffnen" für Vollansicht</span>
+  <span>·</span>
+  <span>Scroll Sync synchronisiert alle 4 Versionen gleichzeitig</span>
+  <span>·</span>
+  <a href="index.html">→ cjsolutionsswitzerland.github.io</a>
+</footer>
+
+<script>
+  /* ── Layout switch ── */
+  function setLayout(mode) {
+    const g = document.getElementById('grid');
+    g.className = 'grid layout-' + mode;
+    ['btn2x2','btnRow','btnCol'].forEach(id => document.getElementById(id).classList.remove('active'));
+    const map = { '2x2':'btn2x2', 'row':'btnRow', 'col':'btnCol' };
+    document.getElementById(map[mode]).classList.add('active');
+  }
+
+  /* ── Reload all ── */
+  function reloadAll() {
+    ['f1','f2','f3','f4'].forEach(id => {
+      const f = document.getElementById(id);
+      f.src = f.src;
+    });
+  }
+
+  /* ── Scroll sync ── */
+  let syncOn = false;
+  let syncing = false;
+
+  function toggleSync() {
+    syncOn = !syncOn;
+    const btn = document.getElementById('syncBtn');
+    btn.classList.toggle('on', syncOn);
+    btn.textContent = syncOn ? '✓ Scroll sync' : 'Scroll sync';
+  }
+
+  // Listen to scroll events inside each iframe and mirror to others
+  const frames = ['f1','f2','f3','f4'].map(id => document.getElementById(id));
+
+  frames.forEach(frame => {
+    frame.addEventListener('load', () => {
+      try {
+        const win = frame.contentWindow;
+        win.addEventListener('scroll', () => {
+          if (!syncOn || syncing) return;
+          syncing = true;
+          const ratio = win.scrollY / (win.document.body.scrollHeight - win.innerHeight || 1);
+          frames.forEach(other => {
+            if (other === frame) return;
+            try {
+              const ow = other.contentWindow;
+              const maxScroll = ow.document.body.scrollHeight - ow.innerHeight;
+              ow.scrollTo({ top: maxScroll * ratio, behavior: 'instant' });
+            } catch {}
+          });
+          requestAnimationFrame(() => { syncing = false; });
+        }, { passive: true });
+      } catch {
+        // cross-origin: cannot sync (only happens if loaded from file://)
+      }
+    });
+  });
+</script>
+</body>
+</html>
