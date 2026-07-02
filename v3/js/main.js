@@ -1,11 +1,11 @@
 /* ============================================================
-   CJ Solutions V5 — shared behaviour
-   Language toggle, scroll reveal, mobile nav, melody engine.
+   CJ Solutions V3 — shared behaviour
+   Language toggle, scroll pop-in, mobile nav, melody engine.
    ============================================================ */
 
 /* ---------------------------- Language ---------------------------- */
 (function(){
-  var STORAGE_KEY = "cj-lang-v5";
+  var STORAGE_KEY = "cj-lang-v3";
   var saved = localStorage.getItem(STORAGE_KEY) || "de";
   applyLang(saved);
 
@@ -30,31 +30,24 @@
   var links = document.querySelector(".nav-links");
   if(!toggle || !links) return;
   toggle.addEventListener("click", function(){
-    var open = links.style.display === "flex";
-    links.style.display = open ? "none" : "flex";
-    links.style.flexDirection = "column";
-    links.style.position = "absolute";
-    links.style.top = "100%";
-    links.style.left = "0";
-    links.style.right = "0";
-    links.style.background = "var(--paper)";
-    links.style.padding = "20px 28px";
-    links.style.borderBottom = "1px solid var(--line)";
-    links.style.gap = "16px";
+    links.classList.toggle("open");
+  });
+  links.addEventListener("click", function(e){
+    if(e.target.closest("a")) links.classList.remove("open");
   });
 })();
 
-/* ---------------------------- Scroll reveal ---------------------------- */
+/* ---------------------------- Scroll pop-in ---------------------------- */
 (function(){
-  var els = document.querySelectorAll(".reveal, .draw-in");
+  var els = document.querySelectorAll(".pop");
   if(!("IntersectionObserver" in window)){
-    els.forEach(function(el){ el.classList.add("is-visible"); });
+    els.forEach(function(el){ el.classList.add("is-in"); });
     return;
   }
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        entry.target.classList.add("is-visible");
+        entry.target.classList.add("is-in");
         io.unobserve(entry.target);
       }
     });

@@ -83,16 +83,15 @@
       flex: 1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
+      grid-template-rows: 1fr;
       gap: 2px;
       background: rgba(255,255,255,0.06);
       overflow: hidden;
     }
 
     /* Layout variants */
-    .grid.layout-row { grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; }
-    .grid.layout-col { grid-template-columns: 1fr; grid-template-rows: repeat(5, 1fr); }
-    .grid.layout-2x2 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
+    .grid.layout-row { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr; }
+    .grid.layout-col { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
 
     /* ── Panel ── */
     .panel {
@@ -123,9 +122,7 @@
     }
     .v1-badge { background: #22d3c8; color: #0a0f1e; }
     .v2-badge { background: #a78bfa; color: #0a0a0a; }
-    .v3-badge { background: #fff; color: #0a0a0a; }
-    .v4-badge { background: #2dd4bf; color: #000; }
-    .v5-badge { background: #c81e2c; color: #fff; }
+    .v3-badge { background: #ffd23f; color: #06263f; }
 
     .panel-name {
       font-size: 9px;
@@ -203,9 +200,8 @@
 
   <div class="controls">
     <!-- Layout -->
-    <button class="layout-btn active" id="btn2x2" onclick="setLayout('2x2')">2×2</button>
-    <button class="layout-btn" id="btnRow" onclick="setLayout('row')">→→→→</button>
-    <button class="layout-btn" id="btnCol" onclick="setLayout('col')">↓↓↓↓</button>
+    <button class="layout-btn active" id="btnRow" onclick="setLayout('row')">⬌ Nebeneinander</button>
+    <button class="layout-btn" id="btnCol" onclick="setLayout('col')">⬍ Untereinander</button>
 
     <div class="sep"></div>
 
@@ -218,7 +214,7 @@
   </div>
 </header>
 
-<div class="grid layout-2x2" id="grid">
+<div class="grid layout-row" id="grid">
 
   <!-- V1 -->
   <div class="panel">
@@ -244,30 +240,10 @@
   <div class="panel">
     <div class="panel-label">
       <span class="version-badge v3-badge">V3</span>
-      <span class="panel-name">shadcn/ui System</span>
+      <span class="panel-name">Ideen-Werkstatt</span>
     </div>
     <a class="open-btn" href="v3/index.html" target="_blank">↗ öffnen</a>
-    <iframe id="f3" src="v3/index.html" title="V3 – shadcn"></iframe>
-  </div>
-
-  <!-- V4 -->
-  <div class="panel">
-    <div class="panel-label">
-      <span class="version-badge v4-badge">V4</span>
-      <span class="panel-name">Apple Showcase</span>
-    </div>
-    <a class="open-btn" href="v4/index.html" target="_blank">↗ öffnen</a>
-    <iframe id="f4" src="v4/index.html" title="V4 – Apple"></iframe>
-  </div>
-
-  <!-- V5 -->
-  <div class="panel">
-    <div class="panel-label">
-      <span class="version-badge v5-badge">V5</span>
-      <span class="panel-name">Werkstatt-Blueprint</span>
-    </div>
-    <a class="open-btn" href="v5/index.html" target="_blank">↗ öffnen</a>
-    <iframe id="f5" src="v5/index.html" title="V5 – Blueprint"></iframe>
+    <iframe id="f3" src="v3/index.html" title="V3 – Ideen-Werkstatt"></iframe>
   </div>
 
 </div>
@@ -275,7 +251,7 @@
 <footer>
   <span>Klick "↗ öffnen" für Vollansicht</span>
   <span>·</span>
-  <span>Scroll Sync synchronisiert alle 5 Versionen gleichzeitig</span>
+  <span>Scroll Sync synchronisiert alle 3 Versionen gleichzeitig</span>
   <span>·</span>
   <a href="index.html">→ cjsolutionsswitzerland.github.io</a>
 </footer>
@@ -285,22 +261,26 @@
   function setLayout(mode) {
     const g = document.getElementById('grid');
     g.className = 'grid layout-' + mode;
-    ['btn2x2','btnRow','btnCol'].forEach(id => document.getElementById(id).classList.remove('active'));
-    const map = { '2x2':'btn2x2', 'row':'btnRow', 'col':'btnCol' };
+    ['btnRow','btnCol'].forEach(id => document.getElementById(id).classList.remove('active'));
+    const map = { 'row':'btnRow', 'col':'btnCol' };
     document.getElementById(map[mode]).classList.add('active');
   }
 
   /* ── Reload all ── */
   function reloadAll() {
-    ['f1','f2','f3','f4','f5'].forEach(id => {
+    ['f1','f2','f3'].forEach(id => {
       const f = document.getElementById(id);
       f.src = f.src;
     });
   }
 
-  /* ── Scroll sync ── */
+  /* ── Scroll sync ──
+     Opening this page via file:// puts every iframe on its own opaque origin,
+     so direct access to iframe.contentWindow.document is blocked by the browser.
+     Each embedded page instead carries a small postMessage bridge (see the
+     inline script near the end of its <body>) that reports its scroll ratio
+     and accepts scroll-to commands — postMessage works across file:// origins. */
   let syncOn = false;
-  let syncing = false;
 
   function toggleSync() {
     syncOn = !syncOn;
@@ -309,30 +289,16 @@
     btn.textContent = syncOn ? '✓ Scroll sync' : 'Scroll sync';
   }
 
-  // Listen to scroll events inside each iframe and mirror to others
-  const frames = ['f1','f2','f3','f4','f5'].map(id => document.getElementById(id));
+  const frames = ['f1','f2','f3'].map(id => document.getElementById(id));
 
-  frames.forEach(frame => {
-    frame.addEventListener('load', () => {
-      try {
-        const win = frame.contentWindow;
-        win.addEventListener('scroll', () => {
-          if (!syncOn || syncing) return;
-          syncing = true;
-          const ratio = win.scrollY / (win.document.body.scrollHeight - win.innerHeight || 1);
-          frames.forEach(other => {
-            if (other === frame) return;
-            try {
-              const ow = other.contentWindow;
-              const maxScroll = ow.document.body.scrollHeight - ow.innerHeight;
-              ow.scrollTo({ top: maxScroll * ratio, behavior: 'instant' });
-            } catch {}
-          });
-          requestAnimationFrame(() => { syncing = false; });
-        }, { passive: true });
-      } catch {
-        // cross-origin: cannot sync (only happens if loaded from file://)
-      }
+  window.addEventListener('message', (e) => {
+    if (!syncOn) return;
+    const d = e.data;
+    if (!d || !d.cjCompareScroll) return;
+    const sourceFrame = frames.find(f => f.contentWindow === e.source);
+    frames.forEach(f => {
+      if (f === sourceFrame) return;
+      try { f.contentWindow.postMessage({ cjCompareScrollTo: true, ratio: d.ratio }, '*'); } catch {}
     });
   });
 </script>

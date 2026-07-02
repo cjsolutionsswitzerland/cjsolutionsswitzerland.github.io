@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Löt-Arm mit Zitter-Kompensation — CJ Solutions</title>
+<meta name="description" content="Ein gimbal-stabilisierter Lötkolben, der Handzittern beim SMD-Löten unter dem Mikroskop herausfiltert. Konzept fertig, aktuell im Prototypenbau.">
+<link rel="icon" href="../favicon.png">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Löt-Arm mit Zitter-Kompensation — CJ Solutions">
+<meta property="og:description" content="Gimbal-stabilisierter Lötkolben gegen Handzittern beim SMD-Löten. Für einen Kollegen entwickelt, in Entwicklung.">
+<meta property="og:image" content="../og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="tiles">
+
+<header class="floaty">
+  <nav class="navbar">
+    <a href="index.html" class="brand">
+      <img src="../favicon.png" alt="CJ Solutions" class="brand-mark">
+      <span class="brand-name">CJ Solutions<small data-lang-de>Ideen-Werkstatt · Schweiz</small><small data-lang-en>Idea workshop · Switzerland</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#produkte" data-lang-de>Produkte</a><a href="index.html#produkte" data-lang-en>Products</a></li>
+      <li><a href="index.html#werkstatt" data-lang-de>Werkstatt</a><a href="index.html#werkstatt" data-lang-en>Workshop</a></li>
+      <li><a href="index.html#kontakt" data-lang-de>Kontakt</a><a href="index.html#kontakt" data-lang-en>Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="langswitch">
+        <button data-lang="de">DE</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= PRODUCT HERO ================= -->
+<section class="phero">
+  <div class="wrap">
+    <p class="breadcrumb">
+      <a href="index.html" data-lang-de>Produkte</a><a href="index.html" data-lang-en>Products</a>
+      <span> / </span>
+      <span data-lang-de>Löt-Arm mit Zitter-Kompensation</span><span data-lang-en>Tremor-Compensating Solder Arm</span>
+    </p>
+    <div class="phero-grid">
+      <div class="pop is-in">
+        <p class="kicker"><span class="dot"></span><span data-lang-de>Nr. 03 · Werkstatt</span><span data-lang-en>No. 03 · Workshop</span></p>
+        <h1>
+          <span data-lang-de>Die Hand zittert.<br><em style="color:var(--pool-2); font-style:normal;">Die Spitze nicht.</em></span>
+          <span data-lang-en>The hand shakes.<br><em style="color:var(--pool-2); font-style:normal;">The tip doesn't.</em></span>
+        </h1>
+        <p class="lede">
+          <span data-lang-de>Ein Kollege hat eine Lötstation mit Mikroskop, kann aber wegen Handzittern keine SMD-Bauteile mehr sauber löten. Unsere Lösung: ein gimbal-stabilisierter Lötkolben, der genau wie ein Kamera-Gimbal schnelles Zittern herausfiltert — die bewusste, langsame Handbewegung aber ungehindert durchlässt.</span>
+          <span data-lang-en>A colleague has a soldering station with microscope, but hand tremor means he can no longer solder SMD components cleanly. Our solution: a gimbal-stabilized soldering iron that filters out fast tremor exactly like a camera gimbal — while letting slow, deliberate hand movement through untouched.</span>
+        </p>
+        <div class="status-pill"><span class="pulse"></span><span data-lang-de>Konzept fertig · Prototyp im Bau</span><span data-lang-en>Concept finished · prototype in progress</span></div>
+        <div class="hero-actions">
+          <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Interesse%20am%20L%C3%B6t-Arm-Projekt" class="btn btn-splash"><span data-lang-de>Update-Anfrage senden</span><span data-lang-en>Request updates</span></a>
+          <a href="#wirkprinzip" class="btn btn-foam"><span data-lang-de>Wie es funktioniert ↓</span><span data-lang-en>How it works ↓</span></a>
+        </div>
+      </div>
+
+      <div class="pop is-in pop-d2">
+        <svg viewBox="0 0 460 340" width="100%" aria-hidden="true">
+          <!-- pcb -->
+          <rect x="230" y="196" width="180" height="80" rx="8" fill="#1f6b4a" stroke="#06263f" stroke-width="4"/>
+          <circle cx="264" cy="224" r="6" fill="#ffd23f"/>
+          <circle cx="298" cy="224" r="6" fill="#ffd23f"/>
+          <circle cx="332" cy="224" r="6" fill="#ffd23f"/>
+          <circle cx="264" cy="250" r="6" fill="#ffd23f"/>
+          <circle cx="298" cy="250" r="6" fill="#ffd23f"/>
+          <!-- hand -->
+          <ellipse cx="86" cy="176" rx="42" ry="52" fill="#ffd9a8" stroke="#06263f" stroke-width="4"/>
+          <!-- roll motor -->
+          <circle cx="150" cy="152" r="30" fill="#06263f"/>
+          <text x="150" y="158" text-anchor="middle" fill="#ffd23f" font-family="Bricolage Grotesque, sans-serif" font-size="16" font-weight="800">M2</text>
+          <!-- link arm -->
+          <rect x="178" y="140" width="56" height="20" rx="8" fill="#06263f"/>
+          <!-- pitch motor -->
+          <circle cx="246" cy="150" r="20" fill="#35bfd6" stroke="#06263f" stroke-width="3"/>
+          <text x="246" y="156" text-anchor="middle" fill="#06263f" font-family="Bricolage Grotesque, sans-serif" font-size="13" font-weight="800">M1</text>
+          <!-- iron shaft -->
+          <rect x="264" y="141" width="120" height="16" rx="7" fill="#d9d9d9" stroke="#06263f" stroke-width="3"/>
+          <!-- tip -->
+          <rect x="380" y="136" width="30" height="24" rx="4" fill="#ff6f59" stroke="#06263f" stroke-width="3"/>
+          <!-- precision target -->
+          <circle cx="300" cy="220" r="22" fill="none" stroke="#eab308" stroke-width="2.5" stroke-dasharray="4 5"/>
+          <circle cx="300" cy="220" r="6" fill="#eab308"/>
+          <line x1="300" y1="200" x2="300" y2="164" stroke="#eab308" stroke-width="2" stroke-dasharray="3 4"/>
+          <!-- imu chip on grip -->
+          <rect x="108" y="120" width="26" height="18" rx="3" fill="#ffffff" stroke="#06263f" stroke-width="3"/>
+          <text x="121" y="115" text-anchor="middle" fill="#06263f" font-family="Bricolage Grotesque, sans-serif" font-size="11" font-weight="700">IMU</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY ================= -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head center pop">
+      <p class="kicker"><span class="dot"></span><span data-lang-de>Das Problem</span><span data-lang-en>The problem</span></p>
+      <h2><span data-lang-de>SMD-Löten unter dem<br>Mikroskop verzeiht nichts</span><span data-lang-en>SMD soldering under the<br>microscope forgives nothing</span></h2>
+      <p class="sub"><span data-lang-de>Präzision im Zehntelmillimeter-Bereich ist mit physiologischem oder verstärktem Zittern (typisch 4–12&nbsp;Hz) praktisch unmöglich — auch mit gutem Werkzeug und Vergrösserung.</span><span data-lang-en>Sub-millimetre precision is practically impossible with physiological or amplified tremor (typically 4–12&nbsp;Hz) — even with good tools and magnification.</span></p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat pop">
+        <div class="ico">✋</div>
+        <h4 data-lang-de>Mensch bleibt am Werkzeug</h4><h4 data-lang-en>Human stays on the tool</h4>
+        <p data-lang-de>Kein Joystick, kein indirektes Steuern — die Hand hält den Griff und peilt die Lötstelle wie gewohnt an.</p>
+        <p data-lang-en>No joystick, no indirect control — the hand holds the grip and aims at the joint as usual.</p>
+      </div>
+      <div class="feat pop pop-d1">
+        <div class="ico">👁</div>
+        <h4 data-lang-de>Direkte Hand-Auge-Kopplung</h4><h4 data-lang-en>Direct hand-eye coupling</h4>
+        <p data-lang-de>Der Blick durchs Mikroskop und die Handbewegung bleiben verbunden — entscheidend für Feinarbeit.</p>
+        <p data-lang-en>The view through the microscope and the hand movement stay connected — essential for fine work.</p>
+      </div>
+      <div class="feat pop pop-d2">
+        <div class="ico">📐</div>
+        <h4 data-lang-de>Einfallswinkel bleibt frei</h4><h4 data-lang-en>Approach angle stays free</h4>
+        <p data-lang-de>Anders als bei einem teleoperierten Roboterarm ändert sich der Winkel von Lötstelle zu Lötstelle ganz natürlich mit.</p>
+        <p data-lang-en>Unlike a teleoperated robot arm, the angle naturally changes from joint to joint, just as it would by hand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WIRKPRINZIP ================= -->
+<section id="wirkprinzip" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head center pop">
+      <p class="kicker"><span class="dot"></span><span data-lang-de>Wirkprinzip</span><span data-lang-en>Working principle</span></p>
+      <h2><span data-lang-de>Frequenztrennung wie beim<br>Kamera-Gimbal</span><span data-lang-en>Frequency separation, just<br>like a camera gimbal</span></h2>
+    </div>
+    <ul class="rail pop">
+      <li>
+        <span class="badge">1</span>
+        <h4 data-lang-de>Mensch führt grob</h4><h4 data-lang-en>Human does the rough work</h4>
+        <p data-lang-de>Zielsuche und langsames Anpeilen der Lötstelle bleiben vollständig beim Menschen.</p>
+        <p data-lang-en>Target search and slow aiming at the joint stay entirely with the human.</p>
+      </li>
+      <li>
+        <span class="badge">2</span>
+        <h4 data-lang-de>Externe IMU misst Zittern</h4><h4 data-lang-en>External IMU measures tremor</h4>
+        <p data-lang-de>Ein Beschleunigungs- und Gyroskop-Sensor direkt am Griff erfasst die Winkelbewegung der Hand in Echtzeit.</p>
+        <p data-lang-en>An accelerometer/gyroscope sensor right on the grip captures the hand's angular motion in real time.</p>
+      </li>
+      <li>
+        <span class="badge">3</span>
+        <h4 data-lang-de>Gimbal-Regler trennt die Bewegung</h4><h4 data-lang-en>Gimbal controller splits the motion</h4>
+        <p data-lang-de>Niederfrequente, bewusste Bewegung wird durchgelassen. Hochfrequentes Zittern (4–12&nbsp;Hz) wird von den Motoren aktiv gegengeregelt.</p>
+        <p data-lang-en>Low-frequency, deliberate movement is passed through. High-frequency tremor (4–12&nbsp;Hz) is actively counter-steered by the motors.</p>
+      </li>
+      <li>
+        <span class="badge">4</span>
+        <h4 data-lang-de>Hebelwirkung verstärkt die Wirkung</h4><h4 data-lang-en>Leverage amplifies the effect</h4>
+        <p data-lang-de>Der Kolben ist ca. 10–15&nbsp;cm lang — ein paar Grad Winkelstabilisierung am Gimbal-Punkt wirken sich überproportional stark auf die Spitze aus.</p>
+        <p data-lang-en>The iron is about 10–15&nbsp;cm long — a few degrees of angle stabilisation at the gimbal point have an outsized effect on the tip.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= SPECS ================= -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="spec-card pop">
+      <div class="spec-head">
+        <span data-lang-de>Technisches Konzept</span><span data-lang-en>Technical concept</span>
+        <span>Rev. C</span>
+      </div>
+      <table class="spec-table">
+        <tr><td><span data-lang-de>Lötkolben</span><span data-lang-en>Soldering iron</span></td>
+          <td><span data-lang-de>Leichter Lötkolbenkopf, USB-C-PD-Ladung, austauschbare Spitzen, ~55&nbsp;g</span><span data-lang-en>Lightweight iron head, USB-C PD charging, swappable tips, ~55&nbsp;g</span></td></tr>
+        <tr><td><span data-lang-de>Aktuatorik</span><span data-lang-en>Actuators</span></td>
+          <td><span data-lang-de>2-Achsen-Brushless-Gimbal (Roll- &amp; Pitchmotor), Direct-Drive, offene Gabel statt Käfig</span><span data-lang-en>2-axis brushless gimbal (roll &amp; pitch motor), direct-drive, open fork instead of cage</span></td></tr>
+        <tr><td><span data-lang-de>Sensorik</span><span data-lang-en>Sensing</span></td>
+          <td><span data-lang-de>Externe 6-Achsen-IMU direkt am Griff, per I2C an den Controller</span><span data-lang-en>External 6-axis IMU right on the grip, connected via I2C</span></td></tr>
+        <tr><td><span data-lang-de>Steuerung</span><span data-lang-en>Controller</span></td>
+          <td><span data-lang-de>Eigener Gimbal-Regler mit offener Firmware, sitzt in externer Box, nicht im Griff</span><span data-lang-en>Custom gimbal controller with open firmware, sits in an external box, not in the grip</span></td></tr>
+        <tr><td><span data-lang-de>Architektur</span><span data-lang-en>Architecture</span></td>
+          <td><span data-lang-de>Leichter Griff (~125&nbsp;g bewegte Masse) + externe Box mit Controller &amp; Akku, per Kabel verbunden</span><span data-lang-en>Lightweight grip (~125&nbsp;g moving mass) + external box with controller &amp; battery, cable-connected</span></td></tr>
+        <tr><td><span data-lang-de>Stromversorgung</span><span data-lang-en>Power</span></td>
+          <td><span data-lang-de>3S-LiPo-Akku (11.1&nbsp;V) in der externen Box</span><span data-lang-en>3S LiPo battery (11.1&nbsp;V) in the external box</span></td></tr>
+        <tr><td><span data-lang-de>Geschätzte Kosten</span><span data-lang-en>Estimated cost</span></td>
+          <td><span data-lang-de>CHF 150–280, je nach Ausbaustufe (2- oder 3-Achsen)</span><span data-lang-en>CHF 150–280, depending on configuration (2- or 3-axis)</span></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATUS ================= -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head center pop">
+      <p class="kicker"><span class="dot"></span><span data-lang-de>Projektstatus</span><span data-lang-en>Project status</span></p>
+      <h2><span data-lang-de>Wo wir gerade stehen</span><span data-lang-en>Where things stand</span></h2>
+      <p class="sub"><span data-lang-de>Offen entwickelt, Schritt für Schritt — hier siehst du genau, was schon steht und was noch kommt.</span><span data-lang-en>Developed in the open, step by step — here's exactly what's done and what's still ahead.</span></p>
+    </div>
+    <ul class="checklist pop">
+      <li class="done"><span class="mark">✓</span><span data-lang-de>Konzept festgelegt (Gimbal statt Teleoperation)</span><span data-lang-en>Concept finalized (gimbal instead of teleoperation)</span></li>
+      <li class="done"><span class="mark">✓</span><span data-lang-de>Physische Architektur festgelegt (Griff + externe Box)</span><span data-lang-en>Physical architecture finalized (grip + external box)</span></li>
+      <li class="done"><span class="mark">✓</span><span data-lang-de>Kernbauteile ausgewählt (Kolbenkopf, Gimbal-Motoren, Regler, Akku)</span><span data-lang-en>Core parts selected (iron head, gimbal motors, controller, battery)</span></li>
+      <li class="open"><span class="mark">○</span><span data-lang-de>Bauteile bestellt</span><span data-lang-en>Parts ordered</span></li>
+      <li class="open"><span class="mark">○</span><span data-lang-de>Mechanik gedruckt &amp; montiert</span><span data-lang-en>Mechanics printed &amp; assembled</span></li>
+      <li class="open"><span class="mark">○</span><span data-lang-de>Gimbal-Controller konfiguriert &amp; getuned</span><span data-lang-en>Gimbal controller configured &amp; tuned</span></li>
+      <li class="open"><span class="mark">○</span><span data-lang-de>Erster Löttest unter dem Mikroskop</span><span data-lang-en>First soldering test under the microscope</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="splash-cta" id="update">
+  <div class="wrap" style="max-width:720px; position:relative;">
+    <p class="kicker"><span class="dot"></span><span data-lang-de>Auf dem Laufenden bleiben</span><span data-lang-en>Stay in the loop</span></p>
+    <h2><span data-lang-de>Interesse am Projekt<br>oder ein ähnliches Problem?</span><span data-lang-en>Interested in the project<br>or have a similar problem?</span></h2>
+    <p class="sub"><span data-lang-de>Der Löt-Arm ist noch nicht käuflich — schreib uns, wenn du am Fortschritt interessiert bist oder selbst eine Idee hast, die es noch nicht gibt.</span><span data-lang-en>The solder arm isn't for sale yet — get in touch if you're interested in the progress, or if you have an idea of your own that doesn't exist yet.</span></p>
+    <div class="hero-actions" style="margin-top:30px;">
+      <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Interesse%20am%20L%C3%B6t-Arm-Projekt" class="btn btn-duck"><span data-lang-de>Jetzt Kontakt aufnehmen</span><span data-lang-en>Get in touch now</span></a>
+      <a href="index.html#produkte" class="btn btn-foam"><span data-lang-de>Andere Projekte ansehen</span><span data-lang-en>See other projects</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand">CJ Solutions</div>
+      <p class="foot-note" data-lang-de>Handgefertigte Technik aus der Schweiz — vom Badezimmer bis zur Werkbank.</p>
+      <p class="foot-note" data-lang-en>Handmade engineering from Switzerland — from the bathroom to the workbench.</p>
+    </div>
+    <ul class="foot-links">
+      <li><a href="index.html" data-lang-de>Startseite</a><a href="index.html" data-lang-en>Home</a></li>
+      <li><a href="badewanne.html" data-lang-de>Badewanne</a><a href="badewanne.html" data-lang-en>Bathtub</a></li>
+      <li><a href="dusche.html" data-lang-de>Dusche</a><a href="dusche.html" data-lang-en>Shower</a></li>
+      <li><a href="mailto:cj.solutions.switzerland@gmail.com">Mail</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

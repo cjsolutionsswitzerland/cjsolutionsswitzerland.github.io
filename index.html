@@ -247,8 +247,6 @@
       <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;background:var(--cyan);color:var(--navy);font-weight:700;padding:3px 12px;border-radius:99px;">V1</span>
       <a href="v2/index.html" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);padding:3px 12px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'">V2</a>
       <a href="v3/index.html" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);padding:3px 12px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'">V3</a>
-      <a href="v4/index.html" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);padding:3px 12px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'">V4</a>
-      <a href="v5/index.html" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);padding:3px 12px;border-radius:99px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'">V5</a>
     </div>
     <button class="lang-btn" id="langToggle">EN</button>
     <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
@@ -728,6 +726,27 @@
       } catch {}
     });
   });
+</script>
+<script>
+  /* compare.html scroll-sync bridge — uses postMessage since direct iframe DOM
+     access is blocked cross-origin when pages are opened via file:// */
+  (function(){
+    if (window.parent === window) return;
+    var applying = false;
+    window.addEventListener('scroll', function(){
+      if (applying) return;
+      var max = document.body.scrollHeight - window.innerHeight;
+      window.parent.postMessage({ cjCompareScroll: true, ratio: max > 0 ? window.scrollY / max : 0 }, '*');
+    }, { passive: true });
+    window.addEventListener('message', function(e){
+      var d = e.data;
+      if (!d || !d.cjCompareScrollTo) return;
+      applying = true;
+      var max = document.body.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: max * d.ratio, behavior: 'instant' });
+      requestAnimationFrame(function(){ applying = false; });
+    });
+  })();
 </script>
 </body>
 </html>

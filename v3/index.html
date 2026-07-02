@@ -1,794 +1,302 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CJ Solutions – Smarte Elektronik aus der Schweiz</title>
-  <meta name="description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cjsolutionsswitzerland.github.io/v3/">
-  <meta property="og:title" content="CJ Solutions – Smarte Elektronik aus der Schweiz">
-  <meta property="og:description" content="Handgefertigte Elektronik-Lösungen für den Alltag. Präzise, zuverlässig, made in Switzerland.">
-  <meta property="og:image" content="https://cjsolutionsswitzerland.github.io/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"CJ Solutions","url":"https://cjsolutionsswitzerland.github.io/","email":"cj.solutions.switzerland@gmail.com","address":{"@type":"PostalAddress","addressCountry":"CH"}},{"@type":"Product","name":"Badewannen-Füllstandsmesser","brand":{"@type":"Brand","name":"CJ Solutions"},"offers":{"@type":"Offer","price":"49","priceCurrency":"CHF","availability":"https://schema.org/InStock"}}]}
-  </script>
-  <link rel="icon" type="image/png" href="../favicon.png">
-  <link rel="apple-touch-icon" href="../favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            mono: ['"JetBrains Mono"', 'monospace'],
-            sans: ['Inter', 'sans-serif'],
-          },
-          borderRadius: {
-            DEFAULT: '0.5rem',
-          },
-          colors: {
-            border: 'hsl(var(--border))',
-            input: 'hsl(var(--input))',
-            ring: 'hsl(var(--ring))',
-            background: 'hsl(var(--background))',
-            foreground: 'hsl(var(--foreground))',
-            primary: {
-              DEFAULT: 'hsl(var(--primary))',
-              foreground: 'hsl(var(--primary-foreground))',
-            },
-            secondary: {
-              DEFAULT: 'hsl(var(--secondary))',
-              foreground: 'hsl(var(--secondary-foreground))',
-            },
-            muted: {
-              DEFAULT: 'hsl(var(--muted))',
-              foreground: 'hsl(var(--muted-foreground))',
-            },
-            accent: {
-              DEFAULT: 'hsl(var(--accent))',
-              foreground: 'hsl(var(--accent-foreground))',
-            },
-            card: {
-              DEFAULT: 'hsl(var(--card))',
-              foreground: 'hsl(var(--card-foreground))',
-            },
-          },
-        },
-      },
-    }
-  </script>
-  <style>
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 240 10% 3.9%;
-      --card: 0 0% 100%;
-      --card-foreground: 240 10% 3.9%;
-      --primary: 173 58% 39%;        /* teal-600 */
-      --primary-foreground: 0 0% 98%;
-      --secondary: 240 4.8% 95.9%;
-      --secondary-foreground: 240 5.9% 10%;
-      --muted: 240 4.8% 95.9%;
-      --muted-foreground: 240 3.8% 46.1%;
-      --accent: 173 58% 95%;
-      --accent-foreground: 173 58% 30%;
-      --border: 240 5.9% 90%;
-      --input: 240 5.9% 90%;
-      --ring: 173 58% 39%;
-      --radius: 0.5rem;
-    }
-    .dark {
-      --background: 240 10% 3.9%;
-      --foreground: 0 0% 98%;
-      --card: 240 10% 7%;
-      --card-foreground: 0 0% 98%;
-      --primary: 173 58% 50%;
-      --primary-foreground: 240 10% 3.9%;
-      --secondary: 240 3.7% 15.9%;
-      --secondary-foreground: 0 0% 98%;
-      --muted: 240 3.7% 15.9%;
-      --muted-foreground: 240 5% 64.9%;
-      --accent: 173 58% 15%;
-      --accent-foreground: 173 58% 60%;
-      --border: 240 3.7% 15.9%;
-      --input: 240 3.7% 15.9%;
-      --ring: 173 58% 50%;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ Solutions — Wir bauen Dinge, die es noch nicht gibt</title>
+<meta name="description" content="Schweizer Ideen-Werkstatt für Elektronik &amp; Engineering: ein Badewannen-Füllstandsmesser mit Melodie-Alarm, ein Duschzeitsensor mit Ampel — und ein Löt-Arm mit Zitter-Kompensation in Entwicklung.">
+<link rel="icon" href="../favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CJ Solutions — Wir bauen Dinge, die es noch nicht gibt">
+<meta property="og:description" content="Badewannen-Füllstandsmesser, Duschzeitsensor &amp; ein Löt-Arm mit Zitter-Kompensation — handgebaute Ideen aus der Schweiz.">
+<meta property="og:image" content="../og-image.png">
 
-    /* shadcn/ui component primitives */
-    .card { background: hsl(var(--card)); color: hsl(var(--card-foreground)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: var(--radius); font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease; cursor: pointer; white-space: nowrap; user-select: none; }
-    .btn:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
-    .btn-primary { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); padding: 0.5rem 1.25rem; border: none; }
-    .btn-primary:hover { background: hsl(173 58% 33%); }
-    .dark .btn-primary:hover { background: hsl(173 58% 44%); }
-    .btn-outline { background: transparent; color: hsl(var(--foreground)); padding: 0.5rem 1.25rem; border: 1px solid hsl(var(--border)); }
-    .btn-outline:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); border-color: hsl(var(--primary)); }
-    .btn-ghost { background: transparent; color: hsl(var(--foreground)); padding: 0.5rem 1rem; border: none; }
-    .btn-ghost:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
-    .btn-lg { padding: 0.625rem 1.5rem; font-size: 1rem; }
-    .badge { display: inline-flex; align-items: center; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; padding: 0.2rem 0.65rem; }
-    .badge-default { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
-    .badge-secondary { background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); }
-    .badge-outline { border: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); }
-    .badge-accent { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
-    .input { width: 100%; background: hsl(var(--background)); border: 1px solid hsl(var(--input)); color: hsl(var(--foreground)); border-radius: var(--radius); padding: 0.5rem 0.75rem; font-size: 0.875rem; font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
-    .input:focus { outline: none; border-color: hsl(var(--ring)); box-shadow: 0 0 0 3px hsl(var(--ring) / 0.15); }
-    .input::placeholder { color: hsl(var(--muted-foreground)); }
-    .separator { height: 1px; background: hsl(var(--border)); }
-    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(var(--primary)); font-family: 'JetBrains Mono', monospace; }
-
-    /* Reveal animation */
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-    .rd1{transition-delay:.08s} .rd2{transition-delay:.16s} .rd3{transition-delay:.24s}
-    .rd4{transition-delay:.32s} .rd5{transition-delay:.4s} .rd6{transition-delay:.48s}
-
-    /* Bento grid */
-    .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; gap: 1rem; }
-    .bento-wide { grid-column: span 2; }
-    .bento-tall { grid-row: span 2; }
-    @media(max-width: 768px) {
-      .bento-grid { grid-template-columns: 1fr; }
-      .bento-wide { grid-column: span 1; }
-      .bento-tall { grid-row: span 1; }
-      .desktop-only { display: none !important; }
-    }
-
-    /* Timeline */
-    .timeline-line { position: absolute; left: 19px; top: 40px; bottom: 0; width: 1px; background: hsl(var(--border)); }
-
-    /* FAQ */
-    .faq-answer { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(.4,0,.2,1); }
-    .faq-item.open .faq-answer { max-height: 300px; }
-    .faq-icon { transition: transform 0.3s ease; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* Mobile nav */
-    .mobile-nav { display: none; }
-    .mobile-nav.open { display: flex; }
-
-    /* Product card hover */
-    .product-row { transition: background 0.15s; }
-    .product-row:hover { background: hsl(var(--accent)); }
-
-    /* Dark mode toggle icon */
-    .icon-sun, .icon-moon { width: 16px; height: 16px; }
-    html:not(.dark) .icon-moon { display: none; }
-    html.dark .icon-sun { display: none; }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: hsl(var(--muted)); }
-    ::-webkit-scrollbar-thumb { background: hsl(var(--primary)); border-radius: 99px; }
-  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-background text-foreground font-sans antialiased">
+<body>
 
-<!-- ═══════════════════════════════════════════════════ NAV -->
-<header class="fixed top-0 inset-x-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-  <div class="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between gap-4">
-
-    <a href="#" class="flex items-center gap-2 font-semibold text-base shrink-0">
-      <span class="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold text-xs font-mono">CJ</span>
-      <span class="text-foreground">Solutions</span>
+<header class="floaty">
+  <nav class="navbar">
+    <a href="index.html" class="brand">
+      <img src="../favicon.png" alt="CJ Solutions" class="brand-mark">
+      <span class="brand-name">CJ Solutions<small data-lang-de>Ideen-Werkstatt · Schweiz</small><small data-lang-en>Idea workshop · Switzerland</small></span>
     </a>
-
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-1">
-      <a href="#produkte" class="btn btn-ghost text-muted-foreground text-sm" data-de="Produkte" data-en="Products">Produkte</a>
-      <a href="#prozess" class="btn btn-ghost text-muted-foreground text-sm" data-de="Prozess" data-en="Process">Prozess</a>
-      <a href="#werte" class="btn btn-ghost text-muted-foreground text-sm" data-de="Qualität" data-en="Quality">Qualität</a>
-      <a href="#ueber" class="btn btn-ghost text-muted-foreground text-sm" data-de="Über uns" data-en="About">Über uns</a>
-      <a href="#kontakt" class="btn btn-ghost text-muted-foreground text-sm" data-de="Kontakt" data-en="Contact">Kontakt</a>
-    </nav>
-
-    <div class="flex items-center gap-2">
-      <!-- Version switcher -->
-      <div class="flex items-center rounded-full border border-border bg-muted p-0.5 gap-0.5">
-        <a href="../index.html" class="text-xs font-mono text-muted-foreground hover:text-foreground px-2.5 py-1 rounded-full transition-colors">V1</a>
-        <a href="../v2/index.html" class="text-xs font-mono text-muted-foreground hover:text-foreground px-2.5 py-1 rounded-full transition-colors">V2</a>
-        <span class="text-xs font-mono bg-primary text-primary-foreground font-bold px-2.5 py-1 rounded-full">V3</span>
-        <a href="../v4/index.html" class="text-xs font-mono text-muted-foreground hover:text-foreground px-2.5 py-1 rounded-full transition-colors">V4</a>
-        <a href="../v5/index.html" class="text-xs font-mono text-muted-foreground hover:text-foreground px-2.5 py-1 rounded-full transition-colors">V5</a>
+    <ul class="nav-links">
+      <li><a href="#produkte" data-lang-de>Produkte</a><a href="#produkte" data-lang-en>Products</a></li>
+      <li><a href="#werkstatt" data-lang-de>Werkstatt</a><a href="#werkstatt" data-lang-en>Workshop</a></li>
+      <li><a href="#kontakt" data-lang-de>Kontakt</a><a href="#kontakt" data-lang-en>Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="verswitch">
+        <a href="../index.html">V1</a>
+        <a href="../v2/index.html">V2</a>
+        <span class="active">V3</span>
       </div>
-      <!-- Dark mode -->
-      <button id="darkToggle" class="btn btn-ghost w-9 h-9 p-0 text-muted-foreground" aria-label="Dark mode togglen">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <!-- Lang -->
-      <button id="langToggle" class="badge badge-outline font-mono cursor-pointer hover:border-primary hover:text-primary transition-colors">EN</button>
-      <!-- Burger -->
-      <button id="burgerBtn" class="md:hidden btn btn-ghost w-9 h-9 p-0" aria-label="Menü öffnen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-      </button>
+      <div class="langswitch">
+        <button data-lang="de">DE</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
     </div>
-
-  </div>
+  </nav>
 </header>
 
-<!-- Mobile menu -->
-<div id="mobileMenu" class="mobile-nav fixed top-14 inset-x-0 z-40 flex-col bg-background border-b border-border px-5 py-3">
-  <a href="#produkte" class="py-3 text-sm text-muted-foreground hover:text-foreground border-b border-border" data-de="Produkte" data-en="Products">Produkte</a>
-  <a href="#prozess" class="py-3 text-sm text-muted-foreground hover:text-foreground border-b border-border" data-de="Prozess" data-en="Process">Prozess</a>
-  <a href="#werte" class="py-3 text-sm text-muted-foreground hover:text-foreground border-b border-border" data-de="Qualität" data-en="Quality">Qualität</a>
-  <a href="#ueber" class="py-3 text-sm text-muted-foreground hover:text-foreground border-b border-border" data-de="Über uns" data-en="About">Über uns</a>
-  <a href="#kontakt" class="py-3 text-sm text-muted-foreground hover:text-foreground" data-de="Kontakt" data-en="Contact">Kontakt</a>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════ HERO -->
-<section class="pt-32 pb-20 px-5">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-
-    <!-- Left: text -->
-    <div>
-      <div class="badge badge-accent font-mono mb-6" data-de="🇨🇭 Handgefertigt · Schweiz" data-en="🇨🇭 Handcrafted · Switzerland">🇨🇭 Handgefertigt · Schweiz</div>
-      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-5">
-        <span data-de="Elektronik die" data-en="Electronics that">Elektronik die</span><br>
-        <span class="text-primary" data-de="wirklich" data-en="actually">wirklich</span><br>
-        <span data-de="funktioniert." data-en="work.">funktioniert.</span>
-      </h1>
-      <p class="text-muted-foreground text-lg mb-8 leading-relaxed max-w-md" data-de="Kleine, smarte Geräte für den Alltag – handgefertigt auf eigenen PCBs, von einem Techniker der weiss was er tut." data-en="Small, smart devices for everyday life – handcrafted on custom PCBs, by a technician who knows what he's doing.">
-        Kleine, smarte Geräte für den Alltag – handgefertigt auf eigenen PCBs, von einem Techniker der weiss was er tut.
-      </p>
-      <div class="flex flex-wrap gap-3 mb-10">
-        <a href="#produkte" class="btn btn-primary btn-lg">
-          <span data-de="Produkte entdecken" data-en="Discover products">Produkte entdecken</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#kontakt" class="btn btn-outline btn-lg" data-de="Kontakt aufnehmen" data-en="Get in touch">Kontakt aufnehmen</a>
-      </div>
-      <!-- Stats row -->
-      <div class="flex flex-wrap gap-6 text-sm">
-        <div>
-          <span class="font-bold text-2xl text-foreground font-mono">2</span>
-          <span class="text-muted-foreground ml-1.5" data-de="Produkte" data-en="Products">Produkte</span>
-        </div>
-        <div class="w-px bg-border self-stretch"></div>
-        <div>
-          <span class="font-bold text-2xl text-foreground font-mono">6</span>
-          <span class="text-muted-foreground ml-1.5" data-de="Monate Garantie" data-en="Months warranty">Monate Garantie</span>
-        </div>
-        <div class="w-px bg-border self-stretch"></div>
-        <div>
-          <span class="font-bold text-2xl text-foreground font-mono">≤48h</span>
-          <span class="text-muted-foreground ml-1.5" data-de="Antwort" data-en="Response">Antwort</span>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="pop is-in">
+        <p class="kicker"><span class="dot"></span><span data-lang-de>Handgebaut in der Schweiz</span><span data-lang-en>Hand-built in Switzerland</span></p>
+        <h1>
+          <span data-lang-de>Wir bauen Dinge,<br>die es noch nicht <em>gibt</em>.</span>
+          <span data-lang-en>We build things<br>that don't <em>exist</em> yet.</span>
+        </h1>
+        <p class="lede">
+          <span data-lang-de>CJ Solutions ist eine Schweizer Werkstatt für Elektronik- und Ingenieurs-Ideen. Vom singenden Badewannensensor bis zum zitterfreien Lötarm für die Mikroskop-Werkbank — wenn's das noch nicht gibt, entwickeln wir's.</span>
+          <span data-lang-en>CJ Solutions is a Swiss workshop for electronics and engineering ideas. From a singing bathtub sensor to a tremor-free soldering arm for the microscope bench — if it doesn't exist yet, we build it.</span>
+        </p>
+        <div class="hero-actions">
+          <a href="#produkte" class="btn btn-duck"><span data-lang-de>Produkte entdecken</span><span data-lang-en>Discover products</span> <span aria-hidden="true">→</span></a>
+          <a href="#werkstatt" class="btn btn-foam"><span data-lang-de>So entsteht's</span><span data-lang-en>How it's made</span></a>
         </div>
       </div>
-    </div>
 
-    <!-- Right: showcase card -->
-    <div class="reveal rd2 flex flex-col gap-3">
-      <div class="card shadow-lg p-5 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/5 -translate-y-1/2 translate-x-1/2"></div>
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <div class="badge badge-default mb-2 font-mono text-[10px]" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</div>
-            <h3 class="font-semibold text-base" data-de="Badewannen-Füllstandsmesser" data-en="Bath Water Level Monitor">Badewannen-Füllstandsmesser</h3>
-          </div>
-          <span class="text-4xl">🛁</span>
-        </div>
-        <p class="text-sm text-muted-foreground mb-4" data-de="Füllstand & Temperatur in Echtzeit. Akustischer Alarm bei 90% – nie wieder nasser Boden." data-en="Level & temperature in real time. Acoustic alarm at 90% – no more wet floors.">Füllstand & Temperatur in Echtzeit. Akustischer Alarm bei 90% – nie wieder nasser Boden.</p>
-        <div class="separator mb-4"></div>
-        <div class="flex items-center justify-between">
-          <span class="font-mono font-bold text-lg text-primary">CHF 49</span>
-          <a href="../badewanne.html" class="btn btn-outline text-xs px-3 py-1.5">Details →</a>
-        </div>
-      </div>
-      <div class="card shadow-lg p-5 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary/5 -translate-y-1/2 translate-x-1/2"></div>
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <div class="badge badge-default mb-2 font-mono text-[10px]" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</div>
-            <h3 class="font-semibold text-base" data-de="Duschzeitsensor Poti-Edition" data-en="Shower Timer Poti Edition">Duschzeitsensor Poti-Edition</h3>
-          </div>
-          <span class="text-4xl">🚿</span>
-        </div>
-        <p class="text-sm text-muted-foreground mb-4" data-de="Kabellos, automatischer Start via Mikrofon – 18650-Akku, bis zu 15 Tage Laufzeit." data-en="Wireless, automatic start via microphone – 18650 battery, up to 15 days runtime.">Kabellos, automatischer Start via Mikrofon – 18650-Akku, bis zu 15 Tage Laufzeit.</p>
-        <div class="separator mb-4"></div>
-        <div class="flex items-center justify-between">
-          <span class="font-mono font-bold text-lg text-primary">CHF 49</span>
-          <a href="../dusche.html" class="btn btn-outline text-xs px-3 py-1.5">Details →</a>
-        </div>
+      <div class="pop is-in pop-d2 hero-mark">
+        <svg viewBox="0 0 460 340" width="100%" aria-hidden="true">
+          <defs>
+            <clipPath id="logoClip"><rect x="140" y="80" width="180" height="180" rx="36"/></clipPath>
+          </defs>
+          <g class="mark-lines">
+            <path d="M230 170 L128 96"/>
+            <path d="M230 170 L230 46"/>
+            <path d="M230 170 L332 96"/>
+            <path d="M230 170 L120 246"/>
+            <path d="M230 170 L340 246"/>
+          </g>
+          <g class="mark-logo">
+            <image href="../favicon.png" x="140" y="80" width="180" height="180" clip-path="url(#logoClip)" preserveAspectRatio="xMidYMid slice"/>
+          </g>
+          <g font-size="26">
+            <circle cx="128" cy="96" r="28" fill="#fff"/>
+            <text x="128" y="106" text-anchor="middle">💧</text>
+            <circle cx="230" cy="46" r="28" fill="#fff"/>
+            <text x="230" y="56" text-anchor="middle">💡</text>
+            <circle cx="332" cy="96" r="28" fill="#fff"/>
+            <text x="332" y="106" text-anchor="middle">🚿</text>
+            <circle cx="120" cy="246" r="28" fill="#fff"/>
+            <text x="120" y="256" text-anchor="middle">🦾</text>
+            <circle cx="340" cy="246" r="28" fill="#fff"/>
+            <text x="340" y="256" text-anchor="middle">🔬</text>
+          </g>
+        </svg>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════ PRODUKTE (full detail) -->
-<section id="produkte" class="py-20 px-5 bg-muted/40">
-  <div class="max-w-6xl mx-auto">
-    <div class="mb-10 reveal">
-      <p class="section-label mb-2" data-de="Produkte" data-en="Products">Produkte</p>
-      <h2 class="text-3xl font-bold tracking-tight" data-de="Unsere Geräte" data-en="Our devices">Unsere Geräte</h2>
-      <p class="text-muted-foreground mt-2 max-w-md text-sm" data-de="Jedes Produkt löst ein echtes Problem. Klick für alle Details." data-en="Every product solves a real problem. Click for full details.">Jedes Produkt löst ein echtes Problem. Klick für alle Details.</p>
+<!-- ================= PRODUCTS ================= -->
+<section id="produkte" class="tiles">
+  <div class="wrap">
+    <div class="section-head center pop">
+      <p class="kicker"><span class="dot"></span><span data-lang-de>Werkstatt-Katalog</span><span data-lang-en>Workshop catalogue</span></p>
+      <h2><span data-lang-de>Zwei fertige Geräte.<br>Eine Idee, die gerade entsteht.</span><span data-lang-en>Two finished devices.<br>One idea taking shape.</span></h2>
+      <p class="sub"><span data-lang-de>Jedes Projekt startet mit einem echten Problem — mal im Badezimmer, mal am Mikroskop-Arbeitsplatz eines Kollegen.</span><span data-lang-en>Every project starts with a real problem — sometimes in the bathroom, sometimes at a colleague's microscope workbench.</span></p>
     </div>
 
-    <div class="card shadow-sm overflow-hidden reveal">
-      <!-- Product 1 -->
-      <a href="../badewanne.html" class="product-row flex items-center gap-5 px-6 py-5 cursor-pointer" style="text-decoration:none;color:inherit;">
-        <div class="w-12 h-12 rounded-lg bg-accent flex items-center justify-center text-2xl shrink-0">🛁</div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="font-semibold text-sm" data-de="Badewannen-Füllstandsmesser" data-en="Bath Water Level Monitor">Badewannen-Füllstandsmesser</span>
-            <span class="badge badge-accent font-mono text-[10px]" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
-          </div>
-          <p class="text-xs text-muted-foreground leading-relaxed truncate" data-de="Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft." data-en="Measures water level and temperature in real time. Acoustic alarm before the tub overflows.">Misst Füllstand und Wassertemperatur in Echtzeit. Akustischer Alarm bevor die Wanne überläuft.</p>
+    <div class="product-grid">
+      <a href="badewanne.html" class="pcard pop">
+        <p class="pnum"><span data-lang-de>Nr. 01 · Badewanne</span><span data-lang-en>No. 01 · Bathtub</span></p>
+        <h3 data-lang-de>Badewannen-Füllstandsmesser</h3>
+        <h3 data-lang-en>Bathtub Level Meter</h3>
+        <p class="desc" data-lang-de>Misst Füllstand &amp; Wassertemperatur — und spielt eine Melodie, sobald die Wanne voll ist. La Cucaracha inklusive.</p>
+        <p class="desc" data-lang-en>Measures fill level &amp; water temperature — and plays a melody once the tub is full. La Cucaracha included.</p>
+        <div class="pcard-scene">
+          <svg viewBox="0 0 330 190" aria-hidden="true">
+            <rect x="34" y="106" width="262" height="60" rx="22" fill="#f2f8fa" stroke="#06263f" stroke-width="3.5"/>
+            <path d="M44 122 Q 60 112 76 122 T 108 122 T 140 122 T 172 122 T 204 122 T 236 122 T 268 122 T 288 122 V 156 q0 4 -4 4 H 48 q-4 0 -4 -4 Z" fill="#35bfd6" opacity=".8"/>
+            <rect x="24" y="96" width="282" height="20" rx="10" fill="#ffffff" stroke="#06263f" stroke-width="3.5"/>
+            <rect x="62" y="176" width="12" height="10" rx="4" fill="#06263f"/>
+            <rect x="256" y="176" width="12" height="10" rx="4" fill="#06263f"/>
+            <rect x="48" y="62" width="52" height="28" rx="8" fill="#06263f"/>
+            <rect x="55" y="69" width="24" height="14" rx="3" fill="#35bfd6"/>
+            <circle cx="90" cy="76" r="4" fill="#ffd23f"/>
+            <g fill="#eab308" font-family="Bricolage Grotesque, sans-serif" font-size="20" font-weight="800">
+              <text class="note-float" x="130" y="92">♪</text>
+              <text class="note-float n2" x="156" y="98">♫</text>
+            </g>
+            <g class="bob" transform="translate(180,74) scale(.82)">
+              <ellipse cx="34" cy="42" rx="22" ry="14" fill="#ffd23f"/>
+              <path d="M52 36 q9 -9 4 -18 q-3 8 -13 9 Z" fill="#ffd23f"/>
+              <circle cx="18" cy="21" r="12.5" fill="#ffd23f"/>
+              <path d="M6.5 18 q-9 1.5 -7.5 5.5 q1.5 4 9.5 2.5 Z" fill="#ff8c42"/>
+              <circle cx="15" cy="17" r="2.2" fill="#06263f"/>
+              <path d="M28 40 q8 -7 16 -2" stroke="#eab308" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
         </div>
-        <div class="text-right shrink-0">
-          <div class="font-mono font-bold text-primary">CHF 49</div>
-          <div class="text-xs text-muted-foreground" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</div>
+        <div class="pcard-foot">
+          <span class="price-bubble"><small>CHF</small>39</span>
+          <span class="pcard-go"><span data-lang-de>Anschauen</span><span data-lang-en>Take a look</span> <span class="arr">→</span></span>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 text-muted-foreground shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <div class="separator"></div>
-      <!-- Product 2 -->
-      <a href="../dusche.html" class="product-row flex items-center gap-5 px-6 py-5 cursor-pointer" style="text-decoration:none;color:inherit;">
-        <div class="w-12 h-12 rounded-lg bg-accent flex items-center justify-center text-2xl shrink-0">🚿</div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="font-semibold text-sm" data-de="Duschzeitsensor Poti-Edition" data-en="Shower Timer Poti Edition">Duschzeitsensor Poti-Edition</span>
-            <span class="badge badge-accent font-mono text-[10px]" data-de="VERFÜGBAR" data-en="AVAILABLE">VERFÜGBAR</span>
-          </div>
-          <p class="text-xs text-muted-foreground leading-relaxed truncate" data-de="Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar, 18650-Akku." data-en="Wireless, automatic start via microphone, traffic light – time 4–15 min. adjustable, 18650 battery.">Kabellos, automatischer Start via Mikrofon, Ampellogik – Zeit 4–15 Min. per Trimmpoti einstellbar, 18650-Akku.</p>
+
+      <a href="dusche.html" class="pcard pop pop-d1">
+        <p class="pnum"><span data-lang-de>Nr. 02 · Dusche</span><span data-lang-en>No. 02 · Shower</span></p>
+        <h3 data-lang-de>Duschzeitsensor</h3>
+        <h3 data-lang-en>Shower Timer</h3>
+        <p class="desc" data-lang-de>Hört, wann du duschst, und zählt per Ampel runter. Duschzeit von 4–15 Minuten frei einstellbar — ganz ohne Knopfdruck.</p>
+        <p class="desc" data-lang-en>Hears when you shower and counts down via traffic light. Shower time freely adjustable from 4–15 minutes — no buttons needed.</p>
+        <div class="pcard-scene">
+          <svg viewBox="0 0 330 190" aria-hidden="true">
+            <path d="M60 34 H 158 v14" stroke="#06263f" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <path d="M128 48 h60 l9 22 h-78 Z" fill="#ffffff" stroke="#06263f" stroke-width="3.5"/>
+            <g class="drops">
+              <line x1="134" y1="82" x2="134" y2="94"/>
+              <line x1="149" y1="82" x2="149" y2="94"/>
+              <line x1="164" y1="82" x2="164" y2="94"/>
+              <line x1="179" y1="82" x2="179" y2="94"/>
+              <line x1="156" y1="82" x2="156" y2="94"/>
+              <line x1="171" y1="82" x2="171" y2="94"/>
+            </g>
+            <rect x="112" y="168" width="96" height="10" rx="5" fill="#06263f" opacity=".18"/>
+            <rect x="238" y="52" width="62" height="106" rx="17" fill="#ffffff" stroke="#06263f" stroke-width="3.5"/>
+            <circle cx="269" cy="80" r="10" fill="#35c78a"/>
+            <circle cx="269" cy="106" r="10" fill="#ffd23f"/>
+            <circle cx="269" cy="132" r="10" fill="#ff6f59" opacity=".35"/>
+            <line x1="261" y1="146" x2="277" y2="146" stroke="#06263f" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div class="text-right shrink-0">
-          <div class="font-mono font-bold text-primary">CHF 49</div>
-          <div class="text-xs text-muted-foreground" data-de="inkl. MwSt." data-en="incl. VAT">inkl. MwSt.</div>
+        <div class="pcard-foot">
+          <span class="price-bubble"><small>CHF</small>49</span>
+          <span class="pcard-go"><span data-lang-de>Anschauen</span><span data-lang-en>Take a look</span> <span class="arr">→</span></span>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 text-muted-foreground shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="loetarm.html" class="pcard pop pop-d2">
+        <p class="pnum"><span data-lang-de>Nr. 03 · Werkstatt</span><span data-lang-en>No. 03 · Workshop</span></p>
+        <h3 data-lang-de>Löt-Arm mit Zitter-Kompensation</h3>
+        <h3 data-lang-en>Tremor-Compensating Solder Arm</h3>
+        <p class="desc" data-lang-de>Ein gimbal-stabilisierter Lötkolben, der Handzittern beim SMD-Löten unter dem Mikroskop herausfiltert. Für einen Kollegen entwickelt, aktuell im Prototypenbau.</p>
+        <p class="desc" data-lang-en>A gimbal-stabilized soldering iron that filters out hand tremor for SMD soldering under the microscope. Built for a colleague, currently in prototyping.</p>
+        <div class="pcard-scene">
+          <svg viewBox="0 0 330 190" aria-hidden="true">
+            <rect x="150" y="118" width="132" height="56" rx="6" fill="#1f6b4a" stroke="#06263f" stroke-width="3.5"/>
+            <circle cx="172" cy="138" r="4" fill="#ffd23f"/>
+            <circle cx="196" cy="138" r="4" fill="#ffd23f"/>
+            <circle cx="220" cy="138" r="4" fill="#ffd23f"/>
+            <circle cx="172" cy="156" r="4" fill="#ffd23f"/>
+            <circle cx="196" cy="156" r="4" fill="#ffd23f"/>
+            <ellipse cx="40" cy="104" rx="25" ry="31" fill="#ffd9a8" stroke="#06263f" stroke-width="3"/>
+            <circle cx="72" cy="90" r="18" fill="#06263f"/>
+            <rect x="88" y="84" width="34" height="12" rx="5" fill="#06263f"/>
+            <circle cx="130" cy="90" r="12" fill="#35bfd6" stroke="#06263f" stroke-width="2"/>
+            <rect x="140" y="85" width="72" height="9" rx="4" fill="#d9d9d9" stroke="#06263f" stroke-width="2.5"/>
+            <rect x="208" y="82" width="18" height="14" rx="3" fill="#ff6f59"/>
+            <circle cx="226" cy="89" r="14" fill="none" stroke="#eab308" stroke-width="2" stroke-dasharray="3 3"/>
+            <circle cx="226" cy="89" r="4" fill="#eab308"/>
+          </svg>
+        </div>
+        <div class="pcard-foot">
+          <span class="badge-dev"><span data-lang-de>In<br>Entwicklung</span><span data-lang-en>In<br>Development</span></span>
+          <span class="pcard-go"><span data-lang-de>Konzept ansehen</span><span data-lang-en>See the concept</span> <span class="arr">→</span></span>
+        </div>
       </a>
     </div>
-  </div>
-</section>
 
-
-<!-- ═══════════════════════════════════════════════════ WERTE (Bento Grid) -->
-<section id="werte" class="py-20 px-5">
-  <div class="max-w-6xl mx-auto">
-    <div class="mb-10 reveal">
-      <p class="section-label mb-2" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</p>
-      <h2 class="text-3xl font-bold tracking-tight" data-de="Warum CJ Solutions" data-en="Why CJ Solutions">Warum CJ Solutions</h2>
-      <p class="text-muted-foreground mt-2 max-w-md text-sm" data-de="Als Techniker wissen wir was zählt: Zuverlässigkeit und saubere Ausführung." data-en="As technicians we know what matters: reliability and clean execution.">Als Techniker wissen wir was zählt: Zuverlässigkeit und saubere Ausführung.</p>
-    </div>
-
-    <!-- Bento grid -->
-    <div class="bento-grid reveal">
-
-      <!-- Large: PCB Design -->
-      <div class="bento-wide card shadow-sm p-7 flex flex-col justify-between min-h-[200px] group hover:border-primary/40 transition-colors rd1">
-        <div class="text-4xl mb-4">🔲</div>
-        <div>
-          <h3 class="font-bold text-lg mb-2" data-de="Eigenes PCB-Design" data-en="Custom PCB design">Eigenes PCB-Design</h3>
-          <p class="text-sm text-muted-foreground leading-relaxed" data-de="Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout. Entwickelt in KiCad, gefertigt für Langlebigkeit." data-en="No breadboard chaos – every device has a professionally made PCB layout. Designed in KiCad, built for longevity.">Kein Breadboard-Gewirr – jedes Gerät hat ein professionell gefertigtes Platinen-Layout. Entwickelt in KiCad, gefertigt für Langlebigkeit.</p>
-        </div>
-        <div class="mt-4 flex items-center gap-2 text-xs text-muted-foreground font-mono">
-          <span class="badge badge-outline">KiCad</span>
-          <span class="badge badge-outline">SMD</span>
-          <span class="badge badge-outline">THT</span>
-        </div>
-      </div>
-
-      <!-- Right tall: Made in Switzerland -->
-      <div class="bento-tall card shadow-sm p-7 flex flex-col bg-primary text-primary-foreground border-primary rd2" style="border-color:hsl(var(--primary));">
-        <div class="text-5xl mb-auto">🇨🇭</div>
-        <div class="mt-8">
-          <h3 class="font-bold text-lg mb-2">Made in<br>Switzerland</h3>
-          <p class="text-sm opacity-80 leading-relaxed" data-de="Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt." data-en="Developed, soldered, and tested in Switzerland. Short delivery, direct contact.">Entwickelt, gelötet und getestet in der Schweiz. Kurze Lieferwege, direkter Kontakt.</p>
-        </div>
-      </div>
-
-      <!-- Bottom left: Praxisnah -->
-      <div class="card shadow-sm p-6 hover:border-primary/40 transition-colors rd3">
-        <div class="text-3xl mb-3">🛠</div>
-        <h3 class="font-bold mb-1.5" data-de="Praxisnah entwickelt" data-en="Developed from practice">Praxisnah entwickelt</h3>
-        <p class="text-sm text-muted-foreground leading-relaxed" data-de="Entstanden aus echten Problemen – nicht aus dem Lehrbuch." data-en="Born from real problems – not from a textbook.">Entstanden aus echten Problemen – nicht aus dem Lehrbuch.</p>
-      </div>
-
-      <!-- Bottom middle: Komplett -->
-      <div class="card shadow-sm p-6 hover:border-primary/40 transition-colors rd4">
-        <div class="text-3xl mb-3">📦</div>
-        <h3 class="font-bold mb-1.5" data-de="Komplett geliefert" data-en="Complete delivery">Komplett geliefert</h3>
-        <p class="text-sm text-muted-foreground leading-relaxed" data-de="Fertig aufgebaut, getestet, mit Anleitung. Einstecken und loslegen." data-en="Fully assembled, tested, with instructions. Plug in and go.">Fertig aufgebaut, getestet, mit Anleitung. Einstecken und loslegen.</p>
-      </div>
-
+    <div class="pill-strip pop">
+      <span class="pill" data-lang-de>✕ Keine App</span><span class="pill" data-lang-en>✕ No app</span>
+      <span class="pill" data-lang-de>✕ Kein Konto</span><span class="pill" data-lang-en>✕ No account</span>
+      <span class="pill" data-lang-de>✕ Kein Abo</span><span class="pill" data-lang-en>✕ No subscription</span>
+      <span class="pill" data-lang-de>✓ Akku + USB-C</span><span class="pill" data-lang-en>✓ Battery + USB-C</span>
+      <span class="pill" data-lang-de>✓ Handgelötet in der Schweiz</span><span class="pill" data-lang-en>✓ Hand-soldered in Switzerland</span>
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════ PROZESS (vertical timeline) -->
-<section id="prozess" class="py-20 px-5 bg-muted/40">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-16 items-start">
-
-      <!-- Left: header -->
-      <div class="md:sticky md:top-24 reveal rd1">
-        <p class="section-label mb-2" data-de="Wie es funktioniert" data-en="How it works">Wie es funktioniert</p>
-        <h2 class="text-3xl font-bold tracking-tight mb-4" data-de="Vom Schaltplan zum fertigen Gerät" data-en="From schematic to finished device">Vom Schaltplan zum<br>fertigen Gerät</h2>
-        <p class="text-muted-foreground text-sm leading-relaxed mb-6" data-de="Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung an die Haustüre." data-en="Every CJ device goes through the same careful process – from the first concept to delivery at your door.">Jedes CJ-Gerät durchläuft denselben sorgfältigen Prozess – vom ersten Konzept bis zur Lieferung an die Haustüre.</p>
-        <a href="#kontakt" class="btn btn-primary" data-de="Jetzt bestellen" data-en="Order now">Jetzt bestellen</a>
-      </div>
-
-      <!-- Right: timeline steps -->
-      <div class="reveal rd2">
-        <div class="relative">
-          <div class="timeline-line"></div>
-          <div class="space-y-8">
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10">01</div>
-              <div class="pt-1 pb-2">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">💡</span><h4 class="font-semibold" data-de="Idee" data-en="Idea">Idee</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Echtes Problem aus dem Alltag identifizieren" data-en="Identifying a real everyday problem">Echtes Problem aus dem Alltag identifizieren</p>
-              </div>
-            </div>
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10 text-foreground">02</div>
-              <div class="pt-1 pb-2">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">📐</span><h4 class="font-semibold" data-de="Schaltplan" data-en="Schematic">Schaltplan</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Konzept und Schaltungsentwurf" data-en="Concept & circuit design">Konzept und Schaltungsentwurf</p>
-              </div>
-            </div>
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10 text-foreground">03</div>
-              <div class="pt-1 pb-2">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">🔲</span><h4 class="font-semibold" data-de="PCB-Design" data-en="PCB Design">PCB-Design</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Eigenes professionelles Platinen-Layout" data-en="Custom professional PCB layout">Eigenes professionelles Platinen-Layout</p>
-              </div>
-            </div>
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10 text-foreground">04</div>
-              <div class="pt-1 pb-2">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">🔧</span><h4 class="font-semibold" data-de="Fertigung" data-en="Assembly">Fertigung</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Löten und Aufbau von Hand" data-en="Soldering & manual assembly">Löten und Aufbau von Hand</p>
-              </div>
-            </div>
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10 text-foreground">05</div>
-              <div class="pt-1 pb-2">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">✅</span><h4 class="font-semibold" data-de="Test & QA" data-en="Test & QA">Test & QA</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Jedes Gerät wird einzeln geprüft" data-en="Every device is individually tested">Jedes Gerät wird einzeln geprüft</p>
-              </div>
-            </div>
-
-            <div class="flex gap-5 relative">
-              <div class="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-mono font-bold text-sm shrink-0 z-10">06</div>
-              <div class="pt-1">
-                <div class="flex items-center gap-2 mb-1"><span class="text-xl">📦</span><h4 class="font-semibold" data-de="Versand" data-en="Shipping">Versand</h4></div>
-                <p class="text-sm text-muted-foreground" data-de="Sicher verpackt, direkt zu dir" data-en="Securely packed, straight to you">Sicher verpackt, direkt zu dir</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════ ÜBER UNS -->
-<section id="ueber" class="py-20 px-5">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-
-    <div class="reveal rd1">
-      <p class="section-label mb-2" data-de="Über uns" data-en="About us">Über uns</p>
-      <h2 class="text-3xl font-bold tracking-tight mb-4" data-de="Techniker. Maker. Problemlöser." data-en="Technician. Maker. Problem solver.">Techniker. Maker.<br><span class="text-primary">Problemlöser.</span></h2>
-      <p class="text-muted-foreground text-sm leading-relaxed mb-4" data-de="CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis." data-en="CJ Solutions was born from the desire to create practical electronics for everyday life – built cleanly, at a fair price.">CJ Solutions entstand aus dem Wunsch, praktische Elektronik-Lösungen für den Alltag zu schaffen – sauber gebaut, zu einem fairen Preis.</p>
-      <p class="text-muted-foreground text-sm leading-relaxed" data-de="Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät." data-en="Every product is developed by a trained technician with Python and Arduino experience. From the first schematic to the finished device.">Jedes Produkt wird von einem ausgebildeten Techniker mit Python- und Arduino-Erfahrung entwickelt. Vom ersten Schaltplan bis zum fertigen Gerät.</p>
+<!-- ================= WORKSHOP ================= -->
+<section id="werkstatt">
+  <div class="wrap">
+    <div class="section-head center pop">
+      <p class="kicker"><span class="dot"></span><span data-lang-de>Die Werkstatt</span><span data-lang-en>The workshop</span></p>
+      <h2><span data-lang-de>Kein Fliessband. Ein Lötkolben,<br>ein Multimeter, ein Nachmittag.</span><span data-lang-en>No assembly line. A soldering iron,<br>a multimeter, an afternoon.</span></h2>
+      <p class="sub"><span data-lang-de>Jedes Gerät wird einzeln aufgebaut, kalibriert und getestet, bevor es das Haus verlässt.</span><span data-lang-en>Every unit is assembled, calibrated and tested individually before it leaves the house.</span></p>
     </div>
 
-    <!-- Clean code block (shadcn code style) -->
-    <div class="reveal rd2 card shadow-sm overflow-hidden">
-      <div class="flex items-center gap-2 px-4 py-3 bg-muted/60 border-b border-border">
-        <div class="flex gap-1.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
-        </div>
-        <span class="font-mono text-xs text-muted-foreground ml-2">whoami.sh</span>
+    <div class="step-grid">
+      <div class="step-card pop">
+        <div class="badge">1</div>
+        <h4 data-lang-de>Entwickelt</h4><h4 data-lang-en>Designed</h4>
+        <p data-lang-de>Schaltplan, Firmware und Gehäuse selbst entworfen und über mehrere Versionen getestet.</p>
+        <p data-lang-en>Circuit, firmware and housing self-designed and tested over several iterations.</p>
       </div>
-      <div class="p-5 font-mono text-sm leading-7 bg-zinc-950 text-zinc-100 dark:bg-zinc-900">
-        <div><span class="text-zinc-500">$</span> <span class="text-green-400">whoami</span></div>
-        <div class="text-teal-400 pl-2">Techniker, Schweiz</div>
-        <br>
-        <div><span class="text-zinc-500">$</span> <span class="text-green-400">skills</span> <span class="text-zinc-400">--list</span></div>
-        <div class="text-teal-300 pl-2">Arduino / C++</div>
-        <div class="text-teal-300 pl-2">Python</div>
-        <div class="text-teal-300 pl-2">PCB Design (KiCad)</div>
-        <div class="text-teal-300 pl-2">Elektronik / Wartung</div>
-        <br>
-        <div><span class="text-zinc-500">$</span> <span class="text-green-400">products</span> <span class="text-zinc-400">--status</span></div>
-        <div class="text-emerald-400 pl-2">✓ 2 live</div>
-        <div class="text-violet-400 pl-2">⋯ more in dev</div>
-        <div class="flex items-center mt-1">
-          <span class="text-zinc-500">$ </span>
-          <span class="inline-block w-2 h-4 bg-teal-400 ml-1 animate-pulse"></span>
-        </div>
+      <div class="step-card pop pop-d1">
+        <div class="badge">2</div>
+        <h4 data-lang-de>Gelötet &amp; kalibriert</h4><h4 data-lang-en>Soldered &amp; calibrated</h4>
+        <p data-lang-de>Von Hand verdrahtet, jeder Sensor einzeln justiert — kein Gerät verlässt die Werkstatt ungeprüft.</p>
+        <p data-lang-en>Hand-wired, every sensor individually calibrated — no device leaves the workshop untested.</p>
+      </div>
+      <div class="step-card pop pop-d2">
+        <div class="badge">3</div>
+        <h4 data-lang-de>Verschickt</h4><h4 data-lang-en>Shipped</h4>
+        <p data-lang-de>Direkt ab Werkstatt in der Schweiz — verpackt, geladen und einsatzbereit.</p>
+        <p data-lang-en>Straight from the Swiss workshop — packaged, charged and ready to go.</p>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════ FAQ -->
-<section id="faq" class="py-20 px-5 bg-muted/40">
-  <div class="max-w-3xl mx-auto">
-    <div class="mb-10 reveal">
-      <p class="section-label mb-2" data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</p>
-      <h2 class="text-3xl font-bold tracking-tight" data-de="Oft gestellte Fragen" data-en="Frequently asked questions">Oft gestellte Fragen</h2>
-    </div>
-
-    <div class="card shadow-sm overflow-hidden divide-y divide-border reveal">
-
-      <div class="faq-item">
-        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-4 gap-4 hover:bg-muted/60 transition-colors" data-de="Wie läuft eine Bestellung ab?" data-en="How does ordering work?">
-          <span class="font-medium text-sm">Wie läuft eine Bestellung ab?</span>
-          <span class="faq-icon text-primary font-mono text-lg font-bold shrink-0">+</span>
-        </button>
-        <div class="faq-answer">
-          <p class="px-6 pb-4 pt-0 text-sm text-muted-foreground" data-de="Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht." data-en="Simply send an email with the desired product and delivery address. We confirm within 48 hours and send payment details.">
-            Einfach eine E-Mail schicken mit gewünschtem Produkt und Lieferadresse. Wir bestätigen die Bestellung innerhalb von 48 Stunden und senden eine Zahlungsübersicht.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-4 gap-4 hover:bg-muted/60 transition-colors" data-de="Wohin wird versandt?" data-en="Where do you ship?">
-          <span class="font-medium text-sm">Wohin wird versandt?</span>
-          <span class="faq-icon text-primary font-mono text-lg font-bold shrink-0">+</span>
-        </button>
-        <div class="faq-answer">
-          <p class="px-6 pb-4 pt-0 text-sm text-muted-foreground" data-de="Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache möglich. Für internationale Anfragen einfach melden." data-en="We currently ship within Switzerland. Pickup by arrangement possible. For international requests, just get in touch.">
-            Aktuell versenden wir innerhalb der Schweiz. Abholung nach Absprache möglich. Für internationale Anfragen einfach melden.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-4 gap-4 hover:bg-muted/60 transition-colors" data-de="Gibt es eine Garantie?" data-en="Is there a warranty?">
-          <span class="font-medium text-sm">Gibt es eine Garantie?</span>
-          <span class="faq-icon text-primary font-mono text-lg font-bold shrink-0">+</span>
-        </button>
-        <div class="faq-answer">
-          <p class="px-6 pb-4 pt-0 text-sm text-muted-foreground" data-de="Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt." data-en="Yes. Every device is individually tested before shipping. Defects within 6 months are repaired or replaced free of charge.">
-            Ja. Jedes Gerät wird vor dem Versand einzeln geprüft. Bei Defekten innerhalb von 6 Monaten wird das Gerät kostenlos repariert oder ersetzt.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-4 gap-4 hover:bg-muted/60 transition-colors" data-de="Sind individuelle Projekte möglich?" data-en="Are custom projects possible?">
-          <span class="font-medium text-sm">Sind individuelle Projekte möglich?</span>
-          <span class="faq-icon text-primary font-mono text-lg font-bold shrink-0">+</span>
-        </button>
-        <div class="faq-answer">
-          <p class="px-6 pb-4 pt-0 text-sm text-muted-foreground" data-de="Ja, gerne. Wenn du eine konkrete Idee hast, meld dich – wir schauen gemeinsam wie wir das umsetzen können." data-en="Yes, absolutely. If you have a specific idea, get in touch – we'll look together at how to make it work.">
-            Ja, gerne. Wenn du eine konkrete Idee hast, meld dich – wir schauen gemeinsam wie wir das umsetzen können.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question w-full flex items-center justify-between text-left px-6 py-4 gap-4 hover:bg-muted/60 transition-colors" data-de="Wie lange dauert die Lieferung?" data-en="How long does delivery take?">
-          <span class="font-medium text-sm">Wie lange dauert die Lieferung?</span>
-          <span class="faq-icon text-primary font-mono text-lg font-bold shrink-0">+</span>
-        </button>
-        <div class="faq-answer">
-          <p class="px-6 pb-4 pt-0 text-sm text-muted-foreground" data-de="Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung." data-en="Since every device is handcrafted and individually tested, delivery typically takes 5–10 business days from order confirmation.">
-            Da jedes Gerät handgefertigt und individuell geprüft wird, beträgt die Lieferzeit in der Regel 5–10 Werktage ab Bestellbestätigung.
-          </p>
-        </div>
-      </div>
-
+<!-- ================= CONTACT ================= -->
+<section class="splash-cta" id="kontakt">
+  <div class="wrap" style="max-width:720px; position:relative;">
+    <p class="kicker"><span class="dot"></span><span data-lang-de>Bestellen &amp; Anfragen</span><span data-lang-en>Order &amp; enquire</span></p>
+    <h2><span data-lang-de>Lust auf ein Gerät —<br>oder eine eigene Idee?</span><span data-lang-en>Fancy a device —<br>or have an idea of your own?</span></h2>
+    <p class="sub"><span data-lang-de>Schreib uns kurz, welches Gerät und wie viele Stück, oder was für ein Problem du gelöst haben möchtest — wir melden uns.</span><span data-lang-en>Drop us a line with the device and quantity, or what problem you'd like solved — we'll get back to you.</span></p>
+    <div class="hero-actions" style="margin-top:30px;">
+      <a href="mailto:cj.solutions.switzerland@gmail.com?subject=Anfrage%20CJ%20Solutions" class="btn btn-duck">✉ cj.solutions.switzerland@gmail.com</a>
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════════════════════════════════════════ KONTAKT -->
-<section id="kontakt" class="py-20 px-5">
-  <div class="max-w-xl mx-auto">
-    <div class="mb-8 text-center reveal">
-      <p class="section-label mb-2" data-de="Kontakt" data-en="Contact">Kontakt</p>
-      <h2 class="text-3xl font-bold tracking-tight" data-de="Interesse? Fragen?" data-en="Interested? Questions?">Interesse? Fragen?</h2>
-      <p class="text-muted-foreground mt-2 text-sm" data-de="Für Bestellungen, Fragen oder individuelle Projekte." data-en="For orders, questions, or custom projects.">Für Bestellungen, Fragen oder individuelle Projekte.</p>
-    </div>
-
-    <div class="card shadow-sm p-6 md:p-8 reveal">
-      <form id="contactForm" action="https://formspree.io/f/xpqgllon" method="POST" class="space-y-4">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-medium text-muted-foreground mb-1.5 font-mono uppercase tracking-wide" data-de="Name" data-en="Name">Name</label>
-            <input type="text" name="name" placeholder="Max Muster" required class="input">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-muted-foreground mb-1.5 font-mono uppercase tracking-wide" data-de="E-Mail" data-en="E-Mail">E-Mail</label>
-            <input type="email" name="email" placeholder="max@beispiel.ch" required class="input">
-          </div>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-muted-foreground mb-1.5 font-mono uppercase tracking-wide" data-de="Betreff" data-en="Subject">Betreff</label>
-          <input type="text" name="subject" placeholder="Bestellung / Frage / Projekt" class="input">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-muted-foreground mb-1.5 font-mono uppercase tracking-wide" data-de="Nachricht" data-en="Message">Nachricht</label>
-          <textarea name="message" rows="4" placeholder="Deine Nachricht…" required class="input resize-y"></textarea>
-        </div>
-        <div class="flex items-center justify-between flex-wrap gap-3 pt-1">
-          <p class="text-xs text-muted-foreground">
-            <span data-de="Oder direkt:" data-en="Or directly:">Oder direkt:</span>
-            <a href="mailto:cj.solutions.switzerland@gmail.com" class="text-primary hover:underline ml-1">cj.solutions.switzerland@gmail.com</a>
-          </p>
-          <button type="submit" class="btn btn-primary">
-            <span data-de="Senden" data-en="Send">Senden</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-          </button>
-        </div>
-      </form>
-      <div id="formSuccess" class="hidden text-center py-6">
-        <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-primary text-xl mx-auto mb-3">✓</div>
-        <p class="font-semibold text-sm" data-de="Nachricht erhalten – wir melden uns bald!" data-en="Message received – we'll be in touch soon!">Nachricht erhalten – wir melden uns bald!</p>
-      </div>
-      <p class="text-xs text-muted-foreground text-center mt-5" data-de="Versand innerhalb der Schweiz. Abholung nach Absprache möglich." data-en="Shipping within Switzerland. Pickup by arrangement possible.">Versand innerhalb der Schweiz. Abholung nach Absprache möglich.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════ NEWSLETTER -->
-<section class="py-16 px-5 bg-muted/40">
-  <div class="max-w-4xl mx-auto">
-    <div class="reveal card shadow-sm p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-      <div>
-        <h4 class="font-bold text-base mb-1" data-de="Neue Produkte nicht verpassen" data-en="Don't miss new products">Neue Produkte nicht verpassen</h4>
-        <p class="text-muted-foreground text-sm" data-de="E-Mail hinterlassen – kein Spam, nur Neuheiten." data-en="Leave your email – no spam, just new releases.">E-Mail hinterlassen – kein Spam, nur Neuheiten.</p>
-      </div>
-      <form id="newsletterForm" action="https://formspree.io/f/xwvdqqwg" method="POST" class="flex gap-2 shrink-0 flex-wrap">
-        <input type="email" name="email" placeholder="deine@email.ch" required class="input" style="width:200px;">
-        <button type="submit" class="btn btn-primary" data-de="Anmelden" data-en="Subscribe">Anmelden</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════ FOOTER -->
-<footer class="border-t border-border px-5 py-10">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-sm">
+<footer class="site">
+  <div class="wrap foot-grid">
     <div>
-      <div class="flex items-center gap-2 mb-3">
-        <span class="w-6 h-6 rounded bg-primary flex items-center justify-center text-primary-foreground font-bold text-xs font-mono">CJ</span>
-        <span class="font-semibold">CJ Solutions</span>
-      </div>
-      <p class="text-muted-foreground text-xs leading-relaxed" data-de="Handgefertigte Elektronik-Lösungen für den Alltag. Made in Switzerland." data-en="Handcrafted electronics for everyday life. Made in Switzerland.">Handgefertigte Elektronik-Lösungen für den Alltag. Made in Switzerland.</p>
+      <div class="foot-brand">CJ Solutions</div>
+      <p class="foot-note" data-lang-de>Handgefertigte Technik aus der Schweiz — vom Badezimmer bis zur Werkbank.</p>
+      <p class="foot-note" data-lang-en>Handmade engineering from Switzerland — from the bathroom to the workbench.</p>
     </div>
-    <div>
-      <p class="font-semibold mb-3 text-xs uppercase tracking-wide text-muted-foreground font-mono" data-de="Produkte" data-en="Products">Produkte</p>
-      <div class="space-y-2">
-        <a href="../badewanne.html" class="block text-muted-foreground hover:text-foreground transition-colors text-xs" data-de="Badewannen-Füllstandsmesser" data-en="Bath Water Level Monitor">Badewannen-Füllstandsmesser</a>
-        <a href="../dusche.html" class="block text-muted-foreground hover:text-foreground transition-colors text-xs" data-de="Duschzeitsensor Poti-Edition" data-en="Shower Timer Poti Edition">Duschzeitsensor Poti-Edition</a>
-      </div>
-    </div>
-    <div>
-      <p class="font-semibold mb-3 text-xs uppercase tracking-wide text-muted-foreground font-mono" data-de="Kontakt" data-en="Contact">Kontakt</p>
-      <a href="mailto:cj.solutions.switzerland@gmail.com" class="text-muted-foreground hover:text-foreground transition-colors text-xs block">cj.solutions.switzerland@gmail.com</a>
-      <p class="text-muted-foreground text-xs mt-2">© 2026 CJ Solutions, Schweiz</p>
-    </div>
+    <ul class="foot-links">
+      <li><a href="badewanne.html" data-lang-de>Badewanne</a><a href="badewanne.html" data-lang-en>Bathtub</a></li>
+      <li><a href="dusche.html" data-lang-de>Dusche</a><a href="dusche.html" data-lang-en>Shower</a></li>
+      <li><a href="loetarm.html" data-lang-de>Löt-Arm</a><a href="loetarm.html" data-lang-en>Solder Arm</a></li>
+      <li><a href="mailto:cj.solutions.switzerland@gmail.com">Mail</a></li>
+    </ul>
   </div>
 </footer>
 
-
+<script src="js/main.js"></script>
 <script>
-  /* ── Dark mode ── */
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const savedTheme = localStorage.getItem('cjtheme');
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.documentElement.classList.add('dark');
-  document.getElementById('darkToggle').addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('cjtheme', isDark ? 'dark' : 'light');
-  });
-
-  /* ── Language ── */
-  let lang = localStorage.getItem('cjlang') || 'de';
-  const langBtn = document.getElementById('langToggle');
-  function applyLang(l) {
-    lang = l;
-    langBtn.textContent = lang === 'de' ? 'EN' : 'DE';
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-de]').forEach(el => {
-      const text = el.getAttribute('data-' + lang);
-      if (!text) return;
-      if (['H1','H2','H3','H4','P','SPAN','A','BUTTON','DIV','LABEL'].includes(el.tagName)) el.innerHTML = text;
-      else el.textContent = text;
+  /* compare.html scroll-sync bridge — uses postMessage since direct iframe DOM
+     access is blocked cross-origin when pages are opened via file:// */
+  (function(){
+    if (window.parent === window) return;
+    var applying = false;
+    window.addEventListener('scroll', function(){
+      if (applying) return;
+      var max = document.body.scrollHeight - window.innerHeight;
+      window.parent.postMessage({ cjCompareScroll: true, ratio: max > 0 ? window.scrollY / max : 0 }, '*');
+    }, { passive: true });
+    window.addEventListener('message', function(e){
+      var d = e.data;
+      if (!d || !d.cjCompareScrollTo) return;
+      applying = true;
+      var max = document.body.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: max * d.ratio, behavior: 'instant' });
+      requestAnimationFrame(function(){ applying = false; });
     });
-  }
-  langBtn.addEventListener('click', () => { applyLang(lang === 'de' ? 'en' : 'de'); localStorage.setItem('cjlang', lang); });
-  if (lang === 'en') applyLang('en');
-
-  /* ── Mobile menu ── */
-  const burger = document.getElementById('burgerBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
-
-  /* ── Scroll reveal ── */
-  const ro = new IntersectionObserver(es => {
-    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-
-  /* ── FAQ ── */
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-
-  /* ── Contact form ── */
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  if (form) {
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (res.ok) { form.style.display = 'none'; success.classList.remove('hidden'); }
-      } catch {}
-    });
-  }
-
-  /* ── Newsletter ── */
-  const nl = document.getElementById('newsletterForm');
-  if (nl) {
-    nl.addEventListener('submit', async e => {
-      e.preventDefault();
-      try {
-        const res = await fetch(nl.action, { method: 'POST', body: new FormData(nl), headers: { Accept: 'application/json' } });
-        if (res.ok) nl.innerHTML = '<span class="text-sm text-primary font-medium">✓ ' + (lang === 'de' ? 'Eingetragen!' : 'Subscribed!') + '</span>';
-      } catch {}
-    });
-  }
-
-  /* ── Active nav on scroll ── */
-  const secs = document.querySelectorAll('section[id]');
-  const navAs = document.querySelectorAll('nav a[href^="#"], #mobileMenu a[href^="#"]');
-  new IntersectionObserver(es => {
-    es.forEach(e => {
-      if (e.isIntersecting) {
-        const id = e.target.id;
-        navAs.forEach(a => {
-          a.classList.toggle('text-foreground', a.getAttribute('href') === '#' + id);
-          a.classList.toggle('text-muted-foreground', a.getAttribute('href') !== '#' + id);
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' }).observe && secs.forEach(s => {
-    new IntersectionObserver(es => {
-      es.forEach(e => {
-        if (e.isIntersecting) navAs.forEach(a => {
-          const active = a.getAttribute('href') === '#' + e.target.id;
-          a.style.color = active ? 'hsl(var(--foreground))' : '';
-        });
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' }).observe(s);
-  });
+  })();
 </script>
 </body>
 </html>
