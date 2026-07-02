@@ -371,6 +371,28 @@ header.floaty{
 .splash-cta p.sub{ color:rgba(255,255,255,.8); margin-top:14px; font-size:1.08rem; }
 .splash-cta .hero-actions{ justify-content:center; }
 
+/* ------------------- newsletter ------------------- */
+.newsletter-card{
+  background:var(--white); border:2px solid var(--line); border-radius:var(--r-lg);
+  box-shadow:var(--shadow-soft); max-width:600px; margin:0 auto;
+  padding:44px; display:flex; flex-direction:column; align-items:center; text-align:center;
+  gap:6px;
+}
+.newsletter-card .kicker{ margin-left:auto; margin-right:auto; }
+.newsletter-card h3{ font-size:1.3rem; margin:6px 0 6px; }
+.newsletter-card p{ color:var(--ink-soft); font-size:.95rem; max-width:38ch; margin:0 auto; }
+.newsletter-form{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:20px; width:100%; }
+.newsletter-input{
+  font-family:var(--font-body); font-size:.95rem;
+  background:var(--porcelain); border:2px solid var(--line); color:var(--ink);
+  padding:12px 18px; border-radius:999px; outline:none; width:230px;
+  transition:border-color .15s;
+}
+.newsletter-input::placeholder{ color:var(--ink-faint); }
+.newsletter-input:focus{ border-color:var(--aqua); }
+.newsletter-success{ display:none; font-family:var(--font-display); font-weight:700; color:var(--leaf); margin-top:14px; }
+.newsletter-success.show{ display:block; }
+
 /* ------------------- footer ------------------- */
 footer.site{
   background:var(--deep); color:rgba(255,255,255,.75);
@@ -588,4 +610,7 @@ input[type="range"].splash::-moz-range-thumb{
   .rail::before{ left:21px; }
   .rail li{ padding-left:64px; }
   .rail .badge{ width:46px; height:46px; }
+  .newsletter-card{ padding:32px 26px; }
+  .newsletter-card p{ max-width:none; }
+  .newsletter-input{ width:100%; }
 }

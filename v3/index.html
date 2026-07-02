@@ -260,6 +260,27 @@
   </div>
 </section>
 
+<!-- ================= NEWSLETTER ================= -->
+<section class="tiles">
+  <div class="wrap">
+    <div class="newsletter-card pop">
+      <div>
+        <p class="kicker"><span class="dot"></span><span data-lang-de>Auf dem Laufenden bleiben</span><span data-lang-en>Stay in the loop</span></p>
+        <h3 data-lang-de>Neue Projekte nicht verpassen</h3>
+        <h3 data-lang-en>Don't miss new projects</h3>
+        <p><span data-lang-de>E-Mail hinterlassen — wir melden uns, wenn ein neues Gerät fertig ist. Kein Spam.</span><span data-lang-en>Leave your email — we'll reach out when a new device is ready. No spam.</span></p>
+      </div>
+      <div>
+        <form class="newsletter-form" action="https://formspree.io/f/xwvdqqwg" method="POST" id="newsletterForm">
+          <input type="email" name="email" class="newsletter-input" placeholder="deine@email.ch" required>
+          <button type="submit" class="btn btn-duck btn-sm"><span data-lang-de>Anmelden</span><span data-lang-en>Subscribe</span></button>
+        </form>
+        <p class="newsletter-success" id="newsletterSuccess"><span data-lang-de>✓ Eingetragen — danke!</span><span data-lang-en>✓ Subscribed — thanks!</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="site">
   <div class="wrap foot-grid">
     <div>
@@ -277,6 +298,25 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+  /* newsletter signup (Formspree AJAX) */
+  (function(){
+    var form = document.getElementById('newsletterForm');
+    var success = document.getElementById('newsletterSuccess');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      fetch(form.action, { method:'POST', body:new FormData(form), headers:{ Accept:'application/json' } })
+        .then(function(res){
+          if(res.ok){
+            form.style.display = 'none';
+            success.classList.add('show');
+          }
+        })
+        .catch(function(){});
+    });
+  })();
+</script>
 <script>
   /* compare.html scroll-sync bridge — uses postMessage since direct iframe DOM
      access is blocked cross-origin when pages are opened via file:// */
